@@ -1,0 +1,22 @@
+{
+  "name": "new-tracks",
+  "version": "1.0.0",
+  "description": "An addition to my SoundCloud description website which stores a list of upcoming tracks",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/njscholfield/new-tracks.git"
+  },
+  "keywords": [
+    "soundcloud"
+  ],
+  "author": "Noah Scholfield",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/njscholfield/new-tracks/issues"
+  },
+  "homepage": "https://github.com/njscholfield/new-tracks#readme"
+}
