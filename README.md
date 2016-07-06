@@ -17,14 +17,9 @@ From the description of the preview track, the user can add the track to a list 
   - MongoDB vs. PostgreSQL
   - Store track API url for easier description fetching
 - [ ] Display list of tracks – Table?
-<div class="table-responsive">
-
   |Name|User|Release Date|Description|Purchase|Delete|
   |:---|:---|:-----------|:---------:|:------:|:----:|
   |We Are|Revealed Recordings|July 15, 2016|[Link](#)|[Link](#)|⨉|
-
-</div>
-
   - wrap table in `<div class="table-responsive">`
     - use `.table` on table
   - Locate list at `/:username`
