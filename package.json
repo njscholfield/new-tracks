@@ -18,5 +18,10 @@
   "bugs": {
     "url": "https://github.com/njscholfield/new-tracks/issues"
   },
-  "homepage": "https://github.com/njscholfield/new-tracks#readme"
+  "homepage": "https://github.com/njscholfield/new-tracks#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "mongoose": "^4.5.3",
+    "node-soundcloud": "0.0.5"
+  }
 }
