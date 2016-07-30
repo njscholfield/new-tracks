@@ -1,0 +1,43 @@
+<div ng-hide="descriptionCtrl.trackJSON">
+  <br>
+  <h4 class="text-info text-center">Enter a URL in the input tab to view the description</h4>
+</div>
+<section ng-show="descriptionCtrl.trackJSON">
+  <div ng-show="descriptionCtrl.trackJSON.error">
+    <h4 class="text-danger">{{descriptionCtrl.trackJSON.error}}</h4>
+    <code>Error {{descriptionCtrl.trackJSON.code}}</code>
+  </div>
+  <div ng-hide="descriptionCtrl.trackJSON.error">
+    <div class="row" id="trackTitle">
+      <div class="col-sm-10 col-sm-push-2">
+        <h3>{{descriptionCtrl.trackJSON.title}}</h3>
+        <h4>by
+          <a target="_blank" href="{{descriptionCtrl.trackJSON.user.permalink_url}}">{{descriptionCtrl.trackJSON.user.username}}</a>
+        </h4>
+        <h6>
+          <a target="_blank" href="{{descriptionCtrl.trackJSON.purchase_url}}">{{descriptionCtrl.trackJSON.purchase_title}}</a>
+        </h6>
+        <span ng-hide="descriptionCtrl.tags[0] === ''">Tags:<span>
+        <span ng-repeat="tag in descriptionCtrl.tags track by $index"><span class="label label-primary">{{tag}}</span> </span>
+      </div>
+      <br>
+      <div class="col-sm-2 col-sm-pull-10">
+        <a href="{{descriptionCtrl.imgURL}}" target="_blank">
+          <img class="img-responsive center-block" ng-src="{{descriptionCtrl.imgURL}}">
+        </a>
+      </div>
+    </div>
+      <hr>
+    <p ng-repeat="paragraph in descriptionCtrl.html track by $index" ng-bind-html="paragraph"></p>
+    <br>
+  <div class="row">
+    <div class="col-xs-6">
+      <button class="btn-link" ng-click="descriptionCtrl.toggleJSON()">View Raw Track Info</button>
+    </div>
+    <div class="col-xs-6">
+      <a href="https://soundcloud.com" target="_blank"><img class="pull-right" src="https://developers.soundcloud.com/assets/powered_by_black-4339b4c3c9cf88da9bfb15a16c4f6914.png"></a>
+    </div>
+  </div>
+    <pre ng-show="descriptionCtrl.showJSON"><code>{{descriptionCtrl.trackJSON | json}}</code></pre>
+  </div>
+</section>
