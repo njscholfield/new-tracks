@@ -8,9 +8,6 @@
     };
     $scope.setPanel = function(input) {
       $scope.panel = input;
-      if(input === 3) {
-        $scope.getTracks();
-      }
     };
   }]);
 
@@ -68,7 +65,5 @@
       templateUrl: 'directives/tracks.html'
     };
   });
-
-  // Use function in templateUrl to show logged in or logged out navbar
 
 })();

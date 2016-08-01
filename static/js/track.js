@@ -16,6 +16,7 @@
       }).then(function(me) {
         $scope.user = me;
         $scope.$apply();
+        $scope.getTracks();
       });
     };
 

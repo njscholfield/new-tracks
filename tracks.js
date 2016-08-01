@@ -34,7 +34,7 @@ exports.getTracks = function(req, res) {
 };
 
 var getTracksFromDatabase = function (req, res, username) {
-  user.findOne({permalink: username}, function(err, result) {
+  user.findOne({permalink: username}).exec(function(err, result) {
     if(err) {
       console.log('Error searching database: ' + err);
       res.status(400).json({error: err});
@@ -54,7 +54,7 @@ exports.addTrackToList = function(req, res) {
 };
 
 var addTrackToDatabase = function(req, res, data, username) {
-  user.findOne({username: username}, function(err, result) {
+  user.findOne({permalink: username}).exec(function(err, result) {
     if(err) {
       console.log('Error searching database: ' + err);
       res.status(400).json({error: err});
@@ -75,7 +75,7 @@ var addTrackToDatabase = function(req, res, data, username) {
 };
 
 var addTrackToExistingUser = function(req, res, result, newTrack) {
-  user.findOneAndUpdate({_id: result[0]._id}, {$push: {tracks: newTrack}}, function(err) {
+  user.findOneAndUpdate({_id: result._id}, {$push: {tracks: newTrack}}).exec(function(err) {
     if(err) {
       console.log("Error $push new track: " + err);
       res.status(400).json({error: err});
