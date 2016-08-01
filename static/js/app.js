@@ -8,6 +8,9 @@
     };
     $scope.setPanel = function(input) {
       $scope.panel = input;
+      if(input === 3) {
+        $scope.getTracks();
+      }
     };
   }]);
 
@@ -17,11 +20,12 @@
     this.submitInfo = {title: trackInfo.title, artist: trackInfo.user.username, releaseDate: releaseDate, trackID: trackInfo.id};
     this.ok = function() {
       this.submitInfo.me = {
+        full_name: user.full_name,
         permalink: user.permalink,
         username: user.username,
         user_id: user.id
       };
-      $http.post('/' + user.permalink, this.submitInfo)
+      $http.post('/' + user.permalink + '/add', this.submitInfo)
         .then(function success(response) {
           $uibModalInstance.dismiss({success: true, response: response});
         }, function error(response) {

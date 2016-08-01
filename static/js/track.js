@@ -1,7 +1,9 @@
 (function() {
   var app = angular.module('new-tracks');
 
-  app.controller('trackController', ["$scope", function($scope) {
+  app.controller('trackController', ["$scope", "$http", function($scope, $http) {
+    var trk = this;
+    trk.result = [];
     $scope.SCAuth = function() {
       SC.initialize({
         client_id: '30cba84d4693746b0a2fbc0649b2e42c',
@@ -20,6 +22,16 @@
     $scope.SCLogout = function() {
       $scope.user = undefined;
     };
+
+    $scope.getTracks = function() {
+      $http.get('/' + $scope.user.permalink, {headers: {username: $scope.user.permalink}})
+        .then(function success(response) {
+          console.log(response);
+          trk.result = response.data;
+        }, function error(response) {
+          console.log('Error getting tracks: ' + response);
+        });
+    }
 
   }]);
 

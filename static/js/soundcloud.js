@@ -39,6 +39,7 @@
       }, function (selectedItem) {
         console.log(selectedItem);
         // display "Track Successfully Added"
+        $scope.getTracks();
       });
     };
     sc.submit = function(callURL) {
