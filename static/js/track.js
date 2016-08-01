@@ -4,6 +4,10 @@
   app.controller('trackController', ["$scope", "$http", function($scope, $http) {
     var trk = this;
     trk.result = [];
+    trk.showJSON = false;
+    trk.toggleJSON = function() {
+      trk.showJSON = !trk.showJSON;
+    }
     $scope.SCAuth = function() {
       SC.initialize({
         client_id: '30cba84d4693746b0a2fbc0649b2e42c',
