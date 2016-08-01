@@ -12,11 +12,15 @@
       SC.connect().then(function() {
         return SC.get('/me');
       }).then(function(me) {
-        alert('Hello, ' + me.username);
         $scope.user = me;
-        console.log($scope.user);
+        $scope.$apply();
       });
     };
+
+    $scope.SCLogout = function() {
+      $scope.user = undefined;
+    };
+
   }]);
 
 })();

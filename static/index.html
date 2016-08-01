@@ -24,7 +24,8 @@
     </div>
     <noscript><h3 class="text-warning text-center">JavaScript is required for this page to work. Please enable JavaScript.</h3></noscript>
     <div class="container" ng-controller="PanelController as panelCtrl">
-      <a class="btn btn-primary pull-right" ng-click="SCAuth()">Login with SoundCloud</a>
+      <a class="btn btn-primary pull-right" ng-click="SCAuth()" ng-hide="user">Login with SoundCloud</a>
+      <div class="btn btn-primary pull-right" ng-click="SCLogout()" ng-show="user">{{user.username}}</div>
       <br>
       <br>
       <navpills></navpills>

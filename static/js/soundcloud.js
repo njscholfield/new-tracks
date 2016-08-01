@@ -23,7 +23,11 @@
             return trackID
           },
           releaseDate: function() {
-            return new Date(trackID.release_year, trackID.release_month - 1, trackID.release_day)
+            if(trackID.release_year) {
+              return new Date(trackID.release_year, trackID.release_month - 1, trackID.release_day)
+            } else {
+              return undefined
+            }
           },
           user: function() {
             return $scope.user
