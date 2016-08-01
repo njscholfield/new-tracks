@@ -14,6 +14,7 @@
       }).then(function(me) {
         alert('Hello, ' + me.username);
         $scope.user = me;
+        console.log($scope.user);
       });
     };
   }]);

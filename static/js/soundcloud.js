@@ -3,7 +3,7 @@
   var scapi = "https://api.soundcloud.com/resolve.json?url="
   var client = "client_id=30cba84d4693746b0a2fbc0649b2e42c"
 
-  app.controller("descriptionController", ["$http", "$location", "$scope", function($http, $location, $scope) {
+  app.controller("descriptionController", ["$http", "$location", "$scope", "$uibModal", function($http, $location, $scope, $uibModal) {
     var sc = this
     sc.url = $location.url().substring(1)
     sc.showJSON = false
@@ -11,6 +11,31 @@
     $scope.getDescription = function(trackID) {
       var url = "https://api.soundcloud.com/tracks/" + trackID + '?' + client
       sc.submit(url)
+    }
+    sc.addTrackToList = function(trackID) {
+      var modalInstance = $uibModal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: 'directives/addTrackModal.html',
+        controller: 'addTrackModalController',
+        controllerAs: 'vm',
+        resolve: {
+          trackInfo: function() {
+            return trackID
+          },
+          releaseDate: function() {
+            return new Date(trackID.release_year, trackID.release_month - 1, trackID.release_day)
+          },
+          user: function() {
+            return $scope.user
+          }
+        }
+      });
+      modalInstance.result.then(function (selectedItem) {
+        $scope.selected = selectedItem;
+      }, function (selectedItem) {
+        console.log(selectedItem)
+        // display "Track Successfully Added"
+      });
     }
     sc.submit = function(callURL) {
       if(callURL === undefined) {

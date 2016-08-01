@@ -30,6 +30,8 @@
       <hr>
     <p ng-repeat="paragraph in descriptionCtrl.html track by $index" ng-bind-html="paragraph"></p>
     <br>
+    <button class="btn btn-success" ng-click="descriptionCtrl.addTrackToList(descriptionCtrl.trackJSON)">+ Add Track To List</button>
+    <br>
   <div class="row">
     <div class="col-xs-6">
       <button class="btn-link" ng-click="descriptionCtrl.toggleJSON()">View Raw Track Info</button>
