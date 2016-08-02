@@ -1,25 +1,30 @@
 <section>
   <br>
-  <div class="table-responsive">
-    <table class="table">
-      <tr>
-        <th>Track Name</th>
-        <th>Artist</th>
-        <th class="text-center">Release Date</th>
-        <th class="text-center">Description</th>
-        <th class="text-center">Delete</th>
-      </tr>
-      <tr ng-repeat="track in trackCtrl.result.tracks | orderBy:'releaseDate'">
-        <td>{{ track.title }}</td>
-        <td>{{ track.artist }}</td>
-        <td class="text-center">{{ track.releaseDate | date: 'longDate'}}</td>
-        <td class="text-center"><a class="btn-link" ng-click="getDescription(track.trackID)">View</a></td>
-        <td class="text-center"><a class="btn-link" onclick="console.log('Delete')">&times;</a></td>
-      </tr>
-    </table>
+  <div ng-hide="trackCtrl.result.tracks.length">
+    <h4 class="text-center text-info">The list is empty</h4>
   </div>
-  <button class="btn-link" ng-click="trackCtrl.toggleJSON()">View JSON</button>
-  <div ng-show="trackCtrl.showJSON">
-    <pre><code>{{trackCtrl.result.tracks | json}}</code></pre>
+  <div ng-show="trackCtrl.result.tracks.length">
+    <div class="table-responsive">
+      <table class="table">
+        <tr>
+          <th>Track Name</th>
+          <th>Artist</th>
+          <th class="text-center">Release Date</th>
+          <th class="text-center">Description</th>
+          <th class="text-center">Delete</th>
+        </tr>
+        <tr ng-repeat="track in trackCtrl.result.tracks | orderBy:'releaseDate'">
+          <td>{{ track.title }}</td>
+          <td>{{ track.artist }}</td>
+          <td class="text-center">{{ track.releaseDate | date: 'longDate'}}</td>
+          <td class="text-center"><a class="btn-link" ng-click="getDescription(track.trackID)">View</a></td>
+          <td class="text-center"><a class="text-danger" ng-click="trackCtrl.removeTrack(track.title, track.trackID)">&times;</a></td>
+        </tr>
+      </table>
+    </div>
+    <button class="btn-link" ng-click="trackCtrl.toggleJSON()">View JSON</button>
+    <div ng-show="trackCtrl.showJSON">
+      <pre><code>{{trackCtrl.result.tracks | json}}</code></pre>
+    </div>
   </div>
 </section>

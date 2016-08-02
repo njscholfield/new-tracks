@@ -34,12 +34,12 @@
           }
         }
       });
-      modalInstance.result.then(function (selectedItem) {
-        $scope.selected = selectedItem;
-      }, function (selectedItem) {
-        console.log(selectedItem);
-        // display "Track Successfully Added"
-        $scope.getTracks();
+      modalInstance.result.then(function close(response) {
+        if(response.success) {
+          trk.result = response.response;
+        } else {
+          console.log('Error removing adding: ' + response.response);
+        }
       });
     };
     sc.submit = function(callURL) {

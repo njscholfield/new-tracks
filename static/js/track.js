@@ -1,7 +1,7 @@
 (function() {
   var app = angular.module('new-tracks');
 
-  app.controller('trackController', ["$scope", "$http", function($scope, $http) {
+  app.controller('trackController', ["$scope", "$http", "$uibModal", function($scope, $http, $uibModal) {
     var trk = this;
     trk.result = [];
     trk.showJSON = false;
@@ -20,7 +20,6 @@
       }).then(function(me) {
         $scope.user = me;
         $scope.$apply();
-        $scope.getTracks();
       });
     };
 
@@ -28,16 +27,70 @@
       $scope.user = undefined;
     };
 
+    $scope.$watch('panel', function(newValue) {
+      if(newValue === 3) {
+        $scope.getTracks();
+      }
+    });
+
     $scope.getTracks = function() {
       $http.get('/' + $scope.user.permalink, {headers: {username: $scope.user.permalink}})
         .then(function success(response) {
-          console.log(response);
           trk.result = response.data;
         }, function error(response) {
           console.log('Error getting tracks: ' + response);
         });
-    }
+    };
+
+    this.removeTrack = function(title, trackID) {
+      var modalInstance = $uibModal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: 'directives/removeTrackModal.html',
+        controller: 'removeTrackController',
+        controllerAs: 'vm',
+        resolve: {
+          title: function() {
+            return title;
+          },
+          trackID: function() {
+            return trackID;
+          },
+          user: function() {
+            return $scope.user;
+          }
+        }
+      });
+      modalInstance.result.then(function close(response) {
+        if(response.success) {
+          trk.result = response.response;
+        } else {
+          console.log('Error removing track: ' + response.response);
+        }
+      });
+    };
 
   }]);
+
+  app.controller('removeTrackController', function($http, $uibModalInstance, title, trackID, user) {
+    this.title = title;
+    this.trackID = trackID;
+    this.submitInfo = {
+      permalink: user.permalink,
+      trackID: trackID
+    };
+
+    this.ok = function() {
+      $http.post('/' + user.permalink + '/remove', this.submitInfo)
+        .then(function success(response) {
+          $uibModalInstance.close({success: true, response: response.data});
+        }, function error(response) {
+          $uibModalInstance.close({success: false, response: response});
+        });
+    }
+
+    this.cancel = function() {
+      $uibModalInstance.dismiss();
+    }
+  })
 
 })();

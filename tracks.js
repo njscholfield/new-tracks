@@ -19,7 +19,7 @@ var track = mongoose.model('track', trackSchema);
 var userSchema = new mongoose.Schema({
   fullName: {type: String, required: true},
   username: {type: String, required: true},
-  permalink: {type: String, required: true},
+  permalink: {type: String, required: true, index: { unique: true }},
   userID: {type: String, required: true},
   tracks: [trackSchema]
 });
@@ -40,6 +40,26 @@ var getTracksFromDatabase = function (req, res, username) {
       res.status(400).json({error: err});
     } else {
       res.status(200).json(result);
+    }
+  });
+};
+
+exports.removeTrackFromList = function(req, res) {
+  var data = req.body;
+  if(req.params.username === data.permalink) {
+    removeTrackFromDatabase(req, res, data);
+  } else {
+    res.sendStatus(403);
+  }
+};
+
+var removeTrackFromDatabase = function (req, res, data) {
+  user.findOneAndUpdate({permalink: data.permalink}, {$pull: {tracks: {trackID: data.trackID} } }, {new: true}).exec(function(err, result) {
+    if(err) {
+      console.log('Error removing track: ' + err);
+      res.status(400).json({error: err});
+    } else {
+      res.status(200).json(result.tracks);
     }
   });
 };
@@ -75,12 +95,12 @@ var addTrackToDatabase = function(req, res, data, username) {
 };
 
 var addTrackToExistingUser = function(req, res, result, newTrack) {
-  user.findOneAndUpdate({_id: result._id}, {$push: {tracks: newTrack}}).exec(function(err) {
+  user.findOneAndUpdate({_id: result._id}, {$push: {tracks: newTrack}}, {new: true}).exec(function(err, result) {
     if(err) {
       console.log("Error $push new track: " + err);
       res.status(400).json({error: err});
     } else {
-      res.sendStatus(200);
+      res.status(200).json(result.tracks);
     }
   });
 };
