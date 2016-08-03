@@ -36,9 +36,10 @@
       });
       modalInstance.result.then(function close(response) {
         if(response.success) {
-          trk.result = response.response;
+          $scope.updateResult({tracks: response.response});
+          $scope.updateTrackIDList(response.response);
         } else {
-          console.log('Error removing adding: ' + response.response);
+          console.log('Error adding: ' + response.response);
         }
       });
     };

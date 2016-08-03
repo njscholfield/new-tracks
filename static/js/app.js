@@ -24,13 +24,13 @@
       };
       $http.post('/' + user.permalink + '/add', this.submitInfo)
         .then(function success(response) {
-          $uibModalInstance.dismiss({success: true, response: response});
+          $uibModalInstance.close({success: true, response: response.data});
         }, function error(response) {
-          $uibModalInstance.dismiss({success: false, response: response});
+          $uibModalInstance.close({success: false, response: response});
         });
     }
     this.cancel = function() {
-      $uibModalInstance.close();
+      $uibModalInstance.dismiss();
     }
   });
 

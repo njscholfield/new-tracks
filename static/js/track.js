@@ -4,6 +4,7 @@
   app.controller('trackController', ["$scope", "$http", "$uibModal", function($scope, $http, $uibModal) {
     var trk = this;
     trk.result = [];
+    $scope.tracks = [];
     trk.showJSON = false;
     trk.toggleJSON = function() {
       trk.showJSON = !trk.showJSON;
@@ -20,7 +21,21 @@
       }).then(function(me) {
         $scope.user = me;
         $scope.$apply();
+        $scope.getTracks();
       });
+    };
+
+    $scope.updateResult = function(input) {
+      trk.result = input;
+    };
+
+    $scope.updateTrackIDList = function(tracks) {
+      $scope.tracks = [];
+      if(tracks.length > 0) {
+        tracks.forEach(function(track) {
+          $scope.tracks.push(track.trackID);
+        });
+      }
     };
 
     $scope.SCLogout = function() {
@@ -36,7 +51,8 @@
     $scope.getTracks = function() {
       $http.get('/' + $scope.user.permalink, {headers: {username: $scope.user.permalink}})
         .then(function success(response) {
-          trk.result = response.data;
+          $scope.updateResult(response.data);
+          $scope.updateTrackIDList(response.data.tracks);
         }, function error(response) {
           console.log('Error getting tracks: ' + response);
         });
@@ -62,7 +78,8 @@
       });
       modalInstance.result.then(function close(response) {
         if(response.success) {
-          trk.result = response.response;
+          $scope.updateResult({tracks: response.response});
+          $scope.updateTrackIDList(response.response);
         } else {
           console.log('Error removing track: ' + response.response);
         }
