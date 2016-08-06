@@ -58,18 +58,15 @@
         });
     };
 
-    this.removeTrack = function(title, trackID) {
+    this.editTrack = function(track) {
       var modalInstance = $uibModal.open({
         animation: $scope.animationsEnabled,
-        templateUrl: 'directives/removeTrackModal.html',
-        controller: 'removeTrackController',
+        templateUrl: 'directives/editTrackModal.html',
+        controller: 'editTrackController',
         controllerAs: 'vm',
         resolve: {
-          title: function() {
-            return title;
-          },
-          trackID: function() {
-            return trackID;
+          track: function() {
+            return track;
           },
           user: function() {
             return $scope.user;
@@ -88,26 +85,36 @@
 
   }]);
 
-  app.controller('removeTrackController', function($http, $uibModalInstance, title, trackID, user) {
-    this.title = title;
-    this.trackID = trackID;
+  app.controller('editTrackController', function($http, $uibModalInstance, track, user) {
     this.submitInfo = {
       permalink: user.permalink,
-      trackID: trackID
+      trackID: track.trackID,
+      title: track.title,
+      artist: track.artist,
+      releaseDate: new Date(track.releaseDate)
     };
 
-    this.ok = function() {
+    this.delete = function() {
       $http.post('/' + user.permalink + '/remove', this.submitInfo)
         .then(function success(response) {
           $uibModalInstance.close({success: true, response: response.data});
         }, function error(response) {
           $uibModalInstance.close({success: false, response: response});
         });
-    }
+    };
+
+    this.ok = function() {
+      $http.post('/' + user.permalink + '/edit', this.submitInfo)
+        .then(function success(response) {
+          $uibModalInstance.close({success: true, response: response.data});
+        }, function error(response) {
+          $uibModalInstance.close({success: false, response: response});
+        });
+    };
 
     this.cancel = function() {
       $uibModalInstance.dismiss();
-    }
-  })
+    };
+  });
 
 })();

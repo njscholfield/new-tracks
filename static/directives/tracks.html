@@ -11,14 +11,14 @@
           <th>Artist</th>
           <th class="text-center">Release Date</th>
           <th class="text-center">Description</th>
-          <th class="text-center">Delete</th>
+          <th class="text-center">Edit</th>
         </tr>
         <tr ng-repeat="track in trackCtrl.result.tracks | orderBy:'releaseDate'">
           <td>{{ track.title }}</td>
           <td>{{ track.artist }}</td>
           <td class="text-center">{{ track.releaseDate | date: 'longDate'}}</td>
           <td class="text-center"><a class="btn-link" ng-click="getDescription(track.trackID)">View</a></td>
-          <td class="text-center"><a class="text-danger" ng-click="trackCtrl.removeTrack(track.title, track.trackID)">&times;</a></td>
+          <td class="text-center"><a class="btn-link" ng-click="trackCtrl.editTrack(track)">✎</a></td>
         </tr>
       </table>
     </div>

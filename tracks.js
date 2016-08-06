@@ -44,6 +44,32 @@ var getTracksFromDatabase = function (req, res, username) {
   });
 };
 
+exports.editTrackInList = function(req, res) {
+  var data = req.body;
+  if(req.params.username === data.permalink) {
+    editTrackInDatabase(req, res, data);
+  } else {
+    res.sendStatus(403);
+  }
+};
+
+var editTrackInDatabase = function(req, res, data) {
+  var newTrack = new track({
+    title: data.title,
+    artist: data.artist,
+    releaseDate: data.releaseDate,
+    trackID: data.trackID
+  });
+  user.findOneAndUpdate({permalink: data.permalink, 'tracks.trackID': data.trackID}, {$set: {'tracks.$': newTrack}}, {new: true}).exec(function(err, result) {
+    if(err) {
+      console.log('Error updating track: ' + err);
+      res.status(400).json({error: err});
+    } else {
+      res.status(200).json(result.tracks);
+    }
+  });
+};
+
 exports.removeTrackFromList = function(req, res) {
   var data = req.body;
   if(req.params.username === data.permalink) {
