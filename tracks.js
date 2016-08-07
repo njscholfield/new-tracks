@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/new-tracks', function(err, res) {
+mongoose.connect(process.env.MONGODB_URI, function(err, res) {
   if(err) {
     console.log('ERROR connecting. ' + err);
   } else {
@@ -20,7 +20,7 @@ var userSchema = new mongoose.Schema({
   fullName: {type: String, required: true},
   username: {type: String, required: true},
   permalink: {type: String, required: true, index: { unique: true }},
-  userID: {type: String, required: true},
+  userID: {type: String, required: true, index: { unique: true }},
   tracks: [trackSchema]
 });
 var user = mongoose.model('user', userSchema);
