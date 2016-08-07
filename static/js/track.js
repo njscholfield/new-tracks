@@ -12,7 +12,7 @@
     $scope.SCAuth = function() {
       SC.initialize({
         client_id: '30cba84d4693746b0a2fbc0649b2e42c',
-        redirect_uri: 'http://localhost:8000/callback.html'
+        redirect_uri: 'https://tracks.noahscholfield.com/callback.html'
       });
 
       // initiate auth popup
