@@ -91,7 +91,7 @@
       trackID: track.trackID,
       title: track.title,
       artist: track.artist,
-      releaseDate: new Date(track.releaseDate)
+      releaseDate: new Date(track.releaseDate) || undefined
     };
 
     this.delete = function() {
