@@ -70,6 +70,13 @@
           },
           user: function() {
             return $scope.user;
+          },
+          releaseDate: function() {
+            if(track.releaseDate) {
+              return new Date(track.releaseDate);
+            } else {
+              return undefined;
+            }
           }
         }
       });
@@ -85,13 +92,13 @@
 
   }]);
 
-  app.controller('editTrackController', function($http, $uibModalInstance, track, user) {
+  app.controller('editTrackController', function($http, $uibModalInstance, track, user, releaseDate) {
     this.submitInfo = {
       permalink: user.permalink,
       trackID: track.trackID,
       title: track.title,
       artist: track.artist,
-      releaseDate: new Date(track.releaseDate) || undefined
+      releaseDate: releaseDate
     };
 
     this.delete = function() {
