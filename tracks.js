@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-assert.equal(query.exec().constructor, global.Promise);
 
 mongoose.connect(process.env.MONGODB_URI, function(err, res) {
   if(err) {
