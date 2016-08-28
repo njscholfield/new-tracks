@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+assert.equal(query.exec().constructor, global.Promise);
 
 mongoose.connect(process.env.MONGODB_URI, function(err, res) {
   if(err) {
@@ -34,14 +36,13 @@ exports.getTracks = function(req, res) {
 };
 
 var getTracksFromDatabase = function (req, res, username) {
-  user.findOne({permalink: username}).exec(function(err, result) {
-    if(err) {
-      console.log('Error searching database: ' + err);
-      res.status(400).json({error: err});
-    } else {
+  user.findOne({permalink: username})
+    .exec(function success(result) {
       res.status(200).json(result);
-    }
-  });
+    }, function error(err) {
+      console.log('Error searching database: ' + err);
+      res.status(500).json({error: err});
+    });
 };
 
 exports.editTrackInList = function(req, res) {
