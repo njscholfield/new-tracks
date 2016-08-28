@@ -6,17 +6,27 @@ This project is a continuation of my original SoundCloud project that displays d
 
 From the description of the preview track, the user can add the track to a list of other upcoming tracks. If the release date is not included in the track info from the API, the user will be asked to provide the release date that may be found in the description or leave it blank.
 
+### Technologies Used
+- [Node.js](https://nodejs.org)
+- [Express](https://expressjs.com)
+- [Heroku](https://heroku.com)
+- [mLab MongoDB](https://mlab.com)
+- [AngularJS](https://angularjs.org)
+- [SoundCloud API](https://developers.soundcloud.com)
+- [UI Bootstrap](https://angular-ui.github.io/bootstrap/)
+- [Autolinker.js](https://github.com/gregjacobs/Autolinker.js)
+
 ### Features/ToDo
-- [ ] Show descriptions for SoundCloud tracks
+- [x] Show descriptions for SoundCloud tracks
   - Use other SoundCloud project as basis
-- [ ] Add tracks from the description display page
+- [x] Add tracks from the description display page
   - Modal asks for confirmation and release date if not in track data
-- [ ] Remove a track from the database from the list view
-- [ ] Store list of tracks in database for user
+- [x] Remove a track from the database from the list view
+- [x] Store list of tracks in database for user
   - Authenticate – SoundCloud?
   - MongoDB vs. PostgreSQL
   - Store track API url for easier description fetching
-- [ ] Display list of tracks – Table?
+- [x] Display list of tracks – Table?
 
   |Name|User|Release Date|Description|Purchase|Delete|
   |:---|:---|:-----------|:---------:|:------:|:----:|
