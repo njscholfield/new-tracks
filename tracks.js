@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
 
 mongoose.connect(process.env.MONGODB_URI, function(err, res) {
   if(err) {
@@ -35,13 +34,14 @@ exports.getTracks = function(req, res) {
 };
 
 var getTracksFromDatabase = function (req, res, username) {
-  user.findOne({permalink: username})
-    .exec(function success(result) {
-      res.status(200).json(result);
-    }, function error(err) {
+  user.findOne({permalink: username}, function(err, result) {
+    if(err) {
       console.log('Error searching database: ' + err);
       res.status(500).json({error: err});
-    });
+    } else {
+      res.status(200).json(result);
+    }
+  });
 };
 
 exports.editTrackInList = function(req, res) {
@@ -60,7 +60,7 @@ var editTrackInDatabase = function(req, res, data) {
     releaseDate: data.releaseDate,
     trackID: data.trackID
   });
-  user.findOneAndUpdate({permalink: data.permalink, 'tracks.trackID': data.trackID}, {$set: {'tracks.$': newTrack}}, {new: true}).exec(function(err, result) {
+  user.findOneAndUpdate({permalink: data.permalink, 'tracks.trackID': data.trackID}, {$set: {'tracks.$': newTrack}}, {new: true}, function(err, result) {
     if(err) {
       console.log('Error updating track: ' + err);
       res.status(400).json({error: err});
@@ -80,7 +80,7 @@ exports.removeTrackFromList = function(req, res) {
 };
 
 var removeTrackFromDatabase = function (req, res, data) {
-  user.findOneAndUpdate({permalink: data.permalink}, {$pull: {tracks: {trackID: data.trackID} } }, {new: true}).exec(function(err, result) {
+  user.findOneAndUpdate({permalink: data.permalink}, {$pull: {tracks: {trackID: data.trackID} } }, {new: true}, function(err, result) {
     if(err) {
       console.log('Error removing track: ' + err);
       res.status(400).json({error: err});
@@ -100,7 +100,7 @@ exports.addTrackToList = function(req, res) {
 };
 
 var addTrackToDatabase = function(req, res, data, username) {
-  user.findOne({permalink: username}).exec(function(err, result) {
+  user.findOne({permalink: username}, function(err, result) {
     if(err) {
       console.log('Error searching database: ' + err);
       res.status(400).json({error: err});
@@ -121,7 +121,7 @@ var addTrackToDatabase = function(req, res, data, username) {
 };
 
 var addTrackToExistingUser = function(req, res, result, newTrack) {
-  user.findOneAndUpdate({_id: result._id}, {$push: {tracks: newTrack}}, {new: true}).exec(function(err, result) {
+  user.findOneAndUpdate({_id: result._id}, {$push: {tracks: newTrack}}, {new: true}, function(err, result) {
     if(err) {
       console.log("Error $push new track: " + err);
       res.status(400).json({error: err});
