@@ -1,7 +1,7 @@
 module.exports = function(app, passport, tracks) {
 
   app.get('/register', function(req, res) {
-    res.render('register', {username: "req.user", data: {}, error: {}, message: {type: 'text-danger', content: req.flash('signupMessage')}});
+    res.render('register', {data: {}, error: {}, message: {type: 'text-danger', content: req.flash('signupMessage')}});
   });
 
   app.post('/register', passport.authenticate('local-signup', {
