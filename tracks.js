@@ -1,29 +1,8 @@
-var mongoose = require('mongoose');
-
-mongoose.connect(process.env.MONGODB_URI, function(err, res) {
-  if(err) {
-    console.log('ERROR connecting. ' + err);
-  } else {
-    console.log ('Succeeded, connected');
-  }
-});
-
-var trackSchema = new mongoose.Schema({
-  title: {type: String, required: true},
-  artist: {type: String, required: true},
-  releaseDate: {type: Date, required: false},
-  trackID: {type: String, required: true}
-});
-var track = mongoose.model('track', trackSchema);
-
-var userSchema = new mongoose.Schema({
-  fullName: {type: String, required: true},
-  username: {type: String, required: true},
-  permalink: {type: String, required: true, index: { unique: true }},
-  userID: {type: String, required: true, index: { unique: true }},
-  tracks: [trackSchema]
-});
-var user = mongoose.model('user', userSchema);
+/*TODO
+  need to check all and rewrite to reference username instead of permalink
+  user will be stored in req.user so searching may not be necessary anymore
+  createNewUser will definitely need to be changed
+*/
 
 exports.getTracks = function(req, res) {
   if(req.params.username === req.get('username')) {
