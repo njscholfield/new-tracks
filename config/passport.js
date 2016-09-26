@@ -1,7 +1,7 @@
 var localStrategy = require('passport-local').Strategy;
 var soundcloudStrategy = require('passport-soundcloud').Strategy;
 
-var User = require('./app/userModel.js');
+var User = require('../app/userModel.js');
 
 module.exports = function(passport) {
   passport.serializeUser(function(user, done) {
@@ -68,15 +68,23 @@ module.exports = function(passport) {
     }
   ));
 
-  passport.use(new SoundCloudStrategy({
+  passport.use('soundcloud-login', new soundcloudStrategy({
     clientID: process.env.SOUNDCLOUD_CLIENT_ID,
     clientSecret: process.env.SOUNDCLOUD_CLIENT_SECRET,
-    callbackURL: "http://127.0.0.1:8000/auth/soundcloud/callback" //change for production
+    callbackURL: "https://tracks.noahscholfield.com/callback.html"
+    //callbackURL: "http://127.0.0.1:8000/auth/soundcloud/callback" //change for production
+    // maybe try using state for authorize vs authenticate
   },
     function(accessToken, refreshToken, profile, done) {
-      // replace this with something functional
-      User.findOrCreate({ 'soundcloud.soundcloudID': profile.id }, function (err, user) {
-        return done(err, user);
+      // this will not work for the first time in production
+      // apparently you need to have mongoose write soundcloud.soundcloudID for it to be able to find it
+      // migration function? or just manual migration in mLab?
+      User.findOneAndUpdate({ 'soundcloud.soundcloudID': profile.id }, {$set: {'soundcloud.accessToken': accessToken, 'soundcloud.refreshToken': refreshToken}}, function (err, user) {
+        if(err) {
+          console.log('Error looking for user' + err);
+          return done(err);
+        }
+        return done(null, user);
       });
     }
   ));
