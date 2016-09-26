@@ -1,7 +1,10 @@
 {
   "name": "new-tracks",
   "version": "1.0.0",
-  "description": "An addition to my SoundCloud description website which stores a list of upcoming tracks",
+  "description": "An addition to my SoundCloud description website to stores a list of tracks",
+  "engines": {
+    "node": "6.x.x"
+  },
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
@@ -20,8 +23,16 @@
   },
   "homepage": "https://github.com/njscholfield/new-tracks#readme",
   "dependencies": {
+    "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
+    "connect-flash": "^0.1.1",
+    "connect-redis": "^3.1.0",
+    "ejs": "^2.5.2",
     "express": "^4.14.0",
-    "mongoose": "^4.5.10"
+    "express-session": "^1.14.1",
+    "mongoose": "^4.5.10",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "passport-soundcloud": "^0.2.0"
   }
 }
