@@ -4,19 +4,21 @@ module.exports = function(app, passport, tracks) {
     res.render('register', {username: "req.user", data: {}, error: {}, message: {type: 'text-danger', content: req.flash('signupMessage')}});
   });
 
-  app.post('/register', function(req, res) {
-    console.log(req.body);
-    res.redirect('/');
-  });
+  app.post('/register', passport.authenticate('local-signup', {
+    successRedirect: '/',
+    failureRedirect: '/register',
+    failureFlash: true
+  }));
 
   app.get('/login', function(req, res) {
     res.render('login', {message: req.flash('loginMessage'), error: {}});
   });
 
-  app.post('/login', function(req, res) {
-    console.log(req.body);
-    res.redirect('/');
-  });
+  app.post('/login', passport.authenticate('local-login', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: true
+  }));
 
   app.get('/auth/soundcloud', passport.authenticate('soundcloud'));
 
