@@ -20,9 +20,18 @@ module.exports = function(app, passport, tracks) {
     failureFlash: true
   }));
 
-  app.get('/auth/soundcloud', passport.authenticate('soundcloud'));
+  app.get('/auth/soundcloud', passport.authenticate('soundcloud-login'));
 
-  app.get('/auth/soundcloud/callback', passport.authenticate('soundcloud', { failureRedirect: '/login'}), function(req, res) {
+  app.get('/auth/soundcloud/callback', passport.authenticate('soundcloud-login', { failureRedirect: '/login'}), function(req, res) {
+    res.redirect('/');
+  });
+
+  app.get('/auth/test', isLoggedIn, function(req, res) {
+    res.send("Logged In " + req.user.username);
+  });
+
+  app.get('/logout/', function(req, res){
+    req.logout();
     res.redirect('/');
   });
 
@@ -41,5 +50,13 @@ module.exports = function(app, passport, tracks) {
   app.post('/:username/remove', function(req, res) {
     tracks.removeTrackFromList(req, res);
   });
+
+  function isLoggedIn(req, res, next) {
+  	if (req.isAuthenticated()) {
+      return next();
+    }
+    req.flash('loginMessage', 'You must be logged in to view this page!');
+  	res.redirect('/login/');
+  }
 
 }
