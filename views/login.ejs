@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login | New Tracks</title>
+    <link rel="stylesheet" href="https://noahscholfield.com/css/bootstrap-yeti.min.css">
+  </head>
+  <body>
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Login</h1>
+      </div>
+    </div>
+    <div class="container">
+      <h4 class="text-danger"><%= message %></h4>
+      <form action="/login/" method="post">
+        <legend>Login</legend>
+        <fieldset>
+          <div class="form-group <%= error['username'] %>">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" placeholder="username" name="username" autocomplete="username" required="true">
+          </div>
+          <div class="form-group <%= error['password'] %>">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" placeholder="password" name="password" autocomplete="current-password" required="true">
+          </div>
+        </fieldset>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="reset" class="btn btn-default">Clear</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
