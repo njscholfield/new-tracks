@@ -20,9 +20,9 @@ module.exports = function(app, passport, tracks) {
     failureFlash: true
   }));
 
-  app.get('/auth/soundcloud', passport.authenticate('soundcloud-login'));
+  app.get('/auth/soundcloud', passport.authenticate('soundcloud'));
 
-  app.get('/auth/soundcloud/callback', passport.authenticate('soundcloud-login', { failureRedirect: '/login'}), function(req, res) {
+  app.get('/callback.html', passport.authenticate('soundcloud', { failureRedirect: '/login'}), function(req, res) {
     res.redirect('/');
   });
 
