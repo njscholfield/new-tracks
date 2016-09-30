@@ -28,8 +28,6 @@ var userSchema = mongoose.Schema({
     refreshToken: {type: String}
   },
   username: {type: String, index: { unique: true }},
-  permalink: {type: String, index: { unique: true }}, //remove but transfer to username
-  userID: {type: String, index: { unique: true }}, // remove but transfer to soundcloud.soundcloudID
   tracks: [trackSchema]
 });
 
