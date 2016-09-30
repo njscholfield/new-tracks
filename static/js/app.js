@@ -1,7 +1,7 @@
 (function() {
   var app = angular.module('new-tracks', ['ngSanitize', 'ngAnimate', 'ui.bootstrap']);
 
-  app.controller('PanelController', ["$scope", function($scope) {
+  app.controller('PanelController', ["$scope", "$http", function($scope, $http) {
     $scope.panel = 1;
     this.currentPanel = function(input) {
       return $scope.panel === input;
@@ -9,6 +9,16 @@
     $scope.setPanel = function(input) {
       $scope.panel = input;
     };
+
+    $scope.checkLogin = function() {
+      $http.get('/auth/verify')
+        .then(function success(response) {
+          $scope.user = response.data;
+        }, function error(response) {
+          console.log('Error checking login status: ' + response);
+        });
+    };
+    $scope.checkLogin();
   }]);
 
   app.controller('addTrackModalController', function($http, $uibModalInstance, trackInfo, releaseDate, user) {
@@ -16,13 +26,7 @@
     this.releaseDate = releaseDate;
     this.submitInfo = {title: trackInfo.title, artist: trackInfo.user.username, releaseDate: releaseDate, trackID: trackInfo.id};
     this.ok = function() {
-      this.submitInfo.me = {
-        full_name: user.full_name,
-        permalink: user.permalink,
-        username: user.username,
-        user_id: user.id
-      };
-      $http.post('/' + user.permalink + '/add', this.submitInfo)
+      $http.post('/' + user.username + '/add', this.submitInfo)
         .then(function success(response) {
           $uibModalInstance.close({success: true, response: response.data});
         }, function error(response) {
