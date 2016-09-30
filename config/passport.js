@@ -1,7 +1,7 @@
 var localStrategy = require('passport-local').Strategy;
 var soundcloudStrategy = require('passport-soundcloud').Strategy;
 
-var User = require('../app/userModel.js');
+var User = require('../app/userModel.js').user;
 
 module.exports = function(passport) {
   passport.serializeUser(function(user, done) {
