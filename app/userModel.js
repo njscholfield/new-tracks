@@ -15,7 +15,7 @@ var trackSchema = mongoose.Schema({
   releaseDate: {type: Date, required: false},
   trackID: {type: String, required: true}
 });
-module.exports = mongoose.model('track', trackSchema);
+var track = mongoose.model('track', trackSchema);
 
 var userSchema = mongoose.Schema({
   local: {
@@ -39,4 +39,9 @@ userSchema.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.local.password);
 };
 
-module.exports = mongoose.model('user', userSchema);
+var user = mongoose.model('user', userSchema);
+
+module.exports = {
+  user: user,
+  track: track
+}
