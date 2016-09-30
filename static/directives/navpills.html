@@ -1,5 +1,5 @@
 <ul class="nav nav-pills">
   <li role="presentation" ng-class="{active: panelCtrl.currentPanel(1)}"><a ng-click="setPanel(1)">Input</a></li>
   <li role="presentation" ng-class="{active: panelCtrl.currentPanel(2)}"><a ng-click="setPanel(2)">Description</a></li>
-  <li role="presentation" ng-class="{active: panelCtrl.currentPanel(3)}" ng-show="user"><a ng-click="setPanel(3)">Tracks <span class="badge">{{ tracks.length }}</span></a></li>
+  <li role="presentation" ng-class="{active: panelCtrl.currentPanel(3)}" ng-show="user.loggedIn"><a ng-click="setPanel(3)">Tracks <span class="badge">{{ tracks.length }}</span></a></li>
 </ul>
