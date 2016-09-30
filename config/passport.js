@@ -6,7 +6,7 @@ var User = require('../app/userModel.js');
 module.exports = function(passport) {
   passport.serializeUser(function(user, done) {
       done(null, user.id);
-    });
+  });
 
   passport.deserializeUser(function(id, done) {
       User.findById(id, function(err, user) {
@@ -39,7 +39,8 @@ module.exports = function(passport) {
 
           newUser.save(function(err) {
             if(err) {
-              throw err;
+              console.log('Error creating new account: ' + err);
+              return done(err);
             }
             return done(null, newUser);
           });
@@ -68,24 +69,67 @@ module.exports = function(passport) {
     }
   ));
 
-  passport.use('soundcloud-login', new soundcloudStrategy({
+  passport.use('soundcloud', new soundcloudStrategy({
     clientID: process.env.SOUNDCLOUD_CLIENT_ID,
     clientSecret: process.env.SOUNDCLOUD_CLIENT_SECRET,
-    callbackURL: "https://tracks.noahscholfield.com/callback.html"
-    //callbackURL: "http://127.0.0.1:8000/auth/soundcloud/callback" //change for production
-    // maybe try using state for authorize vs authenticate
+    callbackURL: "https://tracks.noahscholfield.com/callback.html",
+    passReqToCallback: true
   },
-    function(accessToken, refreshToken, profile, done) {
-      // this will not work for the first time in production
-      // apparently you need to have mongoose write soundcloud.soundcloudID for it to be able to find it
-      // migration function? or just manual migration in mLab?
-      User.findOneAndUpdate({ 'soundcloud.soundcloudID': profile.id }, {$set: {'soundcloud.accessToken': accessToken, 'soundcloud.refreshToken': refreshToken}}, function (err, user) {
-        if(err) {
-          console.log('Error looking for user' + err);
-          return done(err);
-        }
-        return done(null, user);
-      });
+    function(req, accessToken, refreshToken, profile, done) {
+      if(!req.user) {
+        // login using SoundCloud
+        // remove $or after migration just { 'soundcloud.soundcloudID': profile.id }
+        User.findOne({ $or: [{ 'soundcloud.soundcloudID': profile.id }, { 'userID': profile.id }] }, function(err, user) {
+          if(err) {
+            console.log('Error searching for user: ' + err);
+            return done(err);
+          } else {
+            if(user) {
+              // login the user with the SoundCloud account
+              if(user.userID) { //migration of userID to soundcloud.soundcloudID // remove from here -
+                user.update({$set: {'soundcloud.soundcloudID': user.userID, username: user.permalink}, $unset: {'userID': "", permalink: ""}}, function(err, user) {
+                  if(err) {
+                    console.log('Error migrating userID to soundcloud.soundcloudID: ' + err);
+                  }
+                });
+              } // remove through here
+              user.update({$set: {'soundcloud.accessToken': accessToken, 'soundcloud.refreshToken': refreshToken}}, function(err, result) {
+                if(err) {
+                  console.log('Error adding accessToken and refreshToken: ' + err);
+                  return done(err);
+                } else {
+                  return done(null, user);
+                }
+              });
+            } else {
+              // create new account with the SoundCloud account
+              var newUser = new User();
+              newUser.username = profile._json.permalink;
+              newUser.soundcloud.soundcloudID = profile.id;
+              newUser.soundcloud.accessToken = accessToken;
+              newUser.soundcloud.refreshToken = refreshToken;
+
+              newUser.save(function(err) {
+                if(err) {
+                  console.log('Error creating new account: ' + err);
+                  return done(err);
+                }
+                return done(null, newUser);
+              });
+            }
+          }
+        });
+      } else {
+        // connect SoundCloud
+        req.user.update({$set: {'soundcloud.soundcloudID': profile.id, 'soundcloud.accessToken': accessToken, 'soundcloud.refreshToken': refreshToken}}, function(err, result) {
+          if(err) {
+            console.log('Error connnecting SoundCloud: ' + err);
+            return done(err);
+          } else {
+            return done(null, req.user);
+          }
+        });
+      }
     }
   ));
 
