@@ -5,7 +5,7 @@
   Rewrite database calls to be more efficient
 */
 
-var models = require('./app/userModel.js');
+var models = require('./userModel.js');
 var user = models.user;
 var track = models.track;
 

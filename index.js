@@ -4,7 +4,7 @@ var RedisStore = require('connect-redis')(session);
 var passport = require('passport');
 var bodyParser = require('body-parser');
 var flash = require('connect-flash');
-var tracks = require('./tracks.js');
+var tracks = require('./app/tracks.js');
 var app = express();
 
 require('./config/passport.js')(passport);
