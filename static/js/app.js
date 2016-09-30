@@ -14,6 +14,7 @@
       $http.get('/auth/verify')
         .then(function success(response) {
           $scope.user = response.data;
+          $scope.getTracks();
         }, function error(response) {
           console.log('Error checking login status: ' + response);
         });
