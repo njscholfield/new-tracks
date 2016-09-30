@@ -9,21 +9,6 @@
     trk.toggleJSON = function() {
       trk.showJSON = !trk.showJSON;
     }
-    $scope.SCAuth = function() {
-      SC.initialize({
-        client_id: '30cba84d4693746b0a2fbc0649b2e42c',
-        redirect_uri: 'https://tracks.noahscholfield.com/callback.html'
-      });
-
-      // initiate auth popup
-      SC.connect().then(function() {
-        return SC.get('/me');
-      }).then(function(me) {
-        $scope.user = me;
-        $scope.$apply();
-        $scope.getTracks();
-      });
-    };
 
     $scope.updateResult = function(input) {
       trk.result = input;
@@ -38,10 +23,6 @@
       }
     };
 
-    $scope.SCLogout = function() {
-      $scope.user = undefined;
-    };
-
     $scope.$watch('panel', function(newValue) {
       if(newValue === 3) {
         $scope.getTracks();
@@ -49,7 +30,7 @@
     });
 
     $scope.getTracks = function() {
-      $http.get('/' + $scope.user.permalink, {headers: {username: $scope.user.permalink}})
+      $http.get('/' + $scope.user.username)
         .then(function success(response) {
           $scope.updateResult(response.data);
           $scope.updateTrackIDList(response.data.tracks);
@@ -94,7 +75,6 @@
 
   app.controller('editTrackController', function($http, $uibModalInstance, track, user, releaseDate) {
     this.submitInfo = {
-      permalink: user.permalink,
       trackID: track.trackID,
       title: track.title,
       artist: track.artist,
@@ -102,7 +82,7 @@
     };
 
     this.delete = function() {
-      $http.post('/' + user.permalink + '/remove', this.submitInfo)
+      $http.post('/' + user.username + '/remove', this.submitInfo)
         .then(function success(response) {
           $uibModalInstance.close({success: true, response: response.data});
         }, function error(response) {
@@ -111,7 +91,7 @@
     };
 
     this.ok = function() {
-      $http.post('/' + user.permalink + '/edit', this.submitInfo)
+      $http.post('/' + user.username + '/edit', this.submitInfo)
         .then(function success(response) {
           $uibModalInstance.close({success: true, response: response.data});
         }, function error(response) {
