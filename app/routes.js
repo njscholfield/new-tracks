@@ -26,8 +26,12 @@ module.exports = function(app, passport, tracks) {
     res.redirect('/');
   });
 
-  app.get('/auth/test', isLoggedIn, function(req, res) {
-    res.send("Logged In " + req.user.username);
+  app.get('/auth/verify', function(req, res) {
+    if(req.user) {
+      res.status(200).json({loggedIn: true, username: req.user.username});
+    } else {
+      res.status(200).json({loggedIn: false});
+    }
   });
 
   app.get('/logout/', function(req, res){
