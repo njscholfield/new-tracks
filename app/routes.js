@@ -20,6 +20,10 @@ module.exports = function(app, passport, tracks) {
     failureFlash: true
   }));
 
+  app.get('/profile', function(req, res) {
+    res.render('profile', {user: req.user});
+  });
+
   app.get('/auth/soundcloud', passport.authenticate('soundcloud'));
 
   app.get('/callback.html', passport.authenticate('soundcloud', { failureRedirect: '/login'}), function(req, res) {
