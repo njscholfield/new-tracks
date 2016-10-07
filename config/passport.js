@@ -21,31 +21,65 @@ module.exports = function(passport) {
   },
     function(req, username, password, done) {
       var data = req.body;
-      User.findOne({$or: [{'local.email': data.inputEmail}, {username: username}]}, function(err, user) {
-        if(err){
-          return done(err);
-        }
 
-        if(user) {
-          if(user.username === username) {
-            return done(null, false, req.flash('signupMessage', 'That username has already been taken.'));
+      if(!req.user) {
+        User.findOne({$or: [{'local.email': data.inputEmail}, {username: username}]}, function(err, user) {
+          if(err){
+            return done(err);
           }
-          return done(null, false, req.flash('signupMessage', 'That email address is already taken.'));
-        } else {
-          var newUser = new User();
-          newUser.local.email = data.inputEmail;
-          newUser.username = username;
-          newUser.local.password = newUser.generateHash(password);
 
-          newUser.save(function(err) {
-            if(err) {
-              console.log('Error creating new account: ' + err);
-              return done(err);
+          if(user) {
+            if(user.username === username) {
+              return done(null, false, req.flash('signupMessage', 'That username has already been taken.'));
             }
-            return done(null, newUser);
-          });
+            return done(null, false, req.flash('signupMessage', 'That email address is already taken.'));
+          } else {
+            var newUser = new User();
+            newUser.local.email = data.inputEmail;
+            newUser.username = username;
+            newUser.local.password = newUser.generateHash(password);
+
+            newUser.save(function(err) {
+              if(err) {
+                console.log('Error creating new account: ' + err);
+                return done(err);
+              }
+              return done(null, newUser);
+            });
+          }
+        });
+      } else {
+        if(req.user.username !== username) {
+          var testUsername = username;
         }
-      })
+
+        User.findOne({$or: [{'local.email': data.inputEmail}, {username: testUsername}]}, function(err, user) {
+          if(err) {
+            console.log('Error searching for used username or email: ' + err);
+            return done(err);
+          } else {
+            if(user && user.username === username && username !== req.user.username) {
+              return done(null, false, req.flash('signupMessage', 'That username has already been taken.'));
+            } else if(user && user.local.email === data.inputEmail) {
+              return done(null, false, req.flash('signupMessage', 'That email address is already in use.'));
+            } else {
+              req.user.username = username;
+              req.user.local.email = data.inputEmail;
+              req.user.local.password = req.user.generateHash(password);
+
+              req.user.save(function(err) {
+                if(err) {
+                  console.log('Error saving updated user: ' + err);
+                  return done(err);
+                }
+                return done(null, req.user, req.flash('signupSuccess', 'Information successfully updated!'));
+              });
+            }
+          }
+        });
+
+        //end
+      }
     }
   ));
 
