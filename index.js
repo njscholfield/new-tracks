@@ -5,6 +5,7 @@ var passport = require('passport');
 var bodyParser = require('body-parser');
 var flash = require('connect-flash');
 var tracks = require('./app/tracks.js');
+var account = require('./app/account.js');
 var app = express();
 
 require('./config/passport.js')(passport);
@@ -19,7 +20,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(flash());
 app.set('view engine', 'ejs');
 
-require('./app/routes.js')(app, passport, tracks);
+require('./app/routes.js')(app, passport, tracks, account);
 
 app.listen(app.get('port'), function() {
   console.log('Node app listening on port ' + app.get('port'));
