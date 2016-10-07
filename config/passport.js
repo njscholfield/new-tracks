@@ -22,6 +22,10 @@ module.exports = function(passport) {
     function(req, username, password, done) {
       var data = req.body;
 
+      if(password !== data.newPassword2 || password.length > 72 || password.length < 8) {
+        return done(null, false, req.flash('signupMessage', 'Passwords do not match or are not 8-72 characters'))
+      }
+
       if(!req.user) {
         User.findOne({$or: [{'local.email': data.inputEmail}, {username: username}]}, function(err, user) {
           if(err){
