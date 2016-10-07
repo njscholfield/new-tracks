@@ -21,8 +21,15 @@ module.exports = function(app, passport, tracks) {
   }));
 
   app.get('/profile', function(req, res) {
-    res.render('profile', {user: req.user});
+    res.render('profile', {user: req.user, message: req.flash('signupMessage'), success: req.flash('signupSuccess')});
   });
+
+  app.post('/profile/register/', passport.authenticate('local-signup', {
+    successRedirect: '/profile',
+    failureRedirect: '/profile',
+    failureFlash: true,
+    successFlash: true
+  }));
 
   app.get('/auth/soundcloud', passport.authenticate('soundcloud'));
 
