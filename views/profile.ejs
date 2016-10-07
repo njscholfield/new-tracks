@@ -14,6 +14,7 @@
       </div>
     </div>
     <div class="container">
+      <h4 class="text-danger"><%= message %></h4>
       <h4 class="text-success"><%= success %></h4>
       <div class="panel panel-primary">
         <div class="panel-heading">Account</div>
@@ -27,7 +28,7 @@
                   <div class="form-group">
                     <label for="email">New Email Address</label>
                     <div class="input-group">
-                      <input class="form-control" name="email" type="email" placeholder="<%= user.email %>" required="true">
+                      <input class="form-control" name="email" type="email" placeholder="<%= user.local.email %>" required="true">
                       <span class="input-group-btn">
                         <button class="btn btn-primary" type="submit">Submit</button>
                       </span>
@@ -57,7 +58,11 @@
                 <legend>Change Password</legend>
                 <fieldset>
                   <div class="form-group">
-                    <label for="newPassword1">New Password</label>
+                    <label for="currentPassword">Current Password</label>
+                    <input class="form-control" name="currentPassword" type="password" required="true">
+                  </div>
+                  <div class="form-group">
+                    <label for="newPassword1">New Password <button type="button" class="btn btn-xs btn-default" data-container="body" data-toggle="popover" data-placement="top" data-content="Password must be 8-72 characters">ℹ︎</button></label>
                     <input class="form-control" name="newPassword1" type="password" required="true">
                   </div>
                   <div class="form-group">
@@ -74,7 +79,6 @@
             <div class="panel-body">
               <form action="/profile/register/" method="post">
                 <legend>Create Local Login</legend>
-                <h4 class="text-danger"><%= message %></h4>
                 <fieldset>
                   <div class="form-group">
                     <label for="inputEmail">Email Address</label>
