@@ -1,4 +1,4 @@
-module.exports = function(app, passport, tracks) {
+module.exports = function(app, passport, tracks, account) {
 
   app.get('/register', function(req, res) {
     res.render('register', {data: {}, error: {}, message: {type: 'text-danger', content: req.flash('signupMessage')}});
@@ -30,6 +30,18 @@ module.exports = function(app, passport, tracks) {
     failureFlash: true,
     successFlash: true
   }));
+
+  app.post('/profile/update/email', function(req, res) {
+    account.updateEmail(req, res);
+  });
+
+  app.post('/profile/update/username', function(req, res) {
+    account.changeUsername(req, res);
+  });
+
+  app.post('/profile/update/password', function(req, res) {
+    account.changePassword(req, res);
+  });
 
   app.get('/auth/soundcloud', passport.authenticate('soundcloud'));
 
