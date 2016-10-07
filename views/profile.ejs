@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Profile | New Tracks</title>
+    <link rel="stylesheet" href="https://noahscholfield.com/css/bootstrap-yeti.min.css">
+  </head>
+  <body>
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Profile</h1>
+      </div>
+    </div>
+    <div class="container">
+      <h4 class="text-success"><%= success %></h4>
+      <div class="panel panel-primary">
+        <div class="panel-heading">Account</div>
+
+          <% if(user.local.email) { %>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <form action="/profile/update/email" method="post">
+                <legend>Update Email Address</legend>
+                <fieldset>
+                  <div class="form-group">
+                    <label for="email">New Email Address</label>
+                    <div class="input-group">
+                      <input class="form-control" name="email" type="email" placeholder="<%= user.email %>" required="true">
+                      <span class="input-group-btn">
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                      </span>
+                    </div>
+                  </div>
+                </fieldset>
+              </form>
+            </li>
+            <li class="list-group-item">
+              <form action="/profile/update/username" method="post">
+                <legend>Change Username</legend>
+                <fieldset>
+                  <div class="form-group">
+                    <label for="username">New Username</label>
+                    <div class="input-group">
+                      <input class="form-control" name="username" type="text" placeholder="<%= user.username %>" required="true">
+                      <span class="input-group-btn">
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                      </span>
+                    </div>
+                  </div>
+                </fieldset>
+              </form>
+            </li>
+            <li class="list-group-item">
+              <form action="/profile/update/password" method="post">
+                <legend>Change Password</legend>
+                <fieldset>
+                  <div class="form-group">
+                    <label for="newPassword1">New Password</label>
+                    <input class="form-control" name="newPassword1" type="password" required="true">
+                  </div>
+                  <div class="form-group">
+                    <label for="newPassword2">Confirm New Password</label>
+                    <input class="form-control" name="newPassword2" type="password" required="true">
+                  </div>
+                </fieldset>
+                <div class="form-group">
+                  <button class="btn btn-primary" type="submit">Submit</button>
+                </div>
+              </form>
+            </li>
+          <% } else { %>
+            <div class="panel-body">
+              <form action="/profile/register/" method="post">
+                <legend>Create Local Login</legend>
+                <h4 class="text-danger"><%= message %></h4>
+                <fieldset>
+                  <div class="form-group">
+                    <label for="inputEmail">Email Address</label>
+                    <input type="email" name="inputEmail" class="form-control" placeholder="username@example.com" required="true" autocomplete="email">
+                  </div>
+                  <div class="form-group">
+                    <label for="inputUsername">Username <button type="button" class="btn btn-xs btn-default" data-container="body" data-toggle="popover" data-placement="top" data-content="Your current username based off of your SoundCloud account is filled in, you may change it to something else.">ℹ︎</button></label>
+                    <input type="text" name="inputUsername" class="form-control" value="<%= user.username %>" required="true" autocapitalize="none" autocorrect="off">
+                  </div>
+                  <div class="form-group">
+                    <label for="newPassword1">Password <button type="button" class="btn btn-xs btn-default" data-container="body" data-toggle="popover" data-placement="top" data-content="Password must be 8-72 characters">ℹ︎</button></label>
+                    <input type="password" name="newPassword1" class="form-control" autocomplete="new-password" placeholder="not 'password' please" required="true" minlength="8" maxlength="73">
+                  </div>
+                  <div class="form-group">
+                    <label for="newPassword2">Confirm Password</label>
+                    <input type="password" name="newPassword2" class="form-control" autocomplete="new-password" placeholder="not 'password' please" required="true" minlength="8" maxlength="73">
+                  </div>
+                </fieldset>
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="reset" class="btn btn-default">Clear</button>
+                </div>
+              </form>
+            </div>
+          <% } %>
+
+      </div>
+
+      <div class="panel panel-warning">
+        <div class="panel-heading">SoundCloud</div>
+        <div class="panel-body">
+          <% if(user.soundcloud) { %>
+            <p><strong>User ID:</strong> <%= user.soundcloud.soundcloudID %></p>
+            <a href="#"><img alt="disconnect SoundCloud" src="https://connect.soundcloud.com/2/btn-disconnect-l.png"></a>
+          <% } else { %>
+            <a href="/auth/soundcloud"><img alt="connect to SoundCloud" src="https://connect.soundcloud.com/2/btn-connect-l.png"></a>
+          <% } %>
+        </div>
+      </div>
+
+      <button class="btn-link" onclick="$('#json').toggleClass('hidden')">Toggle JSON</button>
+
+      <pre class="hidden" id="json"><code><%= JSON.stringify(user, undefined, 2) %></code></pre>
+
+    </div>
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://noahscholfield.com/js/bootstrap.min.js"></script>
+  <script>
+    $(function () {
+      $('[data-toggle="popover"]').popover();
+    });
+  </script>
+</html>
