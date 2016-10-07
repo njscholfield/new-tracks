@@ -15,6 +15,7 @@ From the description of the preview track, the user can add the track to a list 
 - [SoundCloud API](https://developers.soundcloud.com)
 - [UI Bootstrap](https://angular-ui.github.io/bootstrap/)
 - [Autolinker.js](https://github.com/gregjacobs/Autolinker.js)
+- [Passport](http://passportjs.org)
 
 ### Features/ToDo
 - [x] Show descriptions for SoundCloud tracks
