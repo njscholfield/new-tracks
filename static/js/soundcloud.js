@@ -2,13 +2,6 @@
   var app = angular.module('new-tracks');
   var scapi = "https://api.soundcloud.com/resolve.json?url=";
   var client = "client_id=30cba84d4693746b0a2fbc0649b2e42c";
-  var autolinker = new Autolinker({
-    replaceFn: function(autolinker, match) {
-      if(match.getType() === 'twitter') {
-        return '<a href="https://soundcloud.com/' + match.getTwitterHandle().toLowerCase() + '" target="_blank" rel="noopener noreferrer">' + '@' + match.getTwitterHandle() + '</a>';
-      }
-    }
-  });
 
   app.controller("descriptionController", ["$http", "$location", "$scope", "$uibModal", function($http, $location, $scope, $uibModal) {
     var sc = this;
@@ -102,7 +95,7 @@
       if(item == '') {
         array[index] = '<br>';
       } else {
-        array[index] = autolinker.link(item);
+        array[index] = Autolinker.link(item);
       }
     });
     return HTML;
