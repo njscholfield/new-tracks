@@ -78,7 +78,11 @@
           sc.trackJSON = response.data;
           sc.html = JSONtoHTML(sc.trackJSON.description);
           sc.tags = processTags(sc.trackJSON.tag_list);
-          sc.imgURL = sc.trackJSON.artwork_url.replace('large', 't500x500');
+          if(sc.trackJSON.artwork_url) {
+            sc.imgURL = sc.trackJSON.artwork_url.replace('large', 't500x500');
+          } else {
+            sc.imgURL = "/img/placeholder.png";
+          }
           if(sc.trackJSON.purchase_url && !sc.trackJSON.purchase_title) {
             sc.trackJSON.purchase_title = 'Buy';
           }
