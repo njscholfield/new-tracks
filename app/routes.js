@@ -1,32 +1,32 @@
 module.exports = function(app, passport, tracks, account) {
 
-  app.get('/register', function(req, res) {
-    res.render('register', {data: {}, error: {}, message: {type: 'text-danger', content: req.flash('signupMessage')}});
+  app.get('/register/', function(req, res) {
+    res.render('register', {message: {type: 'text-danger', content: req.flash('signupMessage')}});
   });
 
-  app.post('/register', passport.authenticate('local-signup', {
+  app.post('/register/', passport.authenticate('local-signup', {
     successRedirect: '/',
-    failureRedirect: '/register',
+    failureRedirect: '/register/',
     failureFlash: true
   }));
 
-  app.get('/login', function(req, res) {
+  app.get('/login/', function(req, res) {
     res.render('login', {message: req.flash('loginMessage'), error: {}});
   });
 
-  app.post('/login', passport.authenticate('local-login', {
+  app.post('/login/', passport.authenticate('local-login', {
     successRedirect: '/',
-    failureRedirect: '/login',
+    failureRedirect: '/login/',
     failureFlash: true
   }));
 
-  app.get('/profile', function(req, res) {
+  app.get('/profile/', isLoggedIn, function(req, res) {
     res.render('profile', {user: req.user, message: req.flash('signupMessage'), success: req.flash('signupSuccess')});
   });
 
   app.post('/profile/register/', passport.authenticate('local-signup', {
-    successRedirect: '/profile',
-    failureRedirect: '/profile',
+    successRedirect: '/profile/',
+    failureRedirect: '/profile/',
     failureFlash: true,
     successFlash: true
   }));
