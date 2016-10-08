@@ -16,7 +16,7 @@
     <script src="js/track.js"></script>
   </head>
   <body ng-app="new-tracks">
-    <div class="jumbotron">
+    <div class="jumbotron" id="top">
       <div class="container">
         <h1>New Tracks</h1>
       </div>
@@ -37,6 +37,14 @@
       <input-form ng-show="panelCtrl.currentPanel(1)"></input-form>
       <description ng-show="panelCtrl.currentPanel(2)"></description>
       <tracks ng-show="panelCtrl.currentPanel(3)"></tracks>
+      <button class="btn btn-primary pull-right visible-xs" ng-hide="nearTopOfPage" title="Scroll to Top" id="scrollToTop" ng-click="scrollToTop()"><span class="glyphicon glyphicon-chevron-up"></span></button>
+      <style>
+        #scrollToTop {
+          position: fixed;
+          bottom: 3em;
+          right: 1em;
+        }
+      </style>
     </div>
   </body>
 </html>

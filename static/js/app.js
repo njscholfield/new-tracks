@@ -3,6 +3,7 @@
 
   app.controller('PanelController', ["$scope", "$http", function($scope, $http) {
     $scope.panel = 1;
+    $scope.nearTopOfPage = true;
     this.currentPanel = function(input) {
       return $scope.panel === input;
     };
@@ -20,6 +21,24 @@
         });
     };
     $scope.checkLogin();
+
+    $scope.scrollToTop = function() {
+      var top = document.getElementById("top");
+      top.scrollIntoView({behavior: "smooth"});
+    };
+
+    window.onscroll = function () {
+      var oldstate = $scope.nearTopOfPage;
+      if (document.body.scrollTop > 200 ) {
+        $scope.nearTopOfPage = false;
+      }
+      else {
+        $scope.nearTopOfPage = true;
+      }
+      if($scope.nearTopOfPage != oldstate) {
+        $scope.$apply();
+      }
+    };
   }]);
 
   app.controller('addTrackModalController', function($http, $uibModalInstance, trackInfo, releaseDate, user) {
