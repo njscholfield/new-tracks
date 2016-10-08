@@ -116,21 +116,13 @@ module.exports = function(passport) {
     function(req, accessToken, refreshToken, profile, done) {
       if(!req.user) {
         // login using SoundCloud
-        // remove $or after migration just { 'soundcloud.soundcloudID': profile.id }
-        User.findOne({ $or: [{ 'soundcloud.soundcloudID': profile.id }, { 'userID': profile.id }] }, function(err, user) {
+        User.findOne({ 'soundcloud.soundcloudID': profile.id }, function(err, user) {
           if(err) {
             console.log('Error searching for user: ' + err);
             return done(err);
           } else {
             if(user) {
               // login the user with the SoundCloud account
-              if(user.userID) { //migration of userID to soundcloud.soundcloudID // remove from here -
-                user.update({$set: {'soundcloud.soundcloudID': user.userID, username: user.permalink}, $unset: {'userID': "", permalink: ""}}, function(err, user) {
-                  if(err) {
-                    console.log('Error migrating userID to soundcloud.soundcloudID: ' + err);
-                  }
-                });
-              } // remove through here
               user.update({$set: {'soundcloud.accessToken': accessToken, 'soundcloud.refreshToken': refreshToken}}, function(err, result) {
                 if(err) {
                   console.log('Error adding accessToken and refreshToken: ' + err);
