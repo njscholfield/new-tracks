@@ -19,11 +19,11 @@ var track = mongoose.model('track', trackSchema);
 
 var userSchema = mongoose.Schema({
   local: {
-    email: {type: String, index: { unique: true, sparse: true }},
+    email: {type: String, index: { sparse: true }},
     password: {type: String}
   },
   soundcloud: {
-    soundcloudID: {type: String, index: { unique: true, sparse: true }},
+    soundcloudID: {type: String, index: { sparse: true }},
     accessToken: {type: String},
     refreshToken: {type: String}
   },
