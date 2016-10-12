@@ -24,12 +24,12 @@
     <noscript><h3 class="text-warning text-center">JavaScript is required for this page to work. Please enable JavaScript.</h3></noscript>
     <div class="container" ng-controller="PanelController as panelCtrl">
       <div class="pull-right" ng-hide="user.loggedIn">
-        <a class="btn btn-primary" href="/register/" ng-hide="user.loggedIn">Register</a>
-        <a class="btn btn-primary" href="/login/" ng-hide="user.loggedIn">Login</a>
+        <a class="btn btn-primary" href="/register/">Register</a>
+        <a class="btn btn-primary" href="/login/">Login</a>
       </div>
       <div class="pull-right" ng-show="user.loggedIn">
-        <a class="btn btn-link" href="/profile/" ng-show="user.loggedIn">{{ user.username }}</a>
-        <a class="btn btn-danger" href="/logout/" ng-show="user.loggedIn">Logout</a>
+        <a class="btn btn-link" href="/profile/">{{ user.username }}</a>
+        <a class="btn btn-danger" href="/logout/">Logout</a>
       </div>
       <br>
       <br>
