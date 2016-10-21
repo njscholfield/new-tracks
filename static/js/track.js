@@ -5,6 +5,10 @@
     var trk = this;
     trk.result = [];
     $scope.tracks = [];
+    trk.searchCollapsed = true;
+    trk.toggleSearch = function() {
+      trk.searchCollapsed = !trk.searchCollapsed;
+    }
     trk.showJSON = false;
     trk.toggleJSON = function() {
       trk.showJSON = !trk.showJSON;

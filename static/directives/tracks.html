@@ -1,9 +1,20 @@
+<style>
+ #search {
+   height: 2.25em;
+ }
+</style
 <section>
   <br>
   <div ng-hide="trackCtrl.result.tracks.length">
     <h4 class="text-center text-info">The list is empty</h4>
   </div>
   <div ng-show="trackCtrl.result.tracks.length">
+    <div class="input-group">
+      <span class="input-group-addon" ng-click="trackCtrl.toggleSearch()"><span class="glyphicon glyphicon-search"></span></span>
+      <div>
+        <input class="form-control" ng-hide="inputHide" id="search" uib-collapse="trackCtrl.searchCollapsed" horizontal collapsed="inputHide = true" expanding="inputHide = false" type="text" ng-model="query">
+      </div>
+    </div>
     <div class="table-responsive hidden-xs">
       <table class="table">
         <tr>
@@ -13,7 +24,7 @@
           <th class="text-center">Description</th>
           <th class="text-center">Edit</th>
         </tr>
-        <tr ng-repeat="track in trackCtrl.result.tracks | orderBy:'releaseDate'">
+        <tr ng-repeat="track in trackCtrl.result.tracks | filter:query | orderBy:'releaseDate'">
           <td>{{ track.title }}</td>
           <td>{{ track.artist }}</td>
           <td class="text-center">{{ track.releaseDate | date: 'longDate'}}</td>
@@ -23,7 +34,7 @@
       </table>
     </div>
     <div class="visible-xs">
-      <div ng-repeat="track in trackCtrl.result.tracks | orderBy:'releaseDate'">
+      <div ng-repeat="track in trackCtrl.result.tracks | filter:query | orderBy:'releaseDate'">
         <h3 class="text-primary">{{ track.title }}</h3>
         <h5>{{ track.artist }}</h5>
         <h6>{{ track.releaseDate | date: 'longDate' }}</h6>
