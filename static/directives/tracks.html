@@ -2,6 +2,11 @@
  #search {
    height: 2.25em;
  }
+ .form-control-feedback {
+  z-index: 10;
+  pointer-events: auto;
+  cursor: pointer;
+}
 </style
 <section>
   <br>
@@ -12,11 +17,15 @@
     <div class="input-group">
       <span class="input-group-addon" ng-click="trackCtrl.toggleSearch()"><span class="glyphicon glyphicon-search"></span></span>
       <div>
-        <input class="form-control" ng-hide="inputHide" id="search" uib-collapse="trackCtrl.searchCollapsed" horizontal collapsed="inputHide = true" expanding="inputHide = false" type="text" ng-model="query">
+        <div uib-collapse="trackCtrl.searchCollapsed" horizontal id="search">
+          <input class="form-control has-feedback" type="search" ng-model="query">
+          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-click="query = ''"></span>
+        </div>
       </div>
     </div>
     <div class="table-responsive hidden-xs">
-      <table class="table">
+      <br>
+      <table class="table" ng-show="filteredTracks.length">
         <tr>
           <th>Track Name</th>
           <th>Artist</th>
@@ -24,7 +33,8 @@
           <th class="text-center">Description</th>
           <th class="text-center">Edit</th>
         </tr>
-        <tr ng-repeat="track in trackCtrl.result.tracks | filter:query | orderBy:'releaseDate'">
+        <tr ng-repeat="track in filteredTracks = (trackCtrl.result.tracks | filter:query) | orderBy:'releaseDate'">
+          <h4 class="text-info" ng-hide="filteredTracks.length">No results</h4>
           <td>{{ track.title }}</td>
           <td>{{ track.artist }}</td>
           <td class="text-center">{{ track.releaseDate | date: 'longDate'}}</td>
@@ -34,7 +44,7 @@
       </table>
     </div>
     <div class="visible-xs">
-      <div ng-repeat="track in trackCtrl.result.tracks | filter:query | orderBy:'releaseDate'">
+      <div ng-repeat="track in filteredTracks | orderBy:'releaseDate'">
         <h3 class="text-primary">{{ track.title }}</h3>
         <h5>{{ track.artist }}</h5>
         <h6>{{ track.releaseDate | date: 'longDate' }}</h6>
@@ -42,6 +52,7 @@
         <button class="btn btn-xs btn-default" ng-click="trackCtrl.editTrack(track)">Edit Info</button>
         <hr>
       </div>
+      <h4 class="text-info" ng-hide="filteredTracks.length">No results</h4>
     </div>
     <button class="btn-link" ng-click="trackCtrl.toggleJSON()">View JSON</button>
     <div ng-show="trackCtrl.showJSON">
