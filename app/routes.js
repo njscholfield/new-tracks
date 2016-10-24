@@ -1,7 +1,11 @@
 module.exports = function(app, passport, tracks, account) {
 
   app.get('/register/', function(req, res) {
-    res.render('register', {message: {type: 'text-danger', content: req.flash('signupMessage')}});
+    if(req.isAuthenticated()) {
+      res.redirect('/');
+    } else {
+      res.render('register', {message: {type: 'text-danger', content: req.flash('signupMessage')}});
+    }
   });
 
   app.post('/register/', passport.authenticate('local-signup', {
@@ -11,7 +15,11 @@ module.exports = function(app, passport, tracks, account) {
   }));
 
   app.get('/login/', function(req, res) {
-    res.render('login', {message: req.flash('loginMessage'), error: {}});
+    if(req.isAuthenticated()) {
+      res.redirect('/');
+    } else {
+      res.render('login', {message: req.flash('loginMessage'), error: {}});
+    }
   });
 
   app.post('/login/', passport.authenticate('local-login', {
