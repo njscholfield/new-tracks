@@ -1,0 +1,21 @@
+#brandimg {
+  height: 2.7em;
+  border-radius: 2em;
+}
+#scrollToTop {
+  position: fixed;
+  bottom: 3em;
+  right: 1em;
+}
+
+.navbar-header {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+.navbar-fixed {
+  margin-bottom: 0;
+}
+/* Prevent fields from zooming in on mobile */
+.form-control:focus, .form-control:hover {
+  font-size: 1.1em;
+}
