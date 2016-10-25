@@ -58,6 +58,14 @@
     }
   });
 
+  app.directive('navbar', function() {
+    return {
+      restrict: 'E',
+      controller: 'PanelController as panelCtrl',
+      templateUrl: 'directives/loginNav.html'
+    };
+  });
+
   app.directive('navpills', function() {
     return {
       restrict: 'E',
