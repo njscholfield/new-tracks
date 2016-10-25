@@ -6,49 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>New Tracks</title>
     <link rel="stylesheet" href="https://noahscholfield.com/css/bootstrap-yeti.min.css">
+    <link rel="stylesheet" href="/css/home.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.5.8/angular-sanitize.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-animate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.1.4/ui-bootstrap-tpls.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/autolinker/1.2.0/Autolinker.min.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/soundcloud.js"></script>
-    <script src="js/track.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/soundcloud.js"></script>
+    <script src="/js/track.js"></script>
   </head>
   <body ng-app="new-tracks">
-    <div class="jumbotron" id="top">
+    <navbar id="top"></navbar>
+    <div class="jumbotron">
       <div class="container">
         <h1>New Tracks</h1>
       </div>
     </div>
     <noscript><h3 class="text-warning text-center">JavaScript is required for this page to work. Please enable JavaScript.</h3></noscript>
     <div class="container" ng-controller="PanelController as panelCtrl">
-      <div class="pull-right" ng-hide="user.loggedIn">
-        <a class="btn btn-primary" href="/register/">Register</a>
-        <a class="btn btn-primary" href="/login/">Login</a>
-      </div>
-      <div class="pull-right" ng-show="user.loggedIn">
-        <a class="btn btn-link" href="/profile/">{{ user.username }}</a>
-        <a class="btn btn-danger" href="/logout/">Logout</a>
-      </div>
-      <br>
-      <br>
       <navpills></navpills>
       <input-form ng-show="panelCtrl.currentPanel(1)"></input-form>
       <description ng-show="panelCtrl.currentPanel(2)"></description>
       <tracks ng-show="panelCtrl.currentPanel(3)"></tracks>
       <button class="btn btn-primary pull-right visible-xs" ng-hide="nearTopOfPage" title="Scroll to Top" id="scrollToTop" ng-click="scrollToTop()"><span class="glyphicon glyphicon-chevron-up"></span></button>
-      <style>
-        #scrollToTop {
-          position: fixed;
-          bottom: 3em;
-          right: 1em;
-        }
-        /* Prevent fields from zooming in on mobile */
-        .form-control:focus, .form-control:hover {
-          font-size: 1.1em;
-        }
-      </style>
     </div>
   </body>
 </html>
