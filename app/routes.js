@@ -53,12 +53,12 @@ module.exports = function(app, passport, tracks, account) {
 
   app.get('/auth/soundcloud', passport.authenticate('soundcloud'));
 
-  app.get('/callback.html', passport.authenticate('soundcloud', { failureRedirect: '/login'}), function(req, res) {
+  app.get('/callback.html', passport.authenticate('soundcloud', { failureRedirect: '/login/'}), function(req, res) {
     res.redirect('/');
   });
 
   app.get('/auth/verify', function(req, res) {
-    if(req.user) {
+    if(req.isAuthenticated()) {
       res.status(200).json({loggedIn: true, username: req.user.username});
     } else {
       res.status(200).json({loggedIn: false});
@@ -67,8 +67,12 @@ module.exports = function(app, passport, tracks, account) {
 
   app.get('/logout/', function(req, res){
     req.logout();
-    req.session.destroy();
-    res.redirect('/');
+    req.session.destroy(function(err) {
+      if(err) {
+        console.log(err);
+      }
+      res.redirect('/');
+    });
   });
 
   app.get('/:username', function(req, res) {
