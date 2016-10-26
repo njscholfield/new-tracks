@@ -11,7 +11,7 @@ var app = express();
 require('./config/passport.js')(passport);
 
 app.set('port', process.env.PORT || 8000);
-app.use(session({ store: new RedisStore({url: process.env.REDIS_URL}), secret: process.env.SESSION_SECRET, resave: true, saveUninitialized: true }));
+app.use(session({ store: new RedisStore({url: process.env.REDIS_URL}), secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static('static'));
