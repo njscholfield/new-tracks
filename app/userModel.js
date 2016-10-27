@@ -1,7 +1,7 @@
-var mongoose = require('mongoose')
+var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 
-mongoose.connect(process.env.MONGODB_URI, function(err, res) {
+mongoose.connect(process.env.MONGODB_URI, function(err) {
   if(err) {
     console.log('ERROR connecting. ' + err);
   } else {
@@ -32,11 +32,11 @@ var userSchema = mongoose.Schema({
 });
 
 userSchema.methods.generateHash = function(password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(12), null);
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(12), null);
 };
 
 userSchema.methods.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.local.password);
+  return bcrypt.compareSync(password, this.local.password);
 };
 
 var user = mongoose.model('user', userSchema);
@@ -44,4 +44,4 @@ var user = mongoose.model('user', userSchema);
 module.exports = {
   user: user,
   track: track
-}
+};

@@ -1,7 +1,7 @@
 (function() {
   var app = angular.module('new-tracks', ['ngSanitize', 'ngAnimate', 'ui.bootstrap']);
 
-  app.controller('PanelController', ["$scope", "$http", function($scope, $http) {
+  app.controller('PanelController', ['$scope', '$http', function($scope, $http) {
     $scope.panel = 1;
     $scope.nearTopOfPage = true;
     this.currentPanel = function(input) {
@@ -15,7 +15,9 @@
       $http.get('/auth/verify')
         .then(function success(response) {
           $scope.user = response.data;
-          $scope.getTracks();
+          if(response.data.loggedIn) {
+            $scope.getTracks();
+          }
         }, function error(response) {
           console.log('Error checking login status: ' + response);
         });
@@ -23,8 +25,8 @@
     $scope.checkLogin();
 
     $scope.scrollToTop = function() {
-      var top = document.getElementById("top");
-      top.scrollIntoView({behavior: "smooth"});
+      var top = document.getElementById('top');
+      top.scrollIntoView({behavior: 'smooth'});
     };
 
     window.onscroll = function () {
@@ -52,10 +54,10 @@
         }, function error(response) {
           $uibModalInstance.close({success: false, response: response});
         });
-    }
+    };
     this.cancel = function() {
       $uibModalInstance.dismiss();
-    }
+    };
   });
 
   app.directive('navbar', function() {

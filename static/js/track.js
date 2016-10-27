@@ -1,18 +1,18 @@
 (function() {
   var app = angular.module('new-tracks');
 
-  app.controller('trackController', ["$scope", "$http", "$uibModal", function($scope, $http, $uibModal) {
+  app.controller('trackController', ['$scope', '$http', '$uibModal', function($scope, $http, $uibModal) {
     var trk = this;
     trk.result = [];
     $scope.tracks = [];
     trk.searchCollapsed = true;
     trk.toggleSearch = function() {
       trk.searchCollapsed = !trk.searchCollapsed;
-    }
+    };
     trk.showJSON = false;
     trk.toggleJSON = function() {
       trk.showJSON = !trk.showJSON;
-    }
+    };
 
     $scope.updateResult = function(input) {
       trk.result = input;

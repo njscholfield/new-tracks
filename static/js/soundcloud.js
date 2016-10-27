@@ -1,15 +1,15 @@
 (function() {
   var app = angular.module('new-tracks');
-  var scapi = "https://api.soundcloud.com/resolve.json?url=";
-  var client = "client_id=30cba84d4693746b0a2fbc0649b2e42c";
+  var scapi = 'https://api.soundcloud.com/resolve.json?url=';
+  var client = 'client_id=30cba84d4693746b0a2fbc0649b2e42c';
 
-  app.controller("descriptionController", ["$http", "$location", "$scope", "$uibModal", function($http, $location, $scope, $uibModal) {
+  app.controller('descriptionController', ['$http', '$location', '$scope', '$uibModal', function($http, $location, $scope, $uibModal) {
     var sc = this;
     sc.url = $location.url().substring(1);
     sc.showJSON = false;
     sc.html = [];
     $scope.getDescription = function(trackID) {
-      var url = "https://api.soundcloud.com/tracks/" + trackID + '?' + client;
+      var url = 'https://api.soundcloud.com/tracks/' + trackID + '?' + client;
       sc.submit(url);
     };
     sc.addTrackToList = function(trackID) {
@@ -53,33 +53,33 @@
           $scope.setPanel(2);
         }, function error(response) {
           if(response.status === 403) {
-            sc.trackJSON = {"error": "The information for this track is not available", "code": 403};
+            sc.trackJSON = {'error': 'The information for this track is not available', 'code': 403};
           } else if(response.status === 404) {
-            sc.trackJSON = {"error": "Invalid URL, please try again", "code": 404};
+            sc.trackJSON = {'error': 'Invalid URL, please try again', 'code': 404};
           } else {
             $http.jsonp(callURL + '&callback=JSON_CALLBACK')
               .then(function success(response) {
                 processJSON(response);
                 $scope.setPanel(2);
               }, function error(response) {
-                sc.trackJSON = {"error": "Something went wrong... This could have been caused by a track for which the information is not available, or a server/network problem. Please try again.", "code": "JSONP Response Code " + response.status};
+                sc.trackJSON = {'error': 'Something went wrong... This could have been caused by a track for which the information is not available, or a server/network problem. Please try again.', 'code': 'JSONP Response Code ' + response.status};
               });
           }
           console.log(response.status + ' ' + response.statusText);
         });
-        function processJSON(response) {
-          sc.trackJSON = response.data;
-          sc.html = JSONtoHTML(sc.trackJSON.description);
-          sc.tags = processTags(sc.trackJSON.tag_list);
-          if(sc.trackJSON.artwork_url) {
-            sc.imgURL = sc.trackJSON.artwork_url.replace('large', 't500x500');
-          } else {
-            sc.imgURL = "/img/placeholder.png";
-          }
-          if(sc.trackJSON.purchase_url && !sc.trackJSON.purchase_title) {
-            sc.trackJSON.purchase_title = 'Buy';
-          }
+      function processJSON(response) {
+        sc.trackJSON = response.data;
+        sc.html = JSONtoHTML(sc.trackJSON.description);
+        sc.tags = processTags(sc.trackJSON.tag_list);
+        if(sc.trackJSON.artwork_url) {
+          sc.imgURL = sc.trackJSON.artwork_url.replace('large', 't500x500');
+        } else {
+          sc.imgURL = '/img/placeholder.png';
         }
+        if(sc.trackJSON.purchase_url && !sc.trackJSON.purchase_title) {
+          sc.trackJSON.purchase_title = 'Buy';
+        }
+      }
     };
     if($location.url()) {
       sc.submit();

@@ -5,13 +5,13 @@ var User = require('../app/userModel.js').user;
 
 module.exports = function(passport) {
   passport.serializeUser(function(user, done) {
-      done(null, user.id);
+    done(null, user.id);
   });
 
   passport.deserializeUser(function(id, done) {
-      User.findById(id, function(err, user) {
-        done(err, user);
-      });
+    User.findById(id, function(err, user) {
+      done(err, user);
+    });
   });
 
   passport.use('local-signup', new localStrategy({
@@ -23,7 +23,7 @@ module.exports = function(passport) {
       var data = req.body;
 
       if(password !== data.newPassword2 || password.length > 72 || password.length < 8) {
-        return done(null, false, req.flash('signupMessage', 'Passwords do not match or are not 8-72 characters'))
+        return done(null, false, req.flash('signupMessage', 'Passwords do not match or are not 8-72 characters'));
       }
 
       if(!req.user) {
@@ -110,7 +110,7 @@ module.exports = function(passport) {
   passport.use('soundcloud', new soundcloudStrategy({
     clientID: process.env.SOUNDCLOUD_CLIENT_ID,
     clientSecret: process.env.SOUNDCLOUD_CLIENT_SECRET,
-    callbackURL: "https://tracks.noahscholfield.com/callback.html",
+    callbackURL: 'https://tracks.noahscholfield.com/callback.html',
     passReqToCallback: true
   },
     function(req, accessToken, refreshToken, profile, done) {
@@ -123,7 +123,7 @@ module.exports = function(passport) {
           } else {
             if(user) {
               // login the user with the SoundCloud account
-              user.update({$set: {'soundcloud.accessToken': accessToken, 'soundcloud.refreshToken': refreshToken}}, function(err, result) {
+              user.update({$set: {'soundcloud.accessToken': accessToken, 'soundcloud.refreshToken': refreshToken}}, function(err) {
                 if(err) {
                   console.log('Error adding accessToken and refreshToken: ' + err);
                   return done(err);
@@ -151,7 +151,7 @@ module.exports = function(passport) {
         });
       } else {
         // connect SoundCloud
-        req.user.update({$set: {'soundcloud.soundcloudID': profile.id, 'soundcloud.accessToken': accessToken, 'soundcloud.refreshToken': refreshToken}}, function(err, result) {
+        req.user.update({$set: {'soundcloud.soundcloudID': profile.id, 'soundcloud.accessToken': accessToken, 'soundcloud.refreshToken': refreshToken}}, function(err) {
           if(err) {
             console.log('Error connnecting SoundCloud: ' + err);
             return done(err);
@@ -163,4 +163,4 @@ module.exports = function(passport) {
     }
   ));
 
-}
+};

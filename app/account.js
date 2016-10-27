@@ -21,7 +21,7 @@ var updateEmailInDatabase = function(req, res) {
         req.flash('signupMessage', 'That email address is already being used!');
         res.redirect('/profile');
       } else {
-        req.user.update({$set: {'local.email': data.email}}, function(err, result) {
+        req.user.update({$set: {'local.email': data.email}}, function(err) {
           if(err) {
             console.log('Error updating email address: ' + err);
             req.flash('signupMessage', 'Error updating email address.');
@@ -56,7 +56,7 @@ var changeUsernameInDatabase = function(req, res) {
         req.flash('signupMessage', 'That username is already being used!');
         res.redirect('/profile');
       } else {
-        req.user.update({$set: {username: data.username}}, function(err, result) {
+        req.user.update({$set: {username: data.username}}, function(err) {
           if(err) {
             console.log('Error updating username: ' + err);
             req.flash('signupMessage', 'Error updating username.');

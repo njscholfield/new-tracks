@@ -92,11 +92,11 @@ module.exports = function(app, passport, tracks, account) {
   });
 
   function isLoggedIn(req, res, next) {
-  	if (req.isAuthenticated()) {
+    if (req.isAuthenticated()) {
       return next();
     }
     req.flash('loginMessage', 'You must be logged in to view this page!');
-  	res.redirect('/login/');
+    res.redirect('/login/');
   }
 
-}
+};

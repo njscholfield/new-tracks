@@ -1,10 +1,3 @@
-/*TODO
-  need to check all and rewrite to reference username instead of permalink
-  user will be stored in req.user so searching may not be necessary anymore
-  createNewUser will definitely need to be changed
-  Rewrite database calls to be more efficient
-*/
-
 var models = require('./userModel.js');
 var user = models.user;
 var track = models.track;
@@ -103,7 +96,7 @@ var addTrackToDatabase = function(req, res, data, username) {
 var addTrackToExistingUser = function(req, res, result, newTrack) {
   user.findOneAndUpdate({_id: result._id}, {$push: {tracks: newTrack}}, {new: true}, function(err, result) {
     if(err) {
-      console.log("Error $push new track: " + err);
+      console.log('Error $push new track: ' + err);
       res.status(400).json({error: err});
     } else {
       res.status(200).json(result.tracks);
