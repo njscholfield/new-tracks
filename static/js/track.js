@@ -39,7 +39,9 @@
           $scope.updateResult(response.data);
           $scope.updateTrackIDList(response.data.tracks);
         }, function error(response) {
-          console.log('Error getting tracks: ' + response);
+          if(response.status === 403) {
+            $scope.checkLogin();
+          }
         });
     };
 
