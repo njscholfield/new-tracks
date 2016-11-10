@@ -17,8 +17,8 @@
     <div class="input-group">
       <span class="input-group-addon" ng-click="trackCtrl.toggleSearch()"><span class="glyphicon glyphicon-search"></span></span>
       <div>
-        <div uib-collapse="trackCtrl.searchCollapsed" horizontal id="search">
-          <input class="form-control has-feedback" type="search" ng-model="query">
+        <div uib-collapse="trackCtrl.searchCollapsed" horizontal expanded="trackCtrl.focus()" id="search">
+          <input class="form-control has-feedback" id="trackSearch" type="search" ng-model="query">
           <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-click="query = ''"></span>
         </div>
       </div>

@@ -9,6 +9,9 @@
     trk.toggleSearch = function() {
       trk.searchCollapsed = !trk.searchCollapsed;
     };
+    trk.focus = function() {
+      document.getElementById('trackSearch').focus();
+    };
     trk.showJSON = false;
     trk.toggleJSON = function() {
       trk.showJSON = !trk.showJSON;
