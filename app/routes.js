@@ -73,6 +73,7 @@ module.exports = function(app, passport, tracks, account) {
       }
       res.redirect('/');
     });
+    res.clearCookie('sessionID');
   });
 
   app.get('/:username', function(req, res) {
