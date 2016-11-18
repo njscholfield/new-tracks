@@ -10,7 +10,7 @@ var app = express();
 
 require('./config/passport.js')(passport);
 
-var sess = { store: new RedisStore({url: process.env.REDIS_URL}), secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false, name: 'sessionID'};
+var sess = { store: new RedisStore({url: process.env.REDIS_URL}), secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false, name: 'sessionID', cookie: {}};
 if (app.get('env') === 'production') {
   app.set('trust proxy', 1);
   sess.cookie.secure = true;
