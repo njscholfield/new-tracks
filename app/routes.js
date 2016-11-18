@@ -23,10 +23,14 @@ module.exports = function(app, passport, tracks, account) {
   });
 
   app.post('/login/', passport.authenticate('local-login', {
-    successRedirect: '/',
     failureRedirect: '/login/',
     failureFlash: true
-  }));
+  }), function(req, res) {
+    if(req.body.remember_me) {
+      req.session.cookie.maxAge = 10 * 24 * 60 * 60 * 1000; /* 10 days */
+    }
+    res.redirect('/');
+  });
 
   app.get('/profile/', isLoggedIn, function(req, res) {
     res.render('profile', {user: req.user, message: req.flash('signupMessage'), success: req.flash('signupSuccess')});
