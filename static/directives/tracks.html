@@ -45,12 +45,14 @@
     </div>
     <div class="visible-xs">
       <div ng-repeat="track in filteredTracks | orderBy:'releaseDate'">
-        <h3 class="text-primary">{{ track.title }}</h3>
-        <h5>{{ track.artist }}</h5>
-        <h6>{{ track.releaseDate | date: 'longDate' }}</h6>
-        <button class="btn btn-xs btn-primary" ng-click="getDescription(track.trackID)">Description</button>
-        <button class="btn btn-xs btn-default" ng-click="trackCtrl.editTrack(track)">Edit Info</button>
-        <hr>
+        <div>
+          <h3 class="text-primary" id="{{ track.trackID }}">{{ track.title }}</h3>
+          <h5>{{ track.artist }}</h5>
+          <h6>{{ track.releaseDate | date: 'longDate' }}</h6>
+          <button class="btn btn-xs btn-primary" ng-click="getDescription(track.trackID)">Description</button>
+          <button class="btn btn-xs btn-default" ng-click="trackCtrl.editTrack(track)">Edit Info</button>
+          <hr>
+        </div>
       </div>
       <h4 class="text-info" ng-hide="filteredTracks.length">No results</h4>
     </div>

@@ -5,7 +5,9 @@
 
   app.controller('descriptionController', ['$http', '$location', '$scope', '$uibModal', function($http, $location, $scope, $uibModal) {
     var sc = this;
-    sc.url = $location.url().substring(1);
+    if($location.url().includes('soundcloud.com')) {
+      sc.url = $location.url().substring(1);
+    }
     sc.showJSON = false;
     sc.html = [];
     $scope.getDescription = function(trackID) {
@@ -71,6 +73,7 @@
         sc.trackJSON = response.data;
         sc.html = JSONtoHTML(sc.trackJSON.description);
         sc.tags = processTags(sc.trackJSON.tag_list);
+        $scope.currentTrack = sc.trackJSON.id;
         if(sc.trackJSON.artwork_url) {
           sc.imgURL = sc.trackJSON.artwork_url.replace('large', 't500x500');
         } else {
@@ -81,7 +84,7 @@
         }
       }
     };
-    if($location.url()) {
+    if($location.url().includes('soundcloud.com')) {
       sc.submit();
     }
     sc.toggleJSON = function() {

@@ -1,7 +1,7 @@
 (function() {
   var app = angular.module('new-tracks');
 
-  app.controller('trackController', ['$scope', '$http', '$uibModal', function($scope, $http, $uibModal) {
+  app.controller('trackController', ['$scope', '$http', '$uibModal', '$anchorScroll', function($scope, $http, $uibModal, $anchorScroll) {
     var trk = this;
     trk.result = [];
     $scope.tracks = [];
@@ -32,20 +32,30 @@
 
     $scope.$watch('panel', function(newValue) {
       if(newValue === 3) {
-        $scope.getTracks();
+        $scope.getTracks().then(function success() {
+          window.setTimeout(function() {
+            if($scope.currentTrack) {
+              $anchorScroll($scope.currentTrack.toString());
+            }
+          }, 0);
+        });
       }
     });
 
     $scope.getTracks = function() {
-      $http.get('/' + $scope.user.username)
-        .then(function success(response) {
-          $scope.updateResult(response.data);
-          $scope.updateTrackIDList(response.data.tracks);
-        }, function error(response) {
-          if(response.status === 403) {
-            $scope.checkLogin();
-          }
-        });
+      return new Promise(function(resolve, reject) {
+        $http.get('/' + $scope.user.username)
+          .then(function success(response) {
+            $scope.updateResult(response.data);
+            $scope.updateTrackIDList(response.data.tracks);
+            resolve('Tracks fetched sucessfully');
+          }, function error(response) {
+            if(response.status === 403) {
+              $scope.checkLogin();
+            }
+            reject(Error(response));
+          });
+      });
     };
 
     this.editTrack = function(track) {
