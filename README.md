@@ -17,30 +17,16 @@ From the description of the preview track, the user can add the track to a list 
 - [Autolinker.js](https://github.com/gregjacobs/Autolinker.js)
 - [Passport](http://passportjs.org)
 
-### Features/ToDo
-- [x] Show descriptions for SoundCloud tracks
-  - Use other SoundCloud project as basis
-- [x] Add tracks from the description display page
-  - Modal asks for confirmation and release date if not in track data
-- [x] Remove a track from the database from the list view
-- [x] Store list of tracks in database for user
-  - Authenticate – SoundCloud?
-  - MongoDB vs. PostgreSQL
-  - Store track API url for easier description fetching
-- [x] Display list of tracks – Table?
-
-  |Name|User|Release Date|Description|Purchase|Delete|
-  |:---|:---|:-----------|:---------:|:------:|:----:|
-  |We Are|Revealed Recordings|July 15, 2016|[Link](#)|[Link](#)|⨉|
-
-  - wrap table in `<div class="table-responsive">`
-    - use `.table` on table
-  - Locate list at `/:username`
-  - Sorted by release date
-  - Links to:
-    - Track description
-    - Purchase url with purchase text?
-      - Would have to refetch track info...
-    - Original Track (on SoundCloud)
-  - ⨉ to remove track from list
-- [ ] Add tracks to SoundCloud playlist
+### To Do
+- [ ] Option of table or div layout for tracks on larger displays
+- [ ] Public/Private Profiles
+  - ability to view track list of users whose accounts are 'public'
+    - add account visibility to db schema
+    - switch/checkbox/dropdown in profile
+  - /user/:username
+  - see list and click to view description
+  - search for user?
+- [ ] Password reset?
+  - nodemailer, node-email-templates
+- [ ] Delete account
+  - confirmation modal
