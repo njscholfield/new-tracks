@@ -7,7 +7,18 @@
   bottom: 3em;
   right: 1em;
 }
+#search {
+  height: 2.25em;
+}
 
+.input-group {
+  width: 100%;
+}
+.form-control-feedback {
+ z-index: 10;
+ pointer-events: auto;
+ cursor: pointer;
+}
 .navbar-header {
   padding-left: 0.5em;
   padding-right: 0.5em;
