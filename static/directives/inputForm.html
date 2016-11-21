@@ -3,12 +3,14 @@
   <fieldset>
     <div class="form-group" ng-class="{'has-error': descriptionCtrl.trackJSON.code === 404, 'has-warning': descriptionCtrl.trackJSON.code === 403}">
       <label for="url">Track URL</label>
-      <input class="form-control" type="url" name="url" ng-model="descriptionCtrl.url">
+      <div class="input-group">
+        <input class="form-control has-feedback" type="url" name="url" ng-model="descriptionCtrl.url" placeholder="https://soundcloud.com/artist/track">
+        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-click="descriptionCtrl.url = ''"></span>
+      </div>
     </div>
   </fieldset>
     <div class="form-group">
       <button class="btn btn-primary" type="submit">Submit</button>
-      <button class="btn btn-default" type="reset">Clear</button>
     </div>
 </form>
 <div ng-show="descriptionCtrl.trackJSON.error">
