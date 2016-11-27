@@ -18,7 +18,7 @@ From the description of the preview track, the user can add the track to a list 
 - [Passport](http://passportjs.org)
 
 ### To Do
-- [ ] Option of table or div layout for tracks on larger displays
+- [x] Option of table or block layout for tracks on larger displays
 - [ ] Public/Private Profiles
   - ability to view track list of users whose accounts are 'public'
     - add account visibility to db schema
