@@ -90,6 +90,12 @@
     sc.toggleJSON = function() {
       sc.showJSON = !sc.showJSON;
     };
+    window.setTimeout(function() {
+      sc.showAlert = !$scope.user.loggedIn;
+    }, 500);
+    sc.dismissAlert = function() {
+      sc.showAlert = false;
+    };
   }]);
 
   var JSONtoHTML = function(string) {
