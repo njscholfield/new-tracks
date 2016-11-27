@@ -1,10 +1,13 @@
 <form ng-submit="descriptionCtrl.submit()">
-  <h3>Get Description</h3>
+  <h3>Enter a track link below to get started</h3>
   <fieldset>
     <div class="form-group" ng-class="{'has-error': descriptionCtrl.trackJSON.code === 404, 'has-warning': descriptionCtrl.trackJSON.code === 403}">
-      <label for="url">Track URL</label>
+      <label for="url">SoundCloud® URL</label>
       <div class="input-group">
-        <input class="form-control has-feedback" type="url" name="url" ng-model="descriptionCtrl.url" placeholder="https://soundcloud.com/artist/track">
+        <span class="input-group-addon">
+          <span class="icon icon-soundcloud"></span>
+        </span>
+        <input class="form-control has-feedback" type="url" name="url" ng-model="descriptionCtrl.url" placeholder="https://soundcloud.com/...">
         <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-click="descriptionCtrl.url = ''"></span>
       </div>
     </div>
