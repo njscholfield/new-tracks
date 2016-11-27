@@ -30,3 +30,4 @@ From the description of the preview track, the user can add the track to a list 
   - nodemailer, node-email-templates
 - [ ] Delete account
   - confirmation modal
+- [ ] Implement Disconnect from SoundCloud
