@@ -1,11 +1,21 @@
 (function() {
   var app = angular.module('new-tracks');
 
-  app.controller('trackController', ['$scope', '$http', '$uibModal', '$anchorScroll', function($scope, $http, $uibModal, $anchorScroll) {
+  app.controller('trackController', ['$scope', '$http', '$uibModal', '$anchorScroll', 'uibButtonConfig', function($scope, $http, $uibModal, $anchorScroll, uibButtonConfig) {
     var trk = this;
     trk.result = [];
     $scope.tracks = [];
     trk.searchCollapsed = true;
+    uibButtonConfig.activeClass = 'btn-primary';
+    var sizeTester = document.getElementById('sizeTester');
+    if(!sizeTester.offsetParent) {
+      trk.displayMode = 'Block';
+    } else {
+      trk.displayMode = 'Table';
+    }
+    trk.currentMode = function(input) {
+      return input === trk.displayMode;
+    };
     trk.toggleSearch = function() {
       trk.searchCollapsed = !trk.searchCollapsed;
     };
