@@ -99,15 +99,19 @@
   }]);
 
   var JSONtoHTML = function(string) {
-    var HTML = string.split('\n');
-    HTML.forEach(function(item, index, array) {
-      if(item == '') {
-        array[index] = '<br>';
-      } else {
-        array[index] = Autolinker.link(item);
-      }
-    });
-    return HTML;
+    if(!string) {
+      return [];
+    } else {
+      var HTML = string.split('\n');
+      HTML.forEach(function(item, index, array) {
+        if(item == '') {
+          array[index] = '<br>';
+        } else {
+          array[index] = Autolinker.link(item);
+        }
+      });
+      return HTML;
+    }
   };
 
   var processTags = function(string) {
