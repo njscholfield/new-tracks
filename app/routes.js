@@ -43,16 +43,20 @@ module.exports = function(app, passport, tracks, account) {
     successFlash: true
   }));
 
-  app.post('/profile/update/email', function(req, res) {
+  app.post('/profile/update/email', isLoggedIn, function(req, res) {
     account.updateEmail(req, res);
   });
 
-  app.post('/profile/update/username', function(req, res) {
+  app.post('/profile/update/username', isLoggedIn, function(req, res) {
     account.changeUsername(req, res);
   });
 
-  app.post('/profile/update/password', function(req, res) {
+  app.post('/profile/update/password', isLoggedIn, function(req, res) {
     account.changePassword(req, res);
+  });
+
+  app.post('/profile/delete-account', isLoggedIn, function(req, res) {
+    account.deleteAccount(req, res);
   });
 
   app.get('/auth/soundcloud', passport.authenticate('soundcloud'));

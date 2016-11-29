@@ -1,14 +1,6 @@
 var User = require('./userModel.js').user;
 
 exports.updateEmail = function(req, res) {
-  if(req.user) {
-    updateEmailInDatabase(req, res);
-  } else {
-    res.sendStatus(403);
-  }
-};
-
-var updateEmailInDatabase = function(req, res) {
   var data = req.body;
 
   User.findOne({'local.email': data.email}, function(err, user){
@@ -36,14 +28,6 @@ var updateEmailInDatabase = function(req, res) {
 };
 
 exports.changeUsername = function(req, res) {
-  if(req.user) {
-    changeUsernameInDatabase(req, res);
-  } else {
-    res.sendStatus(403);
-  }
-};
-
-var changeUsernameInDatabase = function(req, res) {
   var data = req.body;
 
   User.findOne({username: data.username}, function(err, user){
@@ -71,14 +55,6 @@ var changeUsernameInDatabase = function(req, res) {
 };
 
 exports.changePassword = function(req, res) {
-  if(req.user) {
-    changePasswordInDatabase(req, res);
-  } else {
-    res.sendStatus(403);
-  }
-};
-
-var changePasswordInDatabase = function(req, res) {
   var data = req.body;
 
   if(!req.user.validPassword(data.currentPassword)) {
@@ -98,5 +74,26 @@ var changePasswordInDatabase = function(req, res) {
       }
       res.redirect('/profile');
     });
+  }
+};
+
+exports.deleteAccount = function(req, res) {
+  var password = req.body.password;
+
+  if(req.user.validPassword(password)) {
+    User.remove({username: req.user.username}, function(err) {
+      if(err) {
+        console.log('Error deleting account: ' + err);
+        req.flash('signupMessage', 'Error deleting account');
+        res.redirect('/profile/');
+      } else {
+        req.logout();
+        req.session.destroy();
+        res.redirect('/');
+      }
+    });
+  } else {
+    req.flash('signupMessage', 'Password is incorrect');
+    res.redirect('/profile/');
   }
 };
