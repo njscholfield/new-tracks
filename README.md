@@ -28,6 +28,6 @@ From the description of the preview track, the user can add the track to a list 
   - search for user?
 - [ ] Password reset?
   - nodemailer, node-email-templates
-- [ ] Delete account
+- [x] Delete account
   - confirmation modal
 - [ ] Implement Disconnect from SoundCloud
