@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 
+mongoose.Promise = global.Promise;
+
 mongoose.connect(process.env.MONGODB_URI, function(err) {
   if(err) {
     console.log('ERROR connecting. ' + err);
@@ -28,6 +30,7 @@ var userSchema = mongoose.Schema({
     refreshToken: {type: String}
   },
   username: {type: String, index: { unique: true }},
+  profileVisibility: {type: String, default: 'private'},
   tracks: [trackSchema]
 });
 
