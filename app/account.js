@@ -77,6 +77,24 @@ exports.changePassword = function(req, res) {
   }
 };
 
+exports.disconnectSoundCloud = function(req, res) {
+  if(!req.user.local.email) {
+    req.flash('signupMessage', 'You cannot disconnect SoundCloud from a SoundCloud only account. If you would like to switch to username and password sign in, add a password below.');
+    res.redirect('/profile');
+  } else {
+    req.user.soundcloud = {};
+    req.user.save(function(err) {
+      if(err) {
+        req.flash('signupMessage', 'Error disconnecting SoundCloud');
+        console.log('Error disconnecting SoundCloud: ' + err);
+      } else {
+        req.flash('signupSuccess', 'Your account is now disconnected from SoundCloud');
+      }
+      res.redirect('/profile');
+    });
+  }
+};
+
 exports.deleteAccount = function(req, res) {
   var password = req.body.password;
 

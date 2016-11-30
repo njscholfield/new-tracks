@@ -21,8 +21,8 @@ From the description of the preview track, the user can add the track to a list 
 - [x] Option of table or block layout for tracks on larger displays
 - [ ] Public/Private Profiles
   - ability to view track list of users whose accounts are 'public'
-    - add account visibility to db schema
-    - switch/checkbox/dropdown in profile
+    - [x] add account visibility to db schema
+    - [ ] switch/checkbox/dropdown in profile
   - /user/:username
   - see list and click to view description
   - search for user?
@@ -30,4 +30,4 @@ From the description of the preview track, the user can add the track to a list 
   - nodemailer, node-email-templates
 - [x] Delete account
   - confirmation modal
-- [ ] Implement Disconnect from SoundCloud
+- [x] Implement Disconnect from SoundCloud

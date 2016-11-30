@@ -30,9 +30,27 @@
             <button type="submit" class="btn btn-danger">Delete Account</button>
           </div>
         </form>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" tabindex="-1" role="dialog" id="DisconnectModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Disconnect SoundCloud Confirmation</h4>
+          </div>
+          <div class="modal-body">
+            <h4 class="text-warning">Are you sure that you want to disconnect SoundCloud from your account?</h4>
+            <p>If you want to reconnect later, click the connect button in the SoundCloud section of this page.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-warning" href="../deauth/soundcloud">Disconnect</a>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="jumbotron">
       <div class="container">
         <h1>Profile</h1>
@@ -135,10 +153,11 @@
       <div class="panel panel-warning">
         <div class="panel-heading">SoundCloud</div>
         <div class="panel-body">
-          <% if(user.soundcloud) { %>
+          <% if(user.soundcloud.accessToken) { %>
             <p><strong>User ID:</strong> <%= user.soundcloud.soundcloudID %></p>
-            <a href="#"><img alt="disconnect SoundCloud" src="https://connect.soundcloud.com/2/btn-disconnect-l.png"></a>
+            <img alt="disconnect SoundCloud" src="https://connect.soundcloud.com/2/btn-disconnect-l.png" data-toggle="modal" data-target="#DisconnectModal" ng-show="user.local.email">
           <% } else { %>
+            <p>Click the button below to connect your SoundCloud Account</p>
             <a href="/auth/soundcloud"><img alt="connect to SoundCloud" src="https://connect.soundcloud.com/2/btn-connect-l.png"></a>
           <% } %>
         </div>

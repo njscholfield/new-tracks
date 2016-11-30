@@ -61,6 +61,10 @@ module.exports = function(app, passport, tracks, account) {
 
   app.get('/auth/soundcloud', passport.authenticate('soundcloud'));
 
+  app.get('/deauth/soundcloud', isLoggedIn, function(req, res) {
+    account.disconnectSoundCloud(req, res);
+  });
+
   app.get('/callback.html', passport.authenticate('soundcloud', { failureRedirect: '/login/'}), function(req, res) {
     res.redirect('/');
   });
