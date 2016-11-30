@@ -22,10 +22,11 @@ From the description of the preview track, the user can add the track to a list 
 - [ ] Public/Private Profiles
   - ability to view track list of users whose accounts are 'public'
     - [x] add account visibility to db schema
-    - [ ] switch/checkbox/dropdown in profile
+    - [x] switch/checkbox/dropdown in profile
   - /user/:username
-  - see list and click to view description
-  - search for user?
+  - [ ] see list and click to view description
+    - [ ] support /#/trackID on main page
+  - [ ] search for user?
 - [ ] Password reset?
   - nodemailer, node-email-templates
 - [x] Delete account

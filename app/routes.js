@@ -55,6 +55,10 @@ module.exports = function(app, passport, tracks, account) {
     account.changePassword(req, res);
   });
 
+  app.post('/profile/update/visibility', isLoggedIn, function(req, res) {
+    account.changeProfileVisibility(req, res);
+  });
+
   app.post('/profile/delete-account', isLoggedIn, function(req, res) {
     account.deleteAccount(req, res);
   });

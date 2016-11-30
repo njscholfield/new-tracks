@@ -77,9 +77,23 @@ exports.changePassword = function(req, res) {
   }
 };
 
+exports.changeProfileVisibility = function(req, res) {
+  var newVisibility = req.body.profileVisibility;
+
+  req.user.update({$set: {profileVisibility: newVisibility}}, function(err) {
+    if(err) {
+      console.log('Error changing profile visibility: ' + err);
+      req.flash('signupMessage', 'Error changing profile visibility.');
+      res.redirect('/profile');
+    } else {
+      req.flash('signupSuccess', 'Profile visibility successfully changed.');
+      res.redirect('/profile');
+    }
+  });
+};
+
 exports.disconnectSoundCloud = function(req, res) {
   if(!req.user.local.email) {
-    req.flash('signupMessage', 'You cannot disconnect SoundCloud from a SoundCloud only account. If you would like to switch to username and password sign in, add a password below.');
     res.redirect('/profile');
   } else {
     req.user.soundcloud = {};

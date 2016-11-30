@@ -63,65 +63,87 @@
         <div class="panel-heading">Account</div>
 
           <% if(user.local.email) { %>
-          <ul class="list-group">
-            <li class="list-group-item">
-              <form action="/profile/update/email" method="post">
-                <legend>Update Email Address</legend>
-                <fieldset>
-                  <div class="form-group">
-                    <label for="email">New Email Address</label>
-                    <div class="input-group">
-                      <input class="form-control" name="email" type="email" placeholder="<%= user.local.email %>" required="true">
-                      <span class="input-group-btn">
-                        <button class="btn btn-primary" type="submit">Submit</button>
-                      </span>
+            <ul class="list-group">
+              <li class="list-group-item">
+                <form action="/profile/update/email" method="post">
+                  <legend>Update Email Address</legend>
+                  <fieldset>
+                    <div class="form-group">
+                      <label for="email">New Email Address</label>
+                      <div class="input-group">
+                        <input class="form-control" name="email" type="email" placeholder="<%= user.local.email %>" required="true">
+                        <span class="input-group-btn">
+                          <button class="btn btn-primary" type="submit">Submit</button>
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </fieldset>
-              </form>
-            </li>
-            <li class="list-group-item">
-              <form action="/profile/update/username" method="post">
-                <legend>Change Username</legend>
-                <fieldset>
-                  <div class="form-group">
-                    <label for="username">New Username</label>
-                    <div class="input-group">
-                      <input class="form-control" name="username" type="text" placeholder="<%= user.username %>" required="true">
-                      <span class="input-group-btn">
-                        <button class="btn btn-primary" type="submit">Submit</button>
-                      </span>
+                  </fieldset>
+                </form>
+              </li>
+              <li class="list-group-item">
+                <form action="/profile/update/username" method="post">
+                  <legend>Change Username</legend>
+                  <fieldset>
+                    <div class="form-group">
+                      <label for="username">New Username</label>
+                      <div class="input-group">
+                        <input class="form-control" name="username" type="text" placeholder="<%= user.username %>" required="true">
+                        <span class="input-group-btn">
+                          <button class="btn btn-primary" type="submit">Submit</button>
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </fieldset>
-              </form>
-            </li>
-            <li class="list-group-item">
-              <form action="/profile/update/password" method="post">
-                <legend>Change Password</legend>
-                <fieldset>
+                  </fieldset>
+                </form>
+              </li>
+              <li class="list-group-item">
+                <form action="/profile/update/password" method="post">
+                  <legend>Change Password</legend>
+                  <fieldset>
+                    <div class="form-group">
+                      <label for="currentPassword">Current Password</label>
+                      <input class="form-control" name="currentPassword" type="password" required="true">
+                    </div>
+                    <div class="form-group">
+                      <label for="newPassword1">New Password <button type="button" class="btn btn-xs btn-default" data-container="body" data-toggle="popover" data-placement="top" data-content="Password must be 8-72 characters">ℹ︎</button></label>
+                      <input class="form-control" name="newPassword1" type="password" required="true">
+                    </div>
+                    <div class="form-group">
+                      <label for="newPassword2">Confirm New Password</label>
+                      <input class="form-control" name="newPassword2" type="password" required="true">
+                    </div>
+                  </fieldset>
                   <div class="form-group">
-                    <label for="currentPassword">Current Password</label>
-                    <input class="form-control" name="currentPassword" type="password" required="true">
+                    <button class="btn btn-primary" type="submit">Submit</button>
                   </div>
+                </form>
+              </li>
+              <li class="list-group-item">
+                <form action="/profile/update/visibility" method="post">
+                  <legend>Change Profile Visibility</legend>
+
+                  <fieldset>
+                    <div class="form-group">
+                      <label for="profileVisibility">Profile Visibility</label>
+                      <select class="form-control" name="profileVisibility">
+                        <option value="private" <%= user.profileVisibility === 'private' ? "selected" : "" %>>Private</option>
+                        <option value="public" <%= user.profileVisibility === 'public' ? "selected" : "" %>>Public</option>
+                      </select>
+                    </div>
+                  </fieldset>
+                    <p><strong>Private:</strong> only you will be able to see the tracks you have added to your list</p>
+                    <p><strong>Public:</strong> anyone who visits your profile page will be able to see the tracks you have added to your list</p>
                   <div class="form-group">
-                    <label for="newPassword1">New Password <button type="button" class="btn btn-xs btn-default" data-container="body" data-toggle="popover" data-placement="top" data-content="Password must be 8-72 characters">ℹ︎</button></label>
-                    <input class="form-control" name="newPassword1" type="password" required="true">
+                    <button class="btn btn-primary" type="submit">Submit</button>
                   </div>
-                  <div class="form-group">
-                    <label for="newPassword2">Confirm New Password</label>
-                    <input class="form-control" name="newPassword2" type="password" required="true">
-                  </div>
-                </fieldset>
-                <div class="form-group">
-                  <button class="btn btn-primary" type="submit">Submit</button>
-                </div>
-              </form>
-            </li>
+                </form>
+              </li>
+            </ul>
           <% } else { %>
             <div class="panel-body">
               <form action="/profile/register/" method="post">
-                <legend>Create Local Login</legend>
+                <legend>Add Password to Account</legend>
+                <h6>If you would like to be able to sign in with a username and password, fill out the form below.</h6>
                 <fieldset>
                   <div class="form-group">
                     <label for="inputEmail">Email Address</label>
@@ -155,7 +177,9 @@
         <div class="panel-body">
           <% if(user.soundcloud.accessToken) { %>
             <p><strong>User ID:</strong> <%= user.soundcloud.soundcloudID %></p>
-            <img alt="disconnect SoundCloud" src="https://connect.soundcloud.com/2/btn-disconnect-l.png" data-toggle="modal" data-target="#DisconnectModal" ng-show="user.local.email">
+            <% if(user.local.email) { %>
+              <img alt="disconnect SoundCloud" src="https://connect.soundcloud.com/2/btn-disconnect-l.png" data-toggle="modal" data-target="#DisconnectModal">
+            <% } %>
           <% } else { %>
             <p>Click the button below to connect your SoundCloud Account</p>
             <a href="/auth/soundcloud"><img alt="connect to SoundCloud" src="https://connect.soundcloud.com/2/btn-connect-l.png"></a>
@@ -163,8 +187,11 @@
         </div>
       </div>
 
-      <button class="btn btn-danger" data-toggle="modal" data-target="#DeleteModal">Delete Account</button>
+      <% if(user.local.email) { %>
+        <button class="btn btn-danger" data-toggle="modal" data-target="#DeleteModal">Delete Account</button>
         <br>
+      <% } %>
+
       <button class="btn-link" onclick="$('#json').toggleClass('hidden')">Toggle JSON</button>
       <pre class="hidden" id="json"><code><%= JSON.stringify(user, undefined, 2) %></code></pre>
 
