@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Register | New Tracks</title>
+    <link rel="stylesheet" href="https://noahscholfield.com/css/bootstrap-yeti.min.css">
+  </head>
+  <body>
+    <%- include('../views/partials/navbar.ejs', {user: user}) %>
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Register</h1>
+      </div>
+    </div>
+    <div class="container">
+      <h4 class="<%= message['type'] %>"><%= message['content'] %></h4>
+      <a href="/auth/soundcloud"><img class="pull-right" alt="login using SoundCloud" src="https://connect.soundcloud.com/2/btn-connect-l.png"></a>
+      <form action="/register/" method="post">
+        <legend>Register</legend>
+        <fieldset>
+          <div class="form-group">
+            <label for="inputEmail">Email Address</label>
+            <input type="email" name="inputEmail" class="form-control" placeholder="username@example.com" required="true" autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label for="inputUsername">Username</label>
+            <input type="text" name="inputUsername" class="form-control" placeholder="jsmith" required="true" autocapitalize="none" autocorrect="off">
+          </div>
+          <div class="form-group">
+            <label for="newPassword1">Password <button type="button" class="btn btn-xs btn-default" data-container="body" data-toggle="popover" data-placement="top" data-content="Password must be 8-72 characters">ℹ︎</button></label>
+            <input type="password" name="newPassword1" class="form-control" autocomplete="new-password" placeholder="not 'password' please" required="true" minlength="8" maxlength="73">
+          </div>
+          <div class="form-group">
+            <label for="newPassword2">Confirm Password</label>
+            <input type="password" name="newPassword2" class="form-control" autocomplete="new-password" placeholder="not 'password' please" required="true" minlength="8" maxlength="73">
+          </div>
+        </fieldset>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="reset" class="btn btn-default">Clear</button>
+        </div>
+      </form>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://noahscholfield.com/js/bootstrap.min.js"></script>
+    <script>
+    $(function () {
+      $('[data-toggle="popover"]').popover()
+    })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Profile | New Tracks</title>
+    <link rel="stylesheet" href="https://noahscholfield.com/css/bootstrap-yeti.min.css">
+  </head>
+  <body>
+    <%- include('../views/partials/navbar.ejs', {user: user}) %>
+    <div class="modal fade" tabindex="-1" role="dialog" id="DeleteModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Delete Account Confirmation</h4>
+          </div>
+          <div class="modal-body">
+            <h4 class="text-danger">Are you sure that you want to delete you account?</h4>
+            <p>This is permanent and cannot be undone.</p>
+            <form action="/profile/delete-account/" method="post">
+              <div class="form-group">
+                <label for="password">Enter your password to confirm</label>
+                <input type="password" name="password" placeholder="password" class="form-control" required="true">
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-danger">Delete Account</button>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" tabindex="-1" role="dialog" id="DisconnectModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Disconnect SoundCloud Confirmation</h4>
+          </div>
+          <div class="modal-body">
+            <h4 class="text-warning">Are you sure that you want to disconnect SoundCloud from your account?</h4>
+            <p>If you want to reconnect later, click the connect button in the SoundCloud section of this page.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-warning" href="../deauth/soundcloud">Disconnect</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Profile</h1>
+      </div>
+    </div>
+    <div class="container">
+      <h4 class="text-danger"><%= message %></h4>
+      <h4 class="text-success"><%= success %></h4>
+      <div class="panel panel-primary">
+        <div class="panel-heading">Account</div>
+
+          <% if(user.local.email) { %>
+            <ul class="list-group">
+              <li class="list-group-item">
+                <form action="/profile/update/email" method="post">
+                  <legend>Update Email Address</legend>
+                  <fieldset>
+                    <div class="form-group">
+                      <label for="email">New Email Address</label>
+                      <div class="input-group">
+                        <input class="form-control" name="email" type="email" placeholder="<%= user.local.email %>" required="true">
+                        <span class="input-group-btn">
+                          <button class="btn btn-primary" type="submit">Submit</button>
+                        </span>
+                      </div>
+                    </div>
+                  </fieldset>
+                </form>
+              </li>
+              <li class="list-group-item">
+                <form action="/profile/update/username" method="post">
+                  <legend>Change Username</legend>
+                  <fieldset>
+                    <div class="form-group">
+                      <label for="username">New Username</label>
+                      <div class="input-group">
+                        <input class="form-control" name="username" type="text" placeholder="<%= user.username %>" required="true">
+                        <span class="input-group-btn">
+                          <button class="btn btn-primary" type="submit">Submit</button>
+                        </span>
+                      </div>
+                    </div>
+                  </fieldset>
+                </form>
+              </li>
+              <li class="list-group-item">
+                <form action="/profile/update/password" method="post">
+                  <legend>Change Password</legend>
+                  <fieldset>
+                    <div class="form-group">
+                      <label for="currentPassword">Current Password</label>
+                      <input class="form-control" name="currentPassword" type="password" required="true">
+                    </div>
+                    <div class="form-group">
+                      <label for="newPassword1">New Password <button type="button" class="btn btn-xs btn-default" data-container="body" data-toggle="popover" data-placement="top" data-content="Password must be 8-72 characters">ℹ︎</button></label>
+                      <input class="form-control" name="newPassword1" type="password" required="true">
+                    </div>
+                    <div class="form-group">
+                      <label for="newPassword2">Confirm New Password</label>
+                      <input class="form-control" name="newPassword2" type="password" required="true">
+                    </div>
+                  </fieldset>
+                  <div class="form-group">
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                  </div>
+                </form>
+              </li>
+              <li class="list-group-item">
+                <form action="/profile/update/visibility" method="post">
+                  <legend>Change Profile Visibility</legend>
+
+                  <fieldset>
+                    <div class="form-group">
+                      <label for="profileVisibility">Profile Visibility</label>
+                      <select class="form-control" name="profileVisibility">
+                        <option value="private" <%= user.profileVisibility === 'private' ? "selected" : "" %>>Private</option>
+                        <option value="public" <%= user.profileVisibility === 'public' ? "selected" : "" %>>Public</option>
+                      </select>
+                    </div>
+                  </fieldset>
+                  <a class="btn-link" onclick="$('#visibilityInfo').toggleClass('hidden')">What's this?</a>
+                  <br>
+                  <br>
+                  <div class="hidden well well-sm" id="visibilityInfo">
+                    <p><strong>Private:</strong> only you will be able to see the tracks you have added to your list</p>
+                    <p><strong>Public:</strong> anyone who visits your profile page will be able to see the tracks you have added to your list</p>
+                  </div>
+                  <div class="form-group">
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                  </div>
+                </form>
+              </li>
+            </ul>
+          <% } else { %>
+            <div class="panel-body">
+              <form action="/profile/register/" method="post">
+                <legend>Add Password to Account</legend>
+                <h6>If you would like to be able to sign in with a username and password, fill out the form below.</h6>
+                <fieldset>
+                  <div class="form-group">
+                    <label for="inputEmail">Email Address</label>
+                    <input type="email" name="inputEmail" class="form-control" placeholder="username@example.com" required="true" autocomplete="email">
+                  </div>
+                  <div class="form-group">
+                    <label for="inputUsername">Username <button type="button" class="btn btn-xs btn-default" data-container="body" data-toggle="popover" data-placement="top" data-content="Your current username based off of your SoundCloud account is filled in, you may change it to something else.">ℹ︎</button></label>
+                    <input type="text" name="inputUsername" class="form-control" value="<%= user.username %>" required="true" autocapitalize="none" autocorrect="off">
+                  </div>
+                  <div class="form-group">
+                    <label for="newPassword1">Password <button type="button" class="btn btn-xs btn-default" data-container="body" data-toggle="popover" data-placement="top" data-content="Password must be 8-72 characters">ℹ︎</button></label>
+                    <input type="password" name="newPassword1" class="form-control" autocomplete="new-password" placeholder="not 'password' please" required="true" minlength="8" maxlength="73">
+                  </div>
+                  <div class="form-group">
+                    <label for="newPassword2">Confirm Password</label>
+                    <input type="password" name="newPassword2" class="form-control" autocomplete="new-password" placeholder="not 'password' please" required="true" minlength="8" maxlength="73">
+                  </div>
+                </fieldset>
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="reset" class="btn btn-default">Clear</button>
+                </div>
+              </form>
+            </div>
+          <% } %>
+
+      </div>
+
+      <div class="panel panel-warning">
+        <div class="panel-heading">SoundCloud</div>
+        <div class="panel-body">
+          <% if(user.soundcloud.accessToken) { %>
+            <p><strong>User ID:</strong> <%= user.soundcloud.soundcloudID %></p>
+            <% if(user.local.email) { %>
+              <img alt="disconnect SoundCloud" src="https://connect.soundcloud.com/2/btn-disconnect-l.png" data-toggle="modal" data-target="#DisconnectModal">
+            <% } %>
+          <% } else { %>
+            <p>Click the button below to connect your SoundCloud Account</p>
+            <a href="/auth/soundcloud"><img alt="connect to SoundCloud" src="https://connect.soundcloud.com/2/btn-connect-l.png"></a>
+          <% } %>
+        </div>
+      </div>
+
+      <% if(user.local.email) { %>
+        <button class="btn btn-danger" data-toggle="modal" data-target="#DeleteModal">Delete Account</button>
+        <br>
+      <% } %>
+
+      <button class="btn-link" onclick="$('#json').toggleClass('hidden')">Toggle JSON</button>
+      <pre class="hidden" id="json"><code><%= JSON.stringify(user, undefined, 2) %></code></pre>
+
+    </div>
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://noahscholfield.com/js/bootstrap.min.js"></script>
+  <script>
+    $(function () {
+      $('[data-toggle="popover"]').popover();
+    });
+  </script>
+</html>

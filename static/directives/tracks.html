@@ -4,8 +4,22 @@
     <h4 class="text-center text-info">The list is empty</h4>
   </div>
   <div ng-show="trackCtrl.result.tracks.length">
-    <div class="table-responsive hidden-xs">
-      <table class="table">
+    <div class="btn-group hidden-xs pull-right" id="sizeTester">
+        <label class="btn btn-xs btn-default" ng-model="trackCtrl.displayMode" uib-btn-radio="'Table'">Table <span class="icon icon-table"></span></label>
+        <label class="btn btn-xs btn-default" ng-model="trackCtrl.displayMode" uib-btn-radio="'Block'">Block <span class="icon icon-bars"></span></label>
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon" ng-click="trackCtrl.toggleSearch()"><span class="glyphicon glyphicon-search"></span></span>
+      <div>
+        <div uib-collapse="trackCtrl.searchCollapsed" horizontal expanded="trackCtrl.focus()" id="search">
+          <input class="form-control has-feedback" id="trackSearch" type="search" ng-model="query">
+          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-click="query = ''"></span>
+        </div>
+      </div>
+    </div>
+    <div class="table-responsive hidden-xs" ng-show="trackCtrl.currentMode('Table')">
+      <br>
+      <table class="table" ng-show="filteredTracks.length">
         <tr>
           <th>Track Name</th>
           <th>Artist</th>
@@ -13,7 +27,8 @@
           <th class="text-center">Description</th>
           <th class="text-center">Edit</th>
         </tr>
-        <tr ng-repeat="track in trackCtrl.result.tracks | orderBy:'releaseDate'">
+        <tr ng-repeat="track in filteredTracks = (trackCtrl.result.tracks | filter:query) | orderBy:'releaseDate'">
+          <h4 class="text-info" ng-hide="filteredTracks.length">No results</h4>
           <td>{{ track.title }}</td>
           <td>{{ track.artist }}</td>
           <td class="text-center">{{ track.releaseDate | date: 'longDate'}}</td>
@@ -22,15 +37,18 @@
         </tr>
       </table>
     </div>
-    <div class="visible-xs">
-      <div ng-repeat="track in trackCtrl.result.tracks | orderBy:'releaseDate'">
-        <h3 class="text-primary">{{ track.title }}</h3>
-        <h5>{{ track.artist }}</h5>
-        <h6>{{ track.releaseDate | date: 'longDate' }}</h6>
-        <button class="btn btn-xs btn-primary" ng-click="getDescription(track.trackID)">Description</button>
-        <button class="btn btn-xs btn-default" ng-click="trackCtrl.editTrack(track)">Edit Info</button>
-        <hr>
+    <div ng-show="trackCtrl.currentMode('Block')">
+      <div ng-repeat="track in filteredTracks | orderBy:'releaseDate'">
+        <div>
+          <h3 class="text-primary" id="{{ track.trackID }}">{{ track.title }}</h3>
+          <h5>{{ track.artist }}</h5>
+          <h6>{{ track.releaseDate | date: 'longDate' }}</h6>
+          <button class="btn btn-xs btn-primary" ng-click="getDescription(track.trackID)">Description</button>
+          <button class="btn btn-xs btn-default" ng-click="trackCtrl.editTrack(track)">Edit Info</button>
+          <hr>
+        </div>
       </div>
+      <h4 class="text-info" ng-hide="filteredTracks.length">No results</h4>
     </div>
     <button class="btn-link" ng-click="trackCtrl.toggleJSON()">View JSON</button>
     <div ng-show="trackCtrl.showJSON">

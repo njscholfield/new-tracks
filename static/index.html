@@ -5,18 +5,21 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>New Tracks</title>
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/apple-touch-icon-152x152.png">
     <link rel="stylesheet" href="https://noahscholfield.com/css/bootstrap-yeti.min.css">
+    <link rel="stylesheet" href="/css/home.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.5.8/angular-sanitize.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-animate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.1.3/ui-bootstrap-tpls.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/autolinker/0.28.0/Autolinker.min.js"></script>
-    <script src="https://connect.soundcloud.com/sdk/sdk-3.1.2.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/soundcloud.js"></script>
-    <script src="js/track.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.2.0/ui-bootstrap-tpls.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autolinker/1.3.4/Autolinker.min.js"></script>
+    <script src="https://use.fortawesome.com/8c4f3c3d.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/soundcloud.js"></script>
+    <script src="/js/track.js"></script>
   </head>
   <body ng-app="new-tracks">
+    <navbar id="top"></navbar>
     <div class="jumbotron">
       <div class="container">
         <h1>New Tracks</h1>
@@ -24,14 +27,11 @@
     </div>
     <noscript><h3 class="text-warning text-center">JavaScript is required for this page to work. Please enable JavaScript.</h3></noscript>
     <div class="container" ng-controller="PanelController as panelCtrl">
-      <a class="pull-right" ng-click="SCAuth()" ng-hide="user"><img src="https://connect.soundcloud.com/2/btn-connect-l.png"></a>
-      <a class="btn-link pull-right" ng-click="SCLogout()" ng-show="user"><img src="https://connect.soundcloud.com/2/btn-disconnect-l.png"></a>
-      <br>
-      <br>
       <navpills></navpills>
       <input-form ng-show="panelCtrl.currentPanel(1)"></input-form>
       <description ng-show="panelCtrl.currentPanel(2)"></description>
       <tracks ng-show="panelCtrl.currentPanel(3)"></tracks>
+      <button class="btn btn-primary pull-right visible-xs" ng-hide="nearTopOfPage" title="Scroll to Top" id="scrollToTop" ng-click="scrollToTop()"><span class="glyphicon glyphicon-chevron-up"></span></button>
     </div>
   </body>
 </html>

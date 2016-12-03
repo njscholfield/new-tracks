@@ -1,0 +1,35 @@
+#brandimg {
+  height: 2.7em;
+  border-radius: 2em;
+}
+#scrollToTop {
+  position: fixed;
+  bottom: 3em;
+  right: 1em;
+}
+#search {
+  height: 2.25em;
+}
+
+.icon-soundcloud {
+  color: #f50;
+}
+.input-group {
+  width: 100%;
+}
+.form-control-feedback {
+ z-index: 10;
+ pointer-events: auto;
+ cursor: pointer;
+}
+.navbar-header {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+.navbar-fixed {
+  margin-bottom: 0;
+}
+/* Prevent fields from zooming in on mobile */
+.form-control:focus, .form-control:hover {
+  font-size: 1.1em;
+}

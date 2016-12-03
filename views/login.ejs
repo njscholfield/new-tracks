@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign In | New Tracks</title>
+    <link rel="stylesheet" href="https://noahscholfield.com/css/bootstrap-yeti.min.css">
+  </head>
+  <body>
+    <%- include('../views/partials/navbar.ejs', {user: user}) %>
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Sign In</h1>
+      </div>
+    </div>
+    <div class="container">
+      <h4 class="text-danger"><%= message %></h4>
+      <a href="/auth/soundcloud"><img class="pull-right" alt="login using SoundCloud" src="https://connect.soundcloud.com/2/btn-connect-l.png"></a>
+      <form action="/login/" method="post">
+        <legend>Sign In</legend>
+        <fieldset>
+          <div class="form-group <%= error['username'] %>">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" autofocus placeholder="username" name="username" autocomplete="username" required="true">
+          </div>
+          <div class="form-group <%= error['password'] %>">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" placeholder="password" name="password" autocomplete="current-password" required="true">
+          </div>
+          <div class="checkbox">
+            <label for="remember_me">
+              <input type="checkbox" name="remember_me" checked> Remember Me
+            </label>
+          </div>
+        </fieldset>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="reset" class="btn btn-default">Clear</button>
+        </div>
+      </form>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://noahscholfield.com/js/bootstrap.min.js"></script>
+  </body>
+</html>
