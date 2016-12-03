@@ -289,8 +289,8 @@ mongodb@2.2.11:
     readable-stream "2.1.5"
 
 mongoose@^4.6.8:
-  version "4.7.0"
-  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-4.7.0.tgz#adb7c6b73dfb76f204a70ba6cd364f887dcc2012"
+  version "4.7.1"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-4.7.1.tgz#3842df23f5eb5db31d27311d2a3fb4cca2b5cd9e"
   dependencies:
     async "2.1.2"
     bson "~0.5.4"
