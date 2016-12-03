@@ -92,19 +92,19 @@ module.exports = function(app, passport, tracks, account) {
     res.clearCookie('sessionID');
   });
 
-  app.get('/:username', function(req, res) {
+  app.get('/api/:username', function(req, res) {
     tracks.getTracks(req, res);
   });
 
-  app.post('/:username/add', function(req, res) {
+  app.post('/api/:username/add', function(req, res) {
     tracks.addTrackToList(req, res);
   });
 
-  app.post('/:username/edit', function(req, res) {
+  app.post('/api/:username/edit', function(req, res) {
     tracks.editTrackInList(req, res);
   });
 
-  app.post('/:username/remove', function(req, res) {
+  app.post('/api/:username/remove', function(req, res) {
     tracks.removeTrackFromList(req, res);
   });
 
