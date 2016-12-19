@@ -108,6 +108,10 @@ module.exports = function(app, passport, tracks, account) {
     tracks.removeTrackFromList(req, res);
   });
 
+  app.get('/:username/', function(req, res) {
+    tracks.showUserProfile(req, res);
+  });
+
   function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
       return next();
