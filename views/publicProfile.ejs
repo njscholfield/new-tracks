@@ -21,18 +21,23 @@
         This is what your profile will look like to other users if your profile is pubilc.
       </div>
       <% } %>
-      <table class="table">
-        <tr>
-          <th>Track Name</th>
-          <th>Artist</th>
-        </tr>
-        <% tracks.forEach(function(track) { %>
+      <% if(tracks.length > 0) { %>
+        <table class="table">
           <tr>
-            <td><a class="btn-link" href="../#!/<%= track.trackID %>" target="_blank"><%= track.title %></a></td>
-            <td><%= track.artist %></td>
+            <th>Track Name</th>
+            <th>Artist</th>
           </tr>
-        <% }); %>
-      </table>
+          <% tracks.forEach(function(track) { %>
+            <tr>
+              <td><a class="btn-link" href="../#!/<%= track.trackID %>" target="_blank"><%= track.title %></a></td>
+              <td><%= track.artist %></td>
+            </tr>
+          <% }); %>
+        </table>
+      <% } else { %>
+        <h4 class="text-info">No tracks have been added by <%= username %></h4>
+        <br>
+      <% } %>
       <a onclick="$('#json').toggleClass('hidden')">Toggle JSON</a>
       <div class="hidden" id="json">
         <pre><code><%= JSON.stringify(tracks, undefined, 2) %></code></pre>
