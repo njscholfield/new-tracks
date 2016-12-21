@@ -17,34 +17,31 @@
         </div>
       </div>
     </div>
-    <div class="table-responsive hidden-xs" ng-show="trackCtrl.currentMode('Table')">
+    <div class="table-responsive" ng-show="trackCtrl.currentMode('Table')">
       <br>
       <table class="table" ng-show="filteredTracks.length">
         <tr>
           <th>Track Name</th>
           <th>Artist</th>
           <th class="text-center">Release Date</th>
-          <th class="text-center">Description</th>
           <th class="text-center">Edit</th>
         </tr>
         <tr ng-repeat="track in filteredTracks = (trackCtrl.result.tracks | filter:query) | orderBy:'releaseDate'">
           <h4 class="text-info" ng-hide="filteredTracks.length">No results</h4>
-          <td>{{ track.title }}</td>
+          <td><a class="btn-link" ng-click="getDescription(track.trackID)">{{ track.title }}</a></td>
           <td>{{ track.artist }}</td>
           <td class="text-center">{{ track.releaseDate | date: 'longDate'}}</td>
-          <td class="text-center"><a class="btn-link" ng-click="getDescription(track.trackID)">View</a></td>
-          <td class="text-center"><a class="btn-link" ng-click="trackCtrl.editTrack(track)">✎</a></td>
+          <td class="text-center"><a class="btn-link" ng-click="trackCtrl.editTrack(track)"><span class="glyphicon glyphicon-pencil"></span></a></td>
         </tr>
       </table>
     </div>
     <div ng-show="trackCtrl.currentMode('Block')">
       <div ng-repeat="track in filteredTracks | orderBy:'releaseDate'">
         <div>
-          <h3 class="text-primary" id="{{ track.trackID }}">{{ track.title }}</h3>
+          <h3 class="text-primary track-link" id="{{ track.trackID }}" ng-click="getDescription(track.trackID)">{{ track.title }}</h3>
           <h5>{{ track.artist }}</h5>
           <h6>{{ track.releaseDate | date: 'longDate' }}</h6>
-          <button class="btn btn-xs btn-primary" ng-click="getDescription(track.trackID)">Description</button>
-          <button class="btn btn-xs btn-default" ng-click="trackCtrl.editTrack(track)">Edit Info</button>
+          <button class="btn btn-xs btn-primary" ng-click="trackCtrl.editTrack(track)"><span class="glyphicon glyphicon-pencil"></span> Edit Info</button>
           <hr>
         </div>
       </div>
