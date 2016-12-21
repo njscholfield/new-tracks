@@ -19,13 +19,13 @@ From the description of the preview track, the user can add the track to a list 
 
 ### To Do
 - [x] Option of table or block layout for tracks on larger displays
-- [x] Public/Private Profiles
+- [ ] Public/Private Profiles
   - ability to view track list of users whose accounts are 'public'
     - [x] add account visibility to db schema
     - [x] switch/checkbox/dropdown in profile
-  - /:username
-  - [x] see list and click to view description
-    - [x] support /#!/trackID on main page
+  - /user/:username
+  - [ ] see list and click to view description
+    - [ ] support /#/trackID on main page
   - [ ] search for user?
 - [ ] Password reset?
   - nodemailer, node-email-templates

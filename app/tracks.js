@@ -103,39 +103,3 @@ var addTrackToExistingUser = function(req, res, result, newTrack) {
     }
   });
 };
-
-exports.showUserProfile = function(req, res) {
-  var username = req.params.username;
-
-  permissionToViewProfile(req, res, username).then(function success(result) {
-    res.render('publicProfile', {user: req.user || {username:undefined}, username: username, tracks: result});
-  }, function failure(err) {
-    // show real error page
-    res.send(err);
-  });
-};
-
-var permissionToViewProfile = function(req, res, username) {
-  return new Promise(function(resolve, reject) {
-    if(req.user && username === req.user.username) {
-      resolve(req.user.tracks);
-    } else {
-      user.findOne({username: username}, function(err, result) {
-        if(err) {
-          console.log(err);
-          reject(err);
-        } else {
-          if(result) {
-            if(result.profileVisibility === 'public') {
-              resolve(result.tracks);
-            } else {
-              reject('Profile is not public');
-            }
-          } else {
-            reject('Invalid username');
-          }
-        }
-      });
-    }
-  });
-};
