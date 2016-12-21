@@ -14,7 +14,8 @@
         <div uib-dropdown>
           <a href="#" class="dropdown-toggle btn navbar-btn navbar-link" uib-dropdown-toggle><span class="glyphicon glyphicon-user"></span></a>
           <ul class="dropdown-menu-right" uib-dropdown-menu role="menu">
-            <li><a href="/profile/">{{ user.username }}</a></li>
+            <li><a href="/{{user.username}}/"><strong>{{user.username}}</strong></a></li>
+            <li><a href="/profile/"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="/logout/">Sign Out</a></li>
           </ul>
