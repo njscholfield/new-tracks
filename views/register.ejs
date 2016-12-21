@@ -17,7 +17,7 @@
     <div class="container">
       <h4 class="<%= message['type'] %>"><%= message['content'] %></h4>
       <a href="/auth/soundcloud"><img class="pull-right" alt="login using SoundCloud" src="https://connect.soundcloud.com/2/btn-connect-l.png"></a>
-      <form action="/register/" method="post">
+      <form action="/register/?hash=<%= hash %>" method="post">
         <legend>Register</legend>
         <fieldset>
           <div class="form-group">

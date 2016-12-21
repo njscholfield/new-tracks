@@ -2,23 +2,24 @@ module.exports = function(app, passport, tracks, account) {
 
   app.get('/register/', function(req, res) {
     if(req.isAuthenticated()) {
-      res.redirect('/');
+      res.redirect('/#!/' + req.query.hash);
     } else {
-      res.render('register', {message: {type: 'text-danger', content: req.flash('signupMessage')}, user: {} });
+      res.render('register', {message: {type: 'text-danger', content: req.flash('signupMessage')}, user: {}, hash: req.query.hash });
     }
   });
 
   app.post('/register/', passport.authenticate('local-signup', {
-    successRedirect: '/',
     failureRedirect: '/register/',
     failureFlash: true
-  }));
+  }), function(req, res) {
+    res.redirect('/#!/' + req.query.hash);
+  });
 
   app.get('/login/', function(req, res) {
     if(req.isAuthenticated()) {
-      res.redirect('/');
+      res.redirect('/#!/' + req.query.hash);
     } else {
-      res.render('login', {message: req.flash('loginMessage'), error: {}, user: {} });
+      res.render('login', {message: req.flash('loginMessage'), error: {}, user: {}, hash: req.query.hash });
     }
   });
 
@@ -29,7 +30,7 @@ module.exports = function(app, passport, tracks, account) {
     if(req.body.remember_me) {
       req.session.cookie.maxAge = 10 * 24 * 60 * 60 * 1000; /* 10 days */
     }
-    res.redirect('/');
+    res.redirect('/#!/' + req.query.hash);
   });
 
   app.get('/profile/', isLoggedIn, function(req, res) {
