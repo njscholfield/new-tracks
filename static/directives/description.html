@@ -10,7 +10,7 @@
   <div ng-hide="descriptionCtrl.trackJSON.error">
     <br>
     <div uib-alert class="alert alert-dismissible alert-success" close="descriptionCtrl.dismissAlert()" ng-show="descriptionCtrl.showAlert">
-      <a class="alert-link" href="/login/">Sign in</a> or <a class="alert-link" href="/register/">create an account</a> to save this track for later!
+      <a class="alert-link" href="/login/?hash={{descriptionCtrl.trackJSON.id}}">Sign in</a> or <a class="alert-link" href="/register/?hash={{descriptionCtrl.trackJSON.id}}">create an account</a> to save this track for later!
     </div>
     <div class="row" id="trackTitle">
       <div class="col-sm-10 col-sm-push-2">
