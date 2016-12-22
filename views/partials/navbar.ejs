@@ -6,7 +6,7 @@
       </a>
     </div>
     <div class="navbar-header pull-right">
-      <% if(user.username) { %>
+      <% if(user && user.username) { %>
         <div class="dropdown">
           <a href="#" class="dropdown-toggle btn navbar-btn navbar-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span></a>
           <ul class="dropdown-menu dropdown-menu-right" role="menu">
@@ -15,6 +15,11 @@
             <li role="separator" class="divider"></li>
             <li><a href="/logout/">Sign Out</a></li>
           </ul>
+        </div>
+      <% } else if(!user || !user.hide){ %>
+        <div>
+          <a class="btn btn-default navbar-btn" href="/login/">Sign In</a>
+          <a class="btn btn-success navbar-btn" href="/register/">Register</a>
         </div>
       <% } %>
     </div>
