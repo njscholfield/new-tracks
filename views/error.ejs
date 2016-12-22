@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://noahscholfield.com/css/bootstrap-yeti.min.css">
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        color: white;
+      }
+      .cover {
+        height: 100%;
+        background: url("/img/<%= image %>.jpg"), #333;
+        background-size: cover;
+        background-position: <%= position %>;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cover">
+      <%- include('../views/partials/navbar.ejs', {user: user} ) %>
+      <h1 class="text-center"><%= message._1 %></h1>
+      <h3 class="text-center text-info"><%= message._2 %></h3>
+    </div>
+    <% include ../views/partials/scripts.ejs %>
+  </body>
+</html>

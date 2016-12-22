@@ -4,7 +4,7 @@ module.exports = function(app, passport, tracks, account) {
     if(req.isAuthenticated()) {
       res.redirect('/#!/' + req.query.hash);
     } else {
-      res.render('register', {message: {type: 'text-danger', content: req.flash('signupMessage')}, user: {}, hash: req.query.hash });
+      res.render('register', {message: {type: 'text-danger', content: req.flash('signupMessage')}, user: {hide:true}, hash: req.query.hash });
     }
   });
 
@@ -19,7 +19,7 @@ module.exports = function(app, passport, tracks, account) {
     if(req.isAuthenticated()) {
       res.redirect('/#!/' + req.query.hash);
     } else {
-      res.render('login', {message: req.flash('loginMessage'), error: {}, user: {}, hash: req.query.hash });
+      res.render('login', {message: req.flash('loginMessage'), error: {}, user: {hide:true}, hash: req.query.hash });
     }
   });
 
