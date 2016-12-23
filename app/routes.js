@@ -33,34 +33,34 @@ module.exports = function(app, passport, tracks, account) {
     res.redirect('/#!/' + req.query.hash);
   });
 
-  app.get('/profile/', isLoggedIn, function(req, res) {
+  app.get('/settings/', isLoggedIn, function(req, res) {
     res.render('profile', {user: req.user, message: req.flash('signupMessage'), success: req.flash('signupSuccess')});
   });
 
-  app.post('/profile/register/', passport.authenticate('local-signup', {
-    successRedirect: '/profile/',
-    failureRedirect: '/profile/',
+  app.post('/settings/register/', passport.authenticate('local-signup', {
+    successRedirect: '/settings/',
+    failureRedirect: '/settings/',
     failureFlash: true,
     successFlash: true
   }));
 
-  app.post('/profile/update/email', isLoggedIn, function(req, res) {
+  app.post('/settings/update/email', isLoggedIn, function(req, res) {
     account.updateEmail(req, res);
   });
 
-  app.post('/profile/update/username', isLoggedIn, function(req, res) {
+  app.post('/settings/update/username', isLoggedIn, function(req, res) {
     account.changeUsername(req, res);
   });
 
-  app.post('/profile/update/password', isLoggedIn, function(req, res) {
+  app.post('/settings/update/password', isLoggedIn, function(req, res) {
     account.changePassword(req, res);
   });
 
-  app.post('/profile/update/visibility', isLoggedIn, function(req, res) {
+  app.post('/settings/update/visibility', isLoggedIn, function(req, res) {
     account.changeProfileVisibility(req, res);
   });
 
-  app.post('/profile/delete-account', isLoggedIn, function(req, res) {
+  app.post('/settings/delete-account', isLoggedIn, function(req, res) {
     account.deleteAccount(req, res);
   });
 
