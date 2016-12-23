@@ -112,7 +112,14 @@
         if(item == '') {
           array[index] = '<br>';
         } else {
-          array[index] = Autolinker.link(item);
+          array[index] = Autolinker.link(item, {mention: 'twitter',
+            replaceFn: function(match) {
+              if(match.getType() === 'mention') {
+                return '<a href="https://soundcloud.com/' + match.getMention() + '" target="_blank">@' + match.getMention() + '</a>';
+              }
+              return true;
+            }
+          });
         }
       });
       return HTML;
