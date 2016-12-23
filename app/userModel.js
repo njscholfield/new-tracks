@@ -42,6 +42,16 @@ userSchema.methods.validPassword = function(password) {
   return bcrypt.compareSync(password, this.local.password);
 };
 
+userSchema.methods.invalidUsername = function(username) {
+  var reservedUsernames = ['api', 'auth', 'callback.html', 'deauth', 'login', 'newtracks', 'profile', 'register', 'settings', 'soundcloud'];
+  var regex = new RegExp(/([^A-Za-z0-9$\-_.+!*\'(),])+/);
+  if(reservedUsernames.includes(username) || username.search(regex) !== -1 || username.length === 0) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 var user = mongoose.model('user', userSchema);
 
 module.exports = {
