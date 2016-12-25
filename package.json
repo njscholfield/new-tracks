@@ -1,6 +1,6 @@
 {
   "name": "new-tracks",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "An addition to my SoundCloud description website to stores a list of tracks",
   "engines": {
     "node": "6.x.x"
@@ -17,13 +17,12 @@
     "soundcloud"
   ],
   "author": "Noah Scholfield",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/njscholfield/new-tracks/issues"
   },
   "homepage": "https://github.com/njscholfield/new-tracks#readme",
   "dependencies": {
-    "bcrypt": "^0.8.7",
+    "bcrypt": "^1.0.1",
     "body-parser": "^1.15.2",
     "connect-flash": "^0.1.1",
     "connect-redis": "^3.1.0",

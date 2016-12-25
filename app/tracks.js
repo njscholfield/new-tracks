@@ -103,3 +103,42 @@ var addTrackToExistingUser = function(req, res, result, newTrack) {
     }
   });
 };
+
+exports.showUserProfile = function(req, res) {
+  var username = req.params.username;
+
+  permissionToViewProfile(req, res, username).then(function success(result) {
+    res.render('publicProfile', {user: req.user, username: username, tracks: result});
+  }, function failure(err) {
+    if(err === 'private') {
+      res.render('error', {user: req.user, image: 'fence', message: {_1: 'Oops... Looks like you aren\'t allowed here.', _2: 'This profile is private.' }, position: '35%'});
+    } else {
+      res.render('error', {user: req.user, image: 'astronaut', message: {_1: 'Looks like you\'re lost...', _2: 'Page could not be found.' }, position: '50% 40%'});
+    }
+  });
+};
+
+var permissionToViewProfile = function(req, res, username) {
+  return new Promise(function(resolve, reject) {
+    if(req.user && username === req.user.username) {
+      resolve(req.user.tracks);
+    } else {
+      user.findOne({username: username}, function(err, result) {
+        if(err) {
+          console.log(err);
+          reject(err);
+        } else {
+          if(result) {
+            if(result.profileVisibility === 'public') {
+              resolve(result.tracks);
+            } else {
+              reject('private');
+            }
+          } else {
+            reject('404');
+          }
+        }
+      });
+    }
+  });
+};

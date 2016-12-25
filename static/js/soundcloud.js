@@ -3,17 +3,10 @@
   var scapi = 'https://api.soundcloud.com/resolve.json?url=';
   var client = 'client_id=30cba84d4693746b0a2fbc0649b2e42c';
 
-  app.controller('descriptionController', ['$http', '$location', '$scope', '$uibModal', function($http, $location, $scope, $uibModal) {
+  app.controller('descriptionController', ['$http', '$location', '$scope', '$uibModal', '$sce', function($http, $location, $scope, $uibModal, $sce) {
     var sc = this;
-    if($location.url().includes('soundcloud.com')) {
-      sc.url = $location.url().substring(1);
-    }
     sc.showJSON = false;
     sc.html = [];
-    $scope.getDescription = function(trackID) {
-      var url = 'https://api.soundcloud.com/tracks/' + trackID + '?' + client;
-      sc.submit(url);
-    };
     sc.addTrackToList = function(trackID) {
       var modalInstance = $uibModal.open({
         animation: $scope.animationsEnabled,
@@ -53,16 +46,18 @@
         .then(function success(response) {
           processJSON(response);
           $scope.setPanel(2);
+          $location.url(response.data.id);
         }, function error(response) {
           if(response.status === 403) {
             sc.trackJSON = {'error': 'The information for this track is not available', 'code': 403};
           } else if(response.status === 404) {
             sc.trackJSON = {'error': 'Invalid URL, please try again', 'code': 404};
           } else {
-            $http.jsonp(callURL + '&callback=JSON_CALLBACK')
+            $http.jsonp($sce.trustAsResourceUrl(callURL))
               .then(function success(response) {
                 processJSON(response);
                 $scope.setPanel(2);
+                $location.url(response.data.id);
               }, function error(response) {
                 sc.trackJSON = {'error': 'Something went wrong... This could have been caused by a track for which the information is not available, or a server/network problem. Please try again.', 'code': 'JSONP Response Code ' + response.status};
               });
@@ -84,9 +79,19 @@
         }
       }
     };
-    if($location.url().includes('soundcloud.com')) {
-      sc.submit();
-    }
+    $scope.getDescription = function(trackID) {
+      var url = 'https://api.soundcloud.com/tracks/' + trackID + '?' + client;
+      sc.submit(url);
+    };
+    (function checkRoute() {
+      var url = $location.url().substring(1);
+      if(url.includes('soundcloud.com')) {
+        sc.url = url;
+        sc.submit();
+      } else if (!isNaN(url) && url.toString().length === 9) {
+        $scope.getDescription(url);
+      }
+    })();
     sc.toggleJSON = function() {
       sc.showJSON = !sc.showJSON;
     };
@@ -107,7 +112,14 @@
         if(item == '') {
           array[index] = '<br>';
         } else {
-          array[index] = Autolinker.link(item);
+          array[index] = Autolinker.link(item, {mention: 'twitter',
+            replaceFn: function(match) {
+              if(match.getType() === 'mention') {
+                return '<a href="https://soundcloud.com/' + match.getMention() + '" target="_blank">@' + match.getMention() + '</a>';
+              }
+              return true;
+            }
+          });
         }
       });
       return HTML;

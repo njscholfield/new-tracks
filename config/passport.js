@@ -27,18 +27,19 @@ module.exports = function(passport) {
       }
 
       if(!req.user) {
+        // not logged in – create new account
+        var newUser = new User();
         User.findOne({$or: [{'local.email': data.inputEmail}, {username: username}]}, function(err, user) {
           if(err){
             return done(err);
           }
 
-          if(user) {
-            if(user.username === username) {
-              return done(null, false, req.flash('signupMessage', 'That username has already been taken.'));
+          if(user || newUser.invalidUsername(username)) {
+            if(newUser.invalidUsername(username) || user.username === username) {
+              return done(null, false, req.flash('signupMessage', 'That username has already been taken or is invalid.'));
             }
             return done(null, false, req.flash('signupMessage', 'That email address is already taken.'));
           } else {
-            var newUser = new User();
             newUser.local.email = data.inputEmail;
             newUser.username = username;
             newUser.local.password = newUser.generateHash(password);
@@ -53,6 +54,7 @@ module.exports = function(passport) {
           }
         });
       } else {
+        // logged in – create local account with password
         if(req.user.username !== username) {
           var testUsername = username;
         }
@@ -62,7 +64,7 @@ module.exports = function(passport) {
             console.log('Error searching for used username or email: ' + err);
             return done(err);
           } else {
-            if(user && user.username === username && username !== req.user.username) {
+            if((user && user.username === username && username !== req.user.username) || req.user.invalidUsername(username)) {
               return done(null, false, req.flash('signupMessage', 'That username has already been taken.'));
             } else if(user && user.local.email === data.inputEmail) {
               return done(null, false, req.flash('signupMessage', 'That email address is already in use.'));
@@ -81,8 +83,6 @@ module.exports = function(passport) {
             }
           }
         });
-
-        //end
       }
     }
   ));

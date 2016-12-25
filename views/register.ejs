@@ -17,7 +17,7 @@
     <div class="container">
       <h4 class="<%= message['type'] %>"><%= message['content'] %></h4>
       <a href="/auth/soundcloud"><img class="pull-right" alt="login using SoundCloud" src="https://connect.soundcloud.com/2/btn-connect-l.png"></a>
-      <form action="/register/" method="post">
+      <form action="/register/?hash=<%= hash %>" method="post">
         <legend>Register</legend>
         <fieldset>
           <div class="form-group">
@@ -25,7 +25,7 @@
             <input type="email" name="inputEmail" class="form-control" placeholder="username@example.com" required="true" autocomplete="email">
           </div>
           <div class="form-group">
-            <label for="inputUsername">Username</label>
+            <label for="inputUsername">Username <button type="button" class="btn btn-xs btn-default" data-container="body" data-toggle="popover" data-placement="top" data-content="Your username can contain letters, numbers, and these symbols: $-_.+!*'(),">ℹ︎</button></label>
             <input type="text" name="inputUsername" class="form-control" placeholder="jsmith" required="true" autocapitalize="none" autocorrect="off">
           </div>
           <div class="form-group">
@@ -43,8 +43,7 @@
         </div>
       </form>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="https://noahscholfield.com/js/bootstrap.min.js"></script>
+    <% include ../views/partials/scripts.ejs %>
     <script>
     $(function () {
       $('[data-toggle="popover"]').popover()

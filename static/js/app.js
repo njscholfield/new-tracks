@@ -48,7 +48,7 @@
     this.releaseDate = releaseDate;
     this.submitInfo = {title: trackInfo.title, artist: trackInfo.user.username, releaseDate: releaseDate, trackID: trackInfo.id};
     this.ok = function() {
-      $http.post('/' + user.username + '/add', this.submitInfo)
+      $http.post('/api/' + user.username + '/add', this.submitInfo)
         .then(function success(response) {
           $uibModalInstance.close({success: true, response: response.data});
         }, function error(response) {

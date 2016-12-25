@@ -54,7 +54,7 @@
 
     $scope.getTracks = function() {
       return new Promise(function(resolve, reject) {
-        $http.get('/' + $scope.user.username)
+        $http.get('/api/' + $scope.user.username)
           .then(function success(response) {
             $scope.updateResult(response.data);
             $scope.updateTrackIDList(response.data.tracks);
@@ -111,7 +111,7 @@
     };
 
     this.delete = function() {
-      $http.post('/' + user.username + '/remove', this.submitInfo)
+      $http.post('/api/' + user.username + '/remove', this.submitInfo)
         .then(function success(response) {
           $uibModalInstance.close({success: true, response: response.data});
         }, function error(response) {
@@ -120,7 +120,7 @@
     };
 
     this.ok = function() {
-      $http.post('/' + user.username + '/edit', this.submitInfo)
+      $http.post('/api/' + user.username + '/edit', this.submitInfo)
         .then(function success(response) {
           $uibModalInstance.close({success: true, response: response.data});
         }, function error(response) {

@@ -33,3 +33,6 @@
 .form-control:focus, .form-control:hover {
   font-size: 1.1em;
 }
+.track-link:hover {
+  text-decoration: underline;
+}

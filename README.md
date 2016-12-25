@@ -2,9 +2,11 @@
 
 ### Description
 
-This project is a continuation of my original SoundCloud project that displays descriptions of tracks on SoundCloud. This project would help the user keep track of new tracks that will be released in the future that have previews posted on SoundCloud.
+This project is a continuation of my [original SoundCloud project](https://github.com/njscholfield/soundcloud) that displays descriptions of tracks on SoundCloud. It adds a database which allows users to save tracks for later. Users can either create an account or sign in with their SoundCloud account.
 
-From the description of the preview track, the user can add the track to a list of other upcoming tracks. If the release date is not included in the track info from the API, the user will be asked to provide the release date that may be found in the description or leave it blank.
+From the description of the track, the user can add the track to their list of tracks. If the release date is not included in the track info from the API, the user will be asked to provide the release date that may be found in the description or leave it blank.
+
+Each user has the ability to make their profile public, which allows other people to see the tracks a user has saved.
 
 ### Technologies Used
 - [Node.js](https://nodejs.org)
@@ -19,13 +21,13 @@ From the description of the preview track, the user can add the track to a list 
 
 ### To Do
 - [x] Option of table or block layout for tracks on larger displays
-- [ ] Public/Private Profiles
+- [x] Public/Private Profiles
   - ability to view track list of users whose accounts are 'public'
     - [x] add account visibility to db schema
     - [x] switch/checkbox/dropdown in profile
-  - /user/:username
-  - [ ] see list and click to view description
-    - [ ] support /#/trackID on main page
+  - /:username
+  - [x] see list and click to view description
+    - [x] support /#!/trackID on main page
   - [ ] search for user?
 - [ ] Password reset?
   - nodemailer, node-email-templates

@@ -2,23 +2,24 @@ module.exports = function(app, passport, tracks, account) {
 
   app.get('/register/', function(req, res) {
     if(req.isAuthenticated()) {
-      res.redirect('/');
+      res.redirect('/#!/' + req.query.hash);
     } else {
-      res.render('register', {message: {type: 'text-danger', content: req.flash('signupMessage')}, user: {} });
+      res.render('register', {message: {type: 'text-danger', content: req.flash('signupMessage')}, user: {hide:true}, hash: req.query.hash });
     }
   });
 
   app.post('/register/', passport.authenticate('local-signup', {
-    successRedirect: '/',
     failureRedirect: '/register/',
     failureFlash: true
-  }));
+  }), function(req, res) {
+    res.redirect('/#!/' + req.query.hash);
+  });
 
   app.get('/login/', function(req, res) {
     if(req.isAuthenticated()) {
-      res.redirect('/');
+      res.redirect('/#!/' + req.query.hash);
     } else {
-      res.render('login', {message: req.flash('loginMessage'), error: {}, user: {} });
+      res.render('login', {message: req.flash('loginMessage'), error: {}, user: {hide:true}, hash: req.query.hash });
     }
   });
 
@@ -29,37 +30,37 @@ module.exports = function(app, passport, tracks, account) {
     if(req.body.remember_me) {
       req.session.cookie.maxAge = 10 * 24 * 60 * 60 * 1000; /* 10 days */
     }
-    res.redirect('/');
+    res.redirect('/#!/' + req.query.hash);
   });
 
-  app.get('/profile/', isLoggedIn, function(req, res) {
+  app.get('/settings/', isLoggedIn, function(req, res) {
     res.render('profile', {user: req.user, message: req.flash('signupMessage'), success: req.flash('signupSuccess')});
   });
 
-  app.post('/profile/register/', passport.authenticate('local-signup', {
-    successRedirect: '/profile/',
-    failureRedirect: '/profile/',
+  app.post('/settings/register/', passport.authenticate('local-signup', {
+    successRedirect: '/settings/',
+    failureRedirect: '/settings/',
     failureFlash: true,
     successFlash: true
   }));
 
-  app.post('/profile/update/email', isLoggedIn, function(req, res) {
+  app.post('/settings/update/email', isLoggedIn, function(req, res) {
     account.updateEmail(req, res);
   });
 
-  app.post('/profile/update/username', isLoggedIn, function(req, res) {
+  app.post('/settings/update/username', isLoggedIn, function(req, res) {
     account.changeUsername(req, res);
   });
 
-  app.post('/profile/update/password', isLoggedIn, function(req, res) {
+  app.post('/settings/update/password', isLoggedIn, function(req, res) {
     account.changePassword(req, res);
   });
 
-  app.post('/profile/update/visibility', isLoggedIn, function(req, res) {
+  app.post('/settings/update/visibility', isLoggedIn, function(req, res) {
     account.changeProfileVisibility(req, res);
   });
 
-  app.post('/profile/delete-account', isLoggedIn, function(req, res) {
+  app.post('/settings/delete-account', isLoggedIn, function(req, res) {
     account.deleteAccount(req, res);
   });
 
@@ -92,20 +93,24 @@ module.exports = function(app, passport, tracks, account) {
     res.clearCookie('sessionID');
   });
 
-  app.get('/:username', function(req, res) {
+  app.get('/api/:username', function(req, res) {
     tracks.getTracks(req, res);
   });
 
-  app.post('/:username/add', function(req, res) {
+  app.post('/api/:username/add', function(req, res) {
     tracks.addTrackToList(req, res);
   });
 
-  app.post('/:username/edit', function(req, res) {
+  app.post('/api/:username/edit', function(req, res) {
     tracks.editTrackInList(req, res);
   });
 
-  app.post('/:username/remove', function(req, res) {
+  app.post('/api/:username/remove', function(req, res) {
     tracks.removeTrackFromList(req, res);
+  });
+
+  app.get('/:username/', function(req, res) {
+    tracks.showUserProfile(req, res);
   });
 
   function isLoggedIn(req, res, next) {

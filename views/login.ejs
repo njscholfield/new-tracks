@@ -17,7 +17,7 @@
     <div class="container">
       <h4 class="text-danger"><%= message %></h4>
       <a href="/auth/soundcloud"><img class="pull-right" alt="login using SoundCloud" src="https://connect.soundcloud.com/2/btn-connect-l.png"></a>
-      <form action="/login/" method="post">
+      <form action="/login/?hash=<%= hash %>" method="post">
         <legend>Sign In</legend>
         <fieldset>
           <div class="form-group <%= error['username'] %>">
@@ -40,7 +40,6 @@
         </div>
       </form>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="https://noahscholfield.com/js/bootstrap.min.js"></script>
+    <% include ../views/partials/scripts.ejs %>
   </body>
 </html>
