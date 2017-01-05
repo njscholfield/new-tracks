@@ -45,7 +45,8 @@
         $scope.getTracks().then(function success() {
           window.setTimeout(function() {
             if($scope.currentTrack) {
-              $anchorScroll($scope.currentTrack.toString());
+              var modeLetter = (trk.displayMode === 'Block') ? 'b' : 't';
+              $anchorScroll($scope.currentTrack.toString() + modeLetter);
             }
           }, 0);
         });

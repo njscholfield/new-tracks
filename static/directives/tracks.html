@@ -28,7 +28,7 @@
         </tr>
         <tr ng-repeat="track in filteredTracks = (trackCtrl.result.tracks | filter:query) | orderBy:'releaseDate'">
           <h4 class="text-info" ng-hide="filteredTracks.length">No results</h4>
-          <td><a class="btn-link" ng-click="getDescription(track.trackID)">{{ track.title }}</a></td>
+          <td><a class="btn-link" ng-click="getDescription(track.trackID)" id="{{ track.trackID + 't'}}">{{ track.title }}</a></td>
           <td>{{ track.artist }}</td>
           <td class="text-center">{{ track.releaseDate | date: 'longDate'}}</td>
           <td class="text-center"><a class="btn-link" ng-click="trackCtrl.editTrack(track)"><span class="glyphicon glyphicon-pencil"></span></a></td>
@@ -38,7 +38,7 @@
     <div ng-show="trackCtrl.currentMode('Block')">
       <div ng-repeat="track in filteredTracks | orderBy:'releaseDate'">
         <div>
-          <h3 class="text-primary track-link" id="{{ track.trackID }}" ng-click="getDescription(track.trackID)">{{ track.title }}</h3>
+          <h3 class="text-primary track-link" id="{{ track.trackID + 'b'}}" ng-click="getDescription(track.trackID)">{{ track.title }}</h3>
           <h5>{{ track.artist }}</h5>
           <h6>{{ track.releaseDate | date: 'longDate' }}</h6>
           <button class="btn btn-xs btn-primary" ng-click="trackCtrl.editTrack(track)"><span class="glyphicon glyphicon-pencil"></span> Edit Info</button>
