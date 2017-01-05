@@ -28,7 +28,7 @@
         </tr>
         <tr ng-repeat="track in filteredTracks = (trackCtrl.result.tracks | filter:query) | orderBy:'releaseDate'">
           <h4 class="text-info" ng-hide="filteredTracks.length">No results</h4>
-          <td><a class="btn-link" ng-click="getDescription(track.trackID)">{{ track.title }}</a></td>
+          <td id="{{ track.trackID }}"><a class="btn-link" ng-click="getDescription(track.trackID)">{{ track.title }}</a></td>
           <td>{{ track.artist }}</td>
           <td class="text-center">{{ track.releaseDate | date: 'longDate'}}</td>
           <td class="text-center"><a class="btn-link" ng-click="trackCtrl.editTrack(track)"><span class="glyphicon glyphicon-pencil"></span></a></td>
