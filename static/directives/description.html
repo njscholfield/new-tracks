@@ -36,6 +36,8 @@
       <hr>
     <p ng-repeat="paragraph in descriptionCtrl.html track by $index" ng-bind-html="paragraph"></p>
     <br>
+    <h6 title="{{descriptionCtrl.postDate | date:'medium'}}">POSTED ON: {{descriptionCtrl.postDate | date: 'mediumDate'}}</h6>
+
     <button class="btn btn-success" ng-show="user.loggedIn" ng-disabled="tracks.includes(descriptionCtrl.trackJSON.id.toString())" ng-click="descriptionCtrl.addTrackToList(descriptionCtrl.trackJSON)">+ Add Track To List</button>
     <br>
   <div class="row">
