@@ -111,9 +111,9 @@ exports.showUserProfile = function(req, res) {
     res.render('publicProfile', {user: req.user, username: username, tracks: result});
   }, function failure(err) {
     if(err === 'private') {
-      res.render('error', {user: req.user, image: 'fence', message: {_1: 'Oops... Looks like you aren\'t allowed here.', _2: 'This profile is private.' }, position: '35%'});
+      res.render('error', {user: req.user, image: 'fence', message: {_1: 'Oops... Looks like you aren\'t allowed here.', _2: 'This profile is private' }, position: '35%', credit: 'https://unsplash.com/photos/9PPvnEd92xE'});
     } else {
-      res.render('error', {user: req.user, image: 'astronaut', message: {_1: 'Looks like you\'re lost...', _2: 'Page could not be found.' }, position: '50% 40%'});
+      res.render('error', {user: req.user, image: 'astronaut', message: {_1: 'Looks like you\'re lost...', _2: 'Page could not be found' }, position: '50% 40%', credit: 'https://unsplash.com/photos/Yj1M5riCKk4'});
     }
   });
 };

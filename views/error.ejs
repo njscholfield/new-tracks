@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= message._2 %> | New Tracks</title>
     <link rel="stylesheet" href="https://noahscholfield.com/css/bootstrap-yeti.min.css">
     <style>
       html, body {
@@ -17,6 +18,14 @@
         background-size: cover;
         background-position: <%= position %>;
       }
+      .credit {
+        position: absolute;
+        bottom: 0.2em;
+        right: 1em;
+      }
+      .credit > a {
+        color: #ddd;
+      }
     </style>
   </head>
   <body>
@@ -24,6 +33,9 @@
       <%- include('../views/partials/navbar.ejs', {user: user} ) %>
       <h1 class="text-center"><%= message._1 %></h1>
       <h3 class="text-center text-info"><%= message._2 %></h3>
+    </div>
+    <div class="credit">
+      <a href="<%= credit %>" target="_blank"><h6>Photo Credit</h6></a>
     </div>
     <% include ../views/partials/scripts.ejs %>
   </body>
