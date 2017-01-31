@@ -38,7 +38,8 @@
     <br>
     <h6 title="{{descriptionCtrl.postDate | date:'medium'}}">POSTED ON: {{descriptionCtrl.postDate | date: 'mediumDate'}}</h6>
 
-    <button class="btn btn-success" ng-show="user.loggedIn" ng-disabled="tracks.includes(descriptionCtrl.trackJSON.id.toString())" ng-click="descriptionCtrl.addTrackToList(descriptionCtrl.trackJSON)">+ Add Track To List</button>
+    <button class="btn btn-success" ng-show="user.loggedIn && !tracks.includes(descriptionCtrl.trackJSON.id.toString())" ng-click="descriptionCtrl.addTrackToList(descriptionCtrl.trackJSON)">+ Add Track To List</button>
+    <button class="btn btn-default disabled" ng-show="user.loggedIn && tracks.includes(descriptionCtrl.trackJSON.id.toString())"><span class="glyphicon glyphicon-ok"></span> Track Added To List</button>
     <br>
   <div class="row">
     <div class="col-xs-6">
