@@ -34,3 +34,5 @@ Each user has the ability to make their profile public, which allows other peopl
 - [x] Delete account
   - confirmation modal
 - [x] Implement Disconnect from SoundCloud
+- [ ] show error if track has been removed from API/SoundCloud
+- [ ] show a loading indicator when getting track info
