@@ -39,13 +39,13 @@
       });
     };
     sc.submit = function(callURL) {
+      loading(true);
       if(callURL === undefined) {
         callURL = scapi + sc.url + '&' + client;
       }
       $http.get(callURL)
         .then(function success(response) {
           processJSON(response);
-          $scope.setPanel(2);
           $location.url(response.data.id);
         }, function error(response) {
           if(response.status === 403) {
@@ -62,8 +62,11 @@
                 sc.trackJSON = {'error': 'Something went wrong... This could have been caused by a track for which the information is not available, or a server/network problem. Please try again.', 'code': 'JSONP Response Code ' + response.status};
               });
           }
-          $scope.setPanel(2);
           console.log(response.status + ' ' + response.statusText);
+        })
+        .then(function() {
+          $scope.setPanel(2);
+          loading(false);
         });
       function processJSON(response) {
         sc.trackJSON = response.data;
@@ -143,5 +146,14 @@
       result.push(text);
     }
     return result;
+  };
+
+  var loading = function(input) {
+    const loadingBox = document.querySelector('.loading-background');
+    if(input) {
+      loadingBox.classList.remove('hidden');
+    } else {
+      loadingBox.classList.add('hidden');
+    }
   };
 })();

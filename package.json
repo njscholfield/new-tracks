@@ -1,6 +1,6 @@
 {
   "name": "new-tracks",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "An addition to my SoundCloud description website to stores a list of tracks",
   "engines": {
     "node": "6.x.x"
