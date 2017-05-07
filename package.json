@@ -1,7 +1,7 @@
 {
   "name": "new-tracks",
   "version": "2.2.0",
-  "description": "An addition to my SoundCloud description website to stores a list of tracks",
+  "description": "Shows SoundCloud track descriptions and saves tracks for later",
   "engines": {
     "node": "6.x.x"
   },
@@ -14,13 +14,14 @@
     "url": "git+https://github.com/njscholfield/new-tracks.git"
   },
   "keywords": [
-    "soundcloud"
+    "soundcloud", "nodejs", "angularjs"
   ],
   "author": "Noah Scholfield",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/njscholfield/new-tracks/issues"
   },
-  "homepage": "https://github.com/njscholfield/new-tracks#readme",
+  "homepage": "https://tracks.noahscholfield.com",
   "dependencies": {
     "bcrypt": "^1.0.2",
     "body-parser": "^1.15.2",
