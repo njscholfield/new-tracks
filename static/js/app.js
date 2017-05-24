@@ -17,6 +17,7 @@
           $scope.user = response.data;
           if(response.data.loggedIn) {
             $scope.getTracks();
+            $scope.checkForResumeTrack();
           }
         }, function error(response) {
           console.log('Error checking login status: ' + response);
@@ -40,6 +41,23 @@
       if($scope.nearTopOfPage != oldstate) {
         $scope.$apply();
       }
+    };
+  }]);
+
+  app.controller('resumeController', ['$scope', '$timeout', '$location', function($scope, $timeout) {
+    var resume = this;
+    resume.visible = false;
+    resume.hide = function() {
+      resume.visible = false;
+    };
+    $scope.checkForResumeTrack = function() {
+      $timeout(function() {
+        if($scope.user && $scope.user.loggedIn && $scope.user.resumeTrack && $scope.user.resumeTrack !== $scope.currentTrack) {
+          resume.visible = true;
+        } else {
+          resume.visible = false;
+        }
+      }, 0);
     };
   }]);
 
@@ -97,6 +115,14 @@
       restrict: 'E',
       controller: 'trackController as trackCtrl',
       templateUrl: 'directives/tracks.html'
+    };
+  });
+
+  app.directive('resumeAlert', function() {
+    return {
+      restrict: 'E',
+      controller: 'resumeController as resumeCtrl',
+      templateUrl: 'directives/resumeAlert.html'
     };
   });
 

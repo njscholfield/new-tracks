@@ -31,6 +31,7 @@ var userSchema = mongoose.Schema({
   },
   username: {type: String, index: { unique: true }},
   profileVisibility: {type: String, default: 'private'},
+  currentTrack: {type: String},
   tracks: [trackSchema]
 });
 

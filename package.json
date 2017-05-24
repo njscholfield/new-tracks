@@ -1,6 +1,6 @@
 {
   "name": "new-tracks",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Shows SoundCloud track descriptions and saves tracks for later",
   "engines": {
     "node": "6.x.x"
@@ -14,7 +14,9 @@
     "url": "git+https://github.com/njscholfield/new-tracks.git"
   },
   "keywords": [
-    "soundcloud", "nodejs", "angularjs"
+    "soundcloud",
+    "nodejs",
+    "angularjs"
   ],
   "author": "Noah Scholfield",
   "license": "ISC",
@@ -34,11 +36,5 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "passport-soundcloud": "^0.2.0"
-  },
-  "eslintConfig": {
-    "globals": {
-      "angular": false,
-      "Autolinker": false
-    }
   }
 }

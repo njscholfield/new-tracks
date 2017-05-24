@@ -11,7 +11,7 @@ exports.getTracks = function(req, res) {
 };
 
 var getTracksFromDatabase = function (req, res, username) {
-  user.findOne({username: username}, function(err, result) {
+  user.findOne({username: username}, 'tracks' , function(err, result) {
     if(err) {
       console.log('Error searching database: ' + err);
       res.status(500).json({error: err});
@@ -102,6 +102,33 @@ var addTrackToExistingUser = function(req, res, result, newTrack) {
       res.status(200).json(result.tracks);
     }
   });
+};
+
+exports.getCurrentTrack = function(username) {
+  return new Promise(function(resolve, reject) {
+    user.findOne({username: username}, 'currentTrack', function(err, result) {
+      if(err) {
+        return reject({error: err});
+      }
+      return resolve({currentTrack: result.currentTrack});
+    });
+  });
+};
+
+exports.updateCurrentTrack = function(req, res) {
+  if(req.isAuthenticated() && req.user.username === req.params.username) {
+    var data = req.body;
+    user.findOneAndUpdate({username: req.user.username}, {currentTrack: data.currentTrack}, function(err) {
+      if(err) {
+        console.log('Error updating current track', err);
+        res.status(500).json({error: err});
+      } else {
+        res.status(200).json({success: true});
+      }
+    });
+  } else {
+    res.sendStatus(403);
+  }
 };
 
 exports.showUserProfile = function(req, res) {

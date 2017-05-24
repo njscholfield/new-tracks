@@ -8,9 +8,9 @@
     <link rel="apple-touch-icon-precomposed" sizes="152x152" href="apple-touch-icon-152x152.png">
     <link rel="stylesheet" href="https://noahscholfield.com/css/bootstrap-yeti.min.css">
     <link rel="stylesheet" href="css/home.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.6.1/angular-sanitize.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-animate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.4/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.6.4/angular-sanitize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.4/angular-animate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/autolinker/1.4.3/Autolinker.min.js"></script>
     <script src="https://use.fortawesome.com/8c4f3c3d.js"></script>
@@ -20,6 +20,7 @@
   </head>
   <body ng-app="new-tracks">
     <navbar id="top"></navbar>
+
     <div class="jumbotron">
       <div class="container">
         <h1>New Tracks</h1>
@@ -32,6 +33,7 @@
       <description ng-show="panelCtrl.currentPanel(2)"></description>
       <tracks ng-show="panelCtrl.currentPanel(3)"></tracks>
       <button class="btn btn-primary pull-right visible-xs" ng-hide="nearTopOfPage" title="Scroll to Top" id="scrollToTop" ng-click="scrollToTop()"><span class="glyphicon glyphicon-chevron-up"></span></button>
+      <resume-alert ng-show="nearTopOfPage"></resume-alert>
     </div>
     <div class="loading-background hidden">
       <div class="loading">

@@ -67,6 +67,9 @@
         .then(function() {
           $scope.setPanel(2);
           loading(false);
+          if($scope.user.loggedIn) {
+            $http.post('/api/' + $scope.user.username + '/current', {currentTrack: $scope.currentTrack});
+          }
         });
       function processJSON(response) {
         sc.trackJSON = response.data;
@@ -88,15 +91,20 @@
       var url = 'https://api.soundcloud.com/tracks/' + trackID + '?' + client;
       sc.submit(url);
     };
-    (function checkRoute() {
+
+    $scope.checkRoute = function() {
       var url = $location.url().substring(1);
       if(url.includes('soundcloud.com')) {
         sc.url = url;
         sc.submit();
       } else if (!isNaN(url) && url.toString().length === 9) {
+        $scope.currentTrack = url;
         $scope.getDescription(url);
       }
-    })();
+    };
+    $scope.checkRoute();
+    $scope.$on('$locationChangeStart', $scope.checkRoute);
+
     sc.toggleJSON = function() {
       sc.showJSON = !sc.showJSON;
     };

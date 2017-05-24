@@ -3,8 +3,8 @@
 
   app.controller('trackController', ['$scope', '$http', '$uibModal', '$anchorScroll', 'uibButtonConfig', function($scope, $http, $uibModal, $anchorScroll, uibButtonConfig) {
     var trk = this;
-    trk.result = [];
-    $scope.tracks = [];
+    trk.trackList = [];
+    $scope.trackIDList = [];
     trk.searchCollapsed = true;
     uibButtonConfig.activeClass = 'btn-primary';
     var sizeTester = document.getElementById('sizeTester');
@@ -27,15 +27,15 @@
       trk.showJSON = !trk.showJSON;
     };
 
-    $scope.updateResult = function(input) {
-      trk.result = input;
+    $scope.updateTrackList = function(input) {
+      trk.trackList = input;
     };
 
     $scope.updateTrackIDList = function(tracks) {
-      $scope.tracks = [];
+      $scope.trackIDList = [];
       if(tracks.length > 0) {
         tracks.forEach(function(track) {
-          $scope.tracks.push(track.trackID);
+          $scope.trackIDList.push(track.trackID);
         });
       }
     };
@@ -57,7 +57,7 @@
       return new Promise(function(resolve, reject) {
         $http.get('/api/' + $scope.user.username)
           .then(function success(response) {
-            $scope.updateResult(response.data);
+            $scope.updateTrackList(response.data.tracks);
             $scope.updateTrackIDList(response.data.tracks);
             resolve('Tracks fetched sucessfully');
           }, function error(response) {
@@ -93,7 +93,7 @@
       });
       modalInstance.result.then(function close(response) {
         if(response.success) {
-          $scope.updateResult({tracks: response.response});
+          $scope.updateTrackList(response.response);
           $scope.updateTrackIDList(response.response);
         } else {
           console.log('Error removing track: ' + response.response);

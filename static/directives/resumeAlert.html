@@ -1,0 +1,5 @@
+<div id="resume" class="alert alert-dismissable" ng-if="resumeCtrl.visible">
+  <button type="button" class="close" ng-click="resumeCtrl.hide()">&times;</button>
+  <h5>Looks like you had a track open. Do you want to view it again?</h5>
+  <a class="btn btn-xs btn-primary" href="/#!/{{user.resumeTrack}}" ng-click="resumeCtrl.hide()">View track</a>
+</div>

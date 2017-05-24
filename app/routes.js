@@ -76,7 +76,12 @@ module.exports = function(app, passport, tracks, account) {
 
   app.get('/auth/verify', function(req, res) {
     if(req.isAuthenticated()) {
-      res.status(200).json({loggedIn: true, username: req.user.username});
+      tracks.getCurrentTrack(req.user.username)
+        .then(function success(result) {
+          res.status(200).json({loggedIn: true, username: req.user.username, resumeTrack: result.currentTrack});
+        }, function error() {
+          res.status(200).json({loggedIn: true, username: req.user.username});
+        });
     } else {
       res.status(200).json({loggedIn: false});
     }
@@ -107,6 +112,10 @@ module.exports = function(app, passport, tracks, account) {
 
   app.post('/api/:username/remove', function(req, res) {
     tracks.removeTrackFromList(req, res);
+  });
+
+  app.post('/api/:username/current', function(req, res) {
+    tracks.updateCurrentTrack(req, res);
   });
 
   app.get('/:username/', function(req, res) {

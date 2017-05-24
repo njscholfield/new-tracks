@@ -10,6 +10,17 @@
 #search {
   height: 2.25em;
 }
+#resume {
+  min-width: 25%;
+  max-width: 75%;
+  margin: 1em;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: .5px solid gray;
+  border-left: 5px solid rgb(67, 172, 106);
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
 
 .icon-soundcloud {
   color: #f50;
