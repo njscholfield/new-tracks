@@ -53,7 +53,7 @@
     };
     resume.getTrackInfo = function(trackID) {
       return new Promise(function(resolve) {
-        var url = `https://api.soundcloud.com/tracks/${trackID}?client_id=30cba84d4693746b0a2fbc0649b2e42c`;
+        var url = 'https://api.soundcloud.com/tracks/' + trackID + '?client_id=30cba84d4693746b0a2fbc0649b2e42c';
         $http.get(url)
           .then(function success(response) {
             resume.trackInfo = response.data;
