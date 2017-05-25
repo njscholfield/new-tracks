@@ -1,6 +1,6 @@
 {
   "name": "new-tracks",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Shows SoundCloud track descriptions and saves tracks for later",
   "engines": {
     "node": "6.x.x"

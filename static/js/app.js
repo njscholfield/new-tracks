@@ -44,16 +44,30 @@
     };
   }]);
 
-  app.controller('resumeController', ['$scope', '$timeout', '$location', function($scope, $timeout) {
+  app.controller('resumeController', ['$scope', '$timeout', '$http', function($scope, $timeout, $http) {
     var resume = this;
     resume.visible = false;
+    resume.trackInfo = {};
     resume.hide = function() {
       resume.visible = false;
+    };
+    resume.getTrackInfo = function(trackID) {
+      return new Promise(function(resolve) {
+        var url = `https://api.soundcloud.com/tracks/${trackID}?client_id=30cba84d4693746b0a2fbc0649b2e42c`;
+        $http.get(url)
+          .then(function success(response) {
+            resume.trackInfo = response.data;
+            resolve();
+          });
+      });
     };
     $scope.checkForResumeTrack = function() {
       $timeout(function() {
         if($scope.user && $scope.user.loggedIn && $scope.user.resumeTrack && $scope.user.resumeTrack !== $scope.currentTrack) {
-          resume.visible = true;
+          resume.getTrackInfo($scope.user.resumeTrack).then(function success() {
+            resume.visible = true;
+            $scope.$apply();
+          });
         } else {
           resume.visible = false;
         }
