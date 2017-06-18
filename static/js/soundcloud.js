@@ -31,7 +31,7 @@
       });
       modalInstance.result.then(function close(response) {
         if(response.success) {
-          $scope.updateResult({tracks: response.response});
+          $scope.updateTrackList(response.response);
           $scope.updateTrackIDList(response.response);
         } else {
           console.log('Error adding: ' + response.response);
