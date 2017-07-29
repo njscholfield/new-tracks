@@ -15,7 +15,8 @@ var trackSchema = mongoose.Schema({
   title: {type: String, required: true},
   artist: {type: String, required: true},
   releaseDate: {type: Date, required: false},
-  trackID: {type: String, required: true}
+  trackID: {type: String, required: true},
+  isFavorite: {type: Boolean, default: false}
 });
 var track = mongoose.model('track', trackSchema);
 

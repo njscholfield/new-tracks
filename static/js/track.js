@@ -4,6 +4,7 @@
   app.controller('trackController', ['$scope', '$http', '$uibModal', '$anchorScroll', 'uibButtonConfig', function($scope, $http, $uibModal, $anchorScroll, uibButtonConfig) {
     var trk = this;
     trk.trackList = [];
+    trk.favoritesList = [];
     $scope.trackIDList = [];
     trk.searchCollapsed = true;
     uibButtonConfig.activeClass = 'btn-primary';
@@ -29,6 +30,7 @@
 
     $scope.updateTrackList = function(input) {
       trk.trackList = input;
+      trk.favoritesList = trk.trackList.filter((track) => {return track.isFavorite;});
     };
 
     $scope.updateTrackIDList = function(tracks) {
@@ -108,7 +110,12 @@
       trackID: track.trackID,
       title: track.title,
       artist: track.artist,
-      releaseDate: releaseDate
+      releaseDate: releaseDate,
+      isFavorite: track.isFavorite
+    };
+
+    this.updateFavorite = function(newValue) {
+      this.submitInfo.isFavorite = newValue;
     };
 
     this.delete = function() {

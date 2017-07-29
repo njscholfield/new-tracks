@@ -18,9 +18,13 @@
       </div>
     </fieldset>
   </form>
+  <button class="btn btn-default" ng-if="!vm.submitInfo.isFavorite" ng-click="vm.updateFavorite(true)" title="Click to favorite this track"><span class="glyphicon glyphicon-star-empty"></span> Favorite</button>
+  <button class="btn btn-primary" ng-if="vm.submitInfo.isFavorite" ng-click="vm.updateFavorite(false)" title="Click to unfavorite this track"><span class="glyphicon glyphicon-star"></span> Favorite</button>
+  <br>
+  <br>
   <button class="btn btn-danger btn-block" ng-click="vm.delete()">Delete Track</button>
 </div>
 <div class="modal-footer">
-  <button class="btn btn-primary" type="submit" ng-click="vm.ok()">Submit</button>
+  <button class="btn btn-primary" type="submit" ng-click="vm.ok()">Save</button>
   <button class="btn btn-default" type="button" ng-click="vm.cancel()">Cancel</button>
 </div>
