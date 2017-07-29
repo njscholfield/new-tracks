@@ -87,7 +87,8 @@ var addTrackToDatabase = function(req, res, data, username) {
         title: data.title,
         artist: data.artist,
         releaseDate: data.releaseDate,
-        trackID: data.trackID
+        trackID: data.trackID,
+        isFavorite: data.isFavorite
       });
       addTrackToExistingUser(req, res, result, newTrack);
     }

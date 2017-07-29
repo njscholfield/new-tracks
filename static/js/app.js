@@ -78,7 +78,10 @@
   app.controller('addTrackModalController', function($http, $uibModalInstance, trackInfo, releaseDate, user) {
     this.trackInfo = trackInfo;
     this.releaseDate = releaseDate;
-    this.submitInfo = {title: trackInfo.title, artist: trackInfo.user.username, releaseDate: releaseDate, trackID: trackInfo.id};
+    this.submitInfo = {title: trackInfo.title, artist: trackInfo.user.username, releaseDate: releaseDate, trackID: trackInfo.id, isFavorite: false};
+    this.updateFavorite = function(newValue) {
+      this.submitInfo.isFavorite = newValue;
+    };
     this.ok = function() {
       $http.post('/api/' + user.username + '/add', this.submitInfo)
         .then(function success(response) {
