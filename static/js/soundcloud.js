@@ -76,7 +76,7 @@
         sc.html = JSONtoHTML(sc.trackJSON.description);
         sc.tags = processTags(sc.trackJSON.tag_list);
         sc.postDate = new Date(sc.trackJSON.created_at);
-        $scope.currentTrack = sc.trackJSON.id;
+        $scope.currentTrack = sc.trackJSON.id.toString();
         if(sc.trackJSON.artwork_url) {
           sc.imgURL = sc.trackJSON.artwork_url.replace('large', 't500x500');
         } else {
