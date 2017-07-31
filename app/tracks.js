@@ -6,7 +6,7 @@ exports.getTracks = function(req, res) {
   user.findOne({username: req.user.username}, 'tracks' , function(err, result) {
     if(err) {
       console.log('Error searching database: ' + err);
-      res.status(500).json({error: err});
+      res.status(500).json({type: 'error', message: err});
     } else {
       res.status(200).json(result);
     }
@@ -25,7 +25,7 @@ exports.editTrackInList = function(req, res) {
   user.findOneAndUpdate({username: username, 'tracks.trackID': data.trackID}, {$set: {'tracks.$': newTrack}}, {new: true}, function(err, result) {
     if(err) {
       console.log('Error updating track: ' + err);
-      res.status(400).json({error: err});
+      res.status(400).json({type: 'error', message: err});
     } else {
       res.status(200).json(result.tracks);
     }
@@ -37,7 +37,7 @@ exports.removeTrackFromList = function(req, res) {
   user.findOneAndUpdate({username: username}, {$pull: {tracks: {trackID: data.trackID} } }, {new: true}, function(err, result) {
     if(err) {
       console.log('Error removing track: ' + err);
-      res.status(400).json({error: err});
+      res.status(400).json({type: 'error', message: err});
     } else {
       res.status(200).json(result.tracks);
     }
@@ -49,7 +49,7 @@ exports.addTrackToList = function(req, res) {
   user.findOne({username: username}, function(err, result) {
     if(err) {
       console.log('Error searching database: ' + err);
-      res.status(400).json({error: err});
+      res.status(400).json({type: 'error', message: err});
     } else {
       var newTrack = new track({
         title: data.title,
@@ -67,7 +67,7 @@ var addTrackToExistingUser = function(req, res, result, newTrack) {
   user.findOneAndUpdate({_id: result._id}, {$push: {tracks: newTrack}}, {new: true}, function(err, result) {
     if(err) {
       console.log('Error $push new track: ' + err);
-      res.status(400).json({error: err});
+      res.status(400).json({type: 'error', message: err});
     } else {
       res.status(200).json(result.tracks);
     }
@@ -78,7 +78,7 @@ exports.getCurrentTrack = function(username) {
   return new Promise(function(resolve, reject) {
     user.findOne({username: username}, 'currentTrack', function(err, result) {
       if(err) {
-        return reject({error: err});
+        return reject({type: 'error', message: err});
       }
       return resolve({currentTrack: result.currentTrack});
     });
@@ -91,7 +91,7 @@ exports.updateCurrentTrack = function(req, res) {
     user.findOneAndUpdate({username: username}, {currentTrack: data.currentTrack}, function(err) {
       if(err) {
         console.log('Error updating current track', err);
-        res.status(500).json({error: err});
+        res.status(500).json({type: 'error', message: err});
       } else {
         res.status(200).json({success: true});
       }

@@ -28,6 +28,7 @@
     <noscript><h3 class="text-warning text-center">JavaScript is required for this page to work. Please enable JavaScript.</h3></noscript>
     <div class="container" ng-controller="PanelController as panelCtrl">
       <navpills></navpills>
+      <error-alert></error-alert>
       <input-form ng-show="panelCtrl.currentPanel(1)"></input-form>
       <description ng-show="panelCtrl.currentPanel(2)"></description>
       <tracks ng-show="panelCtrl.currentPanel(3)"></tracks>

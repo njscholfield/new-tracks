@@ -134,7 +134,7 @@ module.exports = function(app, passport, tracks, account) {
     if(req.isAuthenticated() && req.user.username === req.params.username) {
       return next();
     } else {
-      res.status(403).json({success: false, message: 'It looks like you aren\'t logged in'});
+      res.status(403).json({type: 'error', message: 'It looks like you aren\'t logged in.'});
     }
   }
 

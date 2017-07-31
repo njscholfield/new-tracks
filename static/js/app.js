@@ -44,6 +44,23 @@
     };
   }]);
 
+  app.controller('ErrorController', ['$scope', function($scope) {
+    var error = this;
+    error.message = 'Error';
+    error.type = 'alert-danger';
+    error.visible = false;
+
+    error.hide = function() {
+      error.visible = false;
+    };
+
+    $scope.displayError = function(type, message) {
+      error.type = (type === 'error') ? 'alert-danger': `alert-${type}`;
+      error.message = message;
+      error.visible = true;
+    };
+  }]);
+
   app.controller('resumeController', ['$scope', '$timeout', '$http', function($scope, $timeout, $http) {
     var resume = this;
     resume.visible = false;
@@ -100,6 +117,14 @@
       restrict: 'E',
       controller: 'PanelController as panelCtrl',
       templateUrl: 'directives/loginNav.html'
+    };
+  });
+
+  app.directive('errorAlert', function() {
+    return {
+      restrict: 'E',
+      controller: 'ErrorController as errorCtrl',
+      templateUrl: 'directives/errorAlert.html'
     };
   });
 

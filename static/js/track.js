@@ -65,6 +65,7 @@
           }, function error(response) {
             if(response.status === 403) {
               $scope.checkLogin();
+              $scope.displayError(response.data.type, response.data.message);
             }
             reject(Error(response));
           });
@@ -98,7 +99,8 @@
           $scope.updateTrackList(response.response);
           $scope.updateTrackIDList(response.response);
         } else {
-          console.log('Error removing track: ' + response.response);
+          $scope.displayError(response.response.data.type, response.response.data.message);
+          console.log('Error removing track: ', response.response.data.message);
         }
       });
     };

@@ -35,6 +35,7 @@
           $scope.updateTrackIDList(response.response);
         } else {
           console.log('Error adding: ' + response.response);
+          $scope.displayError(response.response.data.type, response.response.data.message);
         }
       });
     };
