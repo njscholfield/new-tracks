@@ -67,7 +67,7 @@
         .then(function() {
           $scope.setPanel(2);
           loading(false);
-          if($scope.user.loggedIn) {
+          if($scope.user.loggedIn && $scope.currentTrack) {
             $http.post('/api/' + $scope.user.username + '/current', {currentTrack: $scope.currentTrack});
           }
         });
@@ -88,8 +88,10 @@
       }
     };
     $scope.getDescription = function(trackID) {
-      var url = 'https://api.soundcloud.com/tracks/' + trackID + '?' + client;
-      sc.submit(url);
+      if(trackID && trackID.toString().length === 9) {
+        var url = 'https://api.soundcloud.com/tracks/' + trackID + '?' + client;
+        sc.submit(url);
+      }
     };
 
     $scope.checkRoute = function() {

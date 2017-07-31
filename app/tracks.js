@@ -118,8 +118,8 @@ exports.getCurrentTrack = function(username) {
 };
 
 exports.updateCurrentTrack = function(req, res) {
-  if(req.isAuthenticated() && req.user.username === req.params.username) {
-    var data = req.body;
+  var data = req.body;
+  if(req.isAuthenticated() && req.user.username === req.params.username && data.currentTrack) {
     user.findOneAndUpdate({username: req.user.username}, {currentTrack: data.currentTrack}, function(err) {
       if(err) {
         console.log('Error updating current track', err);
