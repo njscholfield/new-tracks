@@ -98,23 +98,23 @@ module.exports = function(app, passport, tracks, account) {
     res.clearCookie('sessionID');
   });
 
-  app.get('/api/:username', function(req, res) {
+  app.get('/api/:username', isAuthorized, function(req, res) {
     tracks.getTracks(req, res);
   });
 
-  app.post('/api/:username/add', function(req, res) {
+  app.post('/api/:username/add', isAuthorized, function(req, res) {
     tracks.addTrackToList(req, res);
   });
 
-  app.post('/api/:username/edit', function(req, res) {
+  app.post('/api/:username/edit', isAuthorized, function(req, res) {
     tracks.editTrackInList(req, res);
   });
 
-  app.post('/api/:username/remove', function(req, res) {
+  app.post('/api/:username/remove', isAuthorized, function(req, res) {
     tracks.removeTrackFromList(req, res);
   });
 
-  app.post('/api/:username/current', function(req, res) {
+  app.post('/api/:username/current', isAuthorized, function(req, res) {
     tracks.updateCurrentTrack(req, res);
   });
 
@@ -128,6 +128,14 @@ module.exports = function(app, passport, tracks, account) {
     }
     req.flash('loginMessage', 'You must be logged in to view this page!');
     res.redirect('/login/');
+  }
+
+  function isAuthorized(req, res, next) {
+    if(req.isAuthenticated() && req.user.username === req.params.username) {
+      return next();
+    } else {
+      res.status(403).json({success: false, message: 'It looks like you aren\'t logged in'});
+    }
   }
 
 };

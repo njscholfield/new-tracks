@@ -3,15 +3,7 @@ var user = models.user;
 var track = models.track;
 
 exports.getTracks = function(req, res) {
-  if(req.isAuthenticated() && req.user.username === req.params.username) {
-    getTracksFromDatabase(req, res, req.user.username);
-  } else {
-    res.sendStatus(403);
-  }
-};
-
-var getTracksFromDatabase = function (req, res, username) {
-  user.findOne({username: username}, 'tracks' , function(err, result) {
+  user.findOne({username: req.user.username}, 'tracks' , function(err, result) {
     if(err) {
       console.log('Error searching database: ' + err);
       res.status(500).json({error: err});
@@ -22,15 +14,7 @@ var getTracksFromDatabase = function (req, res, username) {
 };
 
 exports.editTrackInList = function(req, res) {
-  var data = req.body;
-  if(req.isAuthenticated() && req.user.username === req.params.username) {
-    editTrackInDatabase(req, res, data, req.user.username);
-  } else {
-    res.sendStatus(403);
-  }
-};
-
-var editTrackInDatabase = function(req, res, data, username) {
+  var [data, username] = [req.body, req.user.username];
   var newTrack = new track({
     title: data.title,
     artist: data.artist,
@@ -49,15 +33,7 @@ var editTrackInDatabase = function(req, res, data, username) {
 };
 
 exports.removeTrackFromList = function(req, res) {
-  var data = req.body;
-  if(req.isAuthenticated() && req.user.username === req.params.username) {
-    removeTrackFromDatabase(req, res, data, req.user.username);
-  } else {
-    res.sendStatus(403);
-  }
-};
-
-var removeTrackFromDatabase = function (req, res, data, username) {
+  var [data, username] = [req.body, req.user.username];
   user.findOneAndUpdate({username: username}, {$pull: {tracks: {trackID: data.trackID} } }, {new: true}, function(err, result) {
     if(err) {
       console.log('Error removing track: ' + err);
@@ -69,15 +45,7 @@ var removeTrackFromDatabase = function (req, res, data, username) {
 };
 
 exports.addTrackToList = function(req, res) {
-  var data = req.body;
-  if(req.isAuthenticated() && req.user.username === req.params.username) {
-    addTrackToDatabase(req, res, data, req.user.username);
-  } else {
-    res.sendStatus(403);
-  }
-};
-
-var addTrackToDatabase = function(req, res, data, username) {
+  var [data, username] = [req.body, req.user.username];
   user.findOne({username: username}, function(err, result) {
     if(err) {
       console.log('Error searching database: ' + err);
@@ -118,9 +86,9 @@ exports.getCurrentTrack = function(username) {
 };
 
 exports.updateCurrentTrack = function(req, res) {
-  var data = req.body;
-  if(req.isAuthenticated() && req.user.username === req.params.username && data.currentTrack) {
-    user.findOneAndUpdate({username: req.user.username}, {currentTrack: data.currentTrack}, function(err) {
+  var [data, username] = [req.body, req.user.username];
+  if(data.currentTrack) {
+    user.findOneAndUpdate({username: username}, {currentTrack: data.currentTrack}, function(err) {
       if(err) {
         console.log('Error updating current track', err);
         res.status(500).json({error: err});
