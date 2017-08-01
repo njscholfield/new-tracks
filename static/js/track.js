@@ -4,8 +4,8 @@
   app.controller('trackController', ['$scope', '$http', '$uibModal', '$anchorScroll', 'uibButtonConfig', function($scope, $http, $uibModal, $anchorScroll, uibButtonConfig) {
     var trk = this;
     trk.trackList = [];
-    trk.favoritesList = [];
     $scope.trackIDList = [];
+    $scope.query = {};
     trk.searchCollapsed = true;
     uibButtonConfig.activeClass = 'btn-primary';
     var sizeTester = document.getElementById('sizeTester');
@@ -30,7 +30,7 @@
 
     $scope.updateTrackList = function(input) {
       trk.trackList = input;
-      trk.favoritesList = trk.trackList.filter((track) => {return track.isFavorite;});
+      $scope.numOfFavTracks = trk.trackList.filter((track) => {return track.isFavorite;}).length;
     };
 
     $scope.updateTrackIDList = function(tracks) {
@@ -43,7 +43,7 @@
     };
 
     $scope.$watch('panel', function(newValue) {
-      if(newValue === 3) {
+      if(newValue === 3 || newValue === 4) {
         $scope.getTracks().then(function success() {
           window.setTimeout(function() {
             if($scope.currentTrack) {

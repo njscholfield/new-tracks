@@ -12,12 +12,11 @@
       <span class="input-group-addon" ng-click="trackCtrl.toggleSearch()"><span class="glyphicon glyphicon-search"></span></span>
       <div>
         <div uib-collapse="trackCtrl.searchCollapsed" horizontal expanded="trackCtrl.focus()" id="search">
-          <input class="form-control has-feedback" id="trackSearch" type="search" ng-model="query">
-          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-click="query = ''"></span>
+          <input class="form-control has-feedback" id="trackSearch" type="search" ng-model="query.$">
+          <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-click="query.$ = ''"></span>
         </div>
       </div>
     </div>
-    <!-- <pre><code>{{ trackCtrl.favoritesList | json}}</code></pre> -->
     <div class="table-responsive" ng-show="trackCtrl.currentMode('Table')">
       <br>
       <table class="table" ng-show="filteredTracks.length">

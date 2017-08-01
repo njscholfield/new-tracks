@@ -31,7 +31,7 @@
       <error-alert></error-alert>
       <input-form ng-show="panelCtrl.currentPanel(1)"></input-form>
       <description ng-show="panelCtrl.currentPanel(2)"></description>
-      <tracks ng-show="panelCtrl.currentPanel(3)"></tracks>
+      <tracks ng-show="panelCtrl.currentPanel(3) || panelCtrl.currentPanel(4)"></tracks>
       <button class="btn btn-primary pull-right visible-xs" ng-hide="nearTopOfPage" title="Scroll to Top" id="scrollToTop" ng-click="scrollToTop()"><span class="glyphicon glyphicon-chevron-up"></span></button>
       <resume-alert ng-show="nearTopOfPage"></resume-alert>
     </div>

@@ -10,6 +10,14 @@
     $scope.setPanel = function(input) {
       $scope.panel = input;
     };
+    this.allTracks = function() {
+      $scope.setPanel(3);
+      $scope.query.isFavorite = undefined;
+    };
+    this.favorites = function() {
+      $scope.setPanel(4);
+      $scope.query = {isFavorite: true};
+    };
 
     $scope.checkLogin = function() {
       $http.get('/auth/verify')
