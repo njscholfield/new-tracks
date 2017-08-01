@@ -34,6 +34,9 @@
 #resume-img {
   max-height: 100px;
 }
+#erroralert {
+  margin: 2em 0;
+}
 
 .icon-soundcloud {
   color: #f50;

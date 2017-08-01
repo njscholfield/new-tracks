@@ -44,7 +44,7 @@
     };
   }]);
 
-  app.controller('ErrorController', ['$scope', function($scope) {
+  app.controller('ErrorController', ['$scope', '$anchorScroll', function($scope, $anchorScroll) {
     var error = this;
     error.message = 'Error';
     error.type = 'alert-danger';
@@ -58,6 +58,9 @@
       error.type = (type === 'error') ? 'alert-danger': `alert-${type}`;
       error.message = message;
       error.visible = true;
+      window.setTimeout(function() {
+        $anchorScroll('erroralert');
+      }, 0);
     };
   }]);
 
