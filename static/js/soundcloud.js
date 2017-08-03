@@ -40,6 +40,7 @@
       });
     };
     sc.submit = function(callURL) {
+      $scope.clearErrors();
       loading(true);
       if(callURL === undefined) {
         callURL = scapi + sc.url + '&' + client;
@@ -50,17 +51,19 @@
           $location.url(response.data.id);
         }, function error(response) {
           if(response.status === 403) {
-            sc.trackJSON = {'error': 'The information for this track is not available', 'code': 403};
+            $scope.displayError('warning', 'The information for this track is not available');
+            sc.trackJSON = {code: 403};
           } else if(response.status === 404) {
-            sc.trackJSON = {'error': 'Invalid URL, please try again', 'code': 404};
+            $scope.displayError('danger', 'Invalid URL, please try again');
+            sc.trackJSON = {code: 404};
           } else {
             $http.jsonp($sce.trustAsResourceUrl(callURL))
               .then(function success(response) {
                 processJSON(response);
                 $scope.setPanel(2);
                 $location.url(response.data.id);
-              }, function error(response) {
-                sc.trackJSON = {'error': 'Something went wrong... This could have been caused by a track for which the information is not available, or a server/network problem. Please try again.', 'code': 'JSONP Response Code ' + response.status};
+              }, function error() {
+                $scope.displayError('danger', 'Something went wrong... This could have been caused by a track for which the information is not available, or a server/network problem. Please try again.');
               });
           }
           console.log(response.status + ' ' + response.statusText);

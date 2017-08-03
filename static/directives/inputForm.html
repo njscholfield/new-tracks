@@ -2,7 +2,7 @@
   <h3>Enter a track link below to get started</h3>
   <fieldset>
     <div class="form-group" ng-class="{'has-error': descriptionCtrl.trackJSON.code === 404, 'has-warning': descriptionCtrl.trackJSON.code === 403}">
-      <label for="url">SoundCloud® Track URL</label>
+      <label class="sr-only" for="url">SoundCloud® Track URL</label>
       <div class="input-group">
         <span class="input-group-addon">
           <span class="icon icon-soundcloud"></span>
@@ -12,11 +12,7 @@
       </div>
     </div>
   </fieldset>
-    <div class="form-group">
+    <div class="form-group sr-only">
       <button class="btn btn-primary" type="submit">Submit</button>
     </div>
 </form>
-<div ng-show="descriptionCtrl.trackJSON.error">
-  <h4 class="text-danger">{{descriptionCtrl.trackJSON.error}}</h4>
-  <code>Error {{descriptionCtrl.trackJSON.code}}</code>
-</div>

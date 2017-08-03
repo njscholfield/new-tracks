@@ -34,8 +34,13 @@
 #resume-img {
   max-height: 100px;
 }
+error-alert {
+  position: fixed;
+  width: 100%;
+  z-index: 17;
+}
 #erroralert {
-  margin: 2em 0;
+  border: 2px solid white;
 }
 
 .icon-soundcloud {
@@ -55,10 +60,6 @@
 }
 .navbar-fixed {
   margin-bottom: 0;
-}
-/* Prevent fields from zooming in on mobile */
-.form-control:focus, .form-control:hover {
-  font-size: 1.1em;
 }
 .track-link:hover {
   text-decoration: underline;
@@ -87,10 +88,14 @@
 .loading .line:nth-last-child(2) {animation: loadingC .6s .2s linear infinite;}
 .loading .line:nth-last-child(3) {animation: loadingC .6s .3s linear infinite;}
 
-/* make resume box full width on small screens */
 @media (max-width: 500px) {
+  /* make resume box full width on small screens */
   #resume {
     width: 94%;
+  }
+  /* Prevent fields from zooming in on mobile */
+  .form-control:focus, .form-control:hover {
+    font-size: 1.1em;
   }
 }
 
@@ -98,4 +103,14 @@
     0 {transform: translate(0,0);}
     50% {transform: translate(0,15px);}
     100% {transform: translate(0,0);}
+}
+
+.jumbotron {
+  background: #FEAC5E;  /* fallback for old browsers */
+  background: linear-gradient(to right, #4BC0C8, #C779D0, #FEAC5E); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color: white;
+}
+
+input[name="url"] {
+  opacity: 0.6;
 }

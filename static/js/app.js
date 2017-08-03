@@ -2,7 +2,7 @@
   var app = angular.module('new-tracks', ['ngSanitize', 'ngAnimate', 'ui.bootstrap']);
 
   app.controller('PanelController', ['$scope', '$http', function($scope, $http) {
-    $scope.panel = 1;
+    $scope.panel = 2;
     $scope.nearTopOfPage = true;
     this.currentPanel = function(input) {
       return $scope.panel === input;
@@ -52,7 +52,7 @@
     };
   }]);
 
-  app.controller('ErrorController', ['$scope', '$anchorScroll', function($scope, $anchorScroll) {
+  app.controller('ErrorController', ['$scope', function($scope) {
     var error = this;
     error.message = 'Error';
     error.type = 'alert-danger';
@@ -66,9 +66,10 @@
       error.type = (type === 'error') ? 'alert-danger': `alert-${type}`;
       error.message = message;
       error.visible = true;
-      window.setTimeout(function() {
-        $anchorScroll('erroralert');
-      }, 0);
+    };
+
+    $scope.clearErrors = function() {
+      error.hide();
     };
   }]);
 
