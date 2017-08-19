@@ -64,8 +64,7 @@
             resolve('Tracks fetched sucessfully');
           }, function error(response) {
             if(response.status === 403) {
-              $scope.checkLogin();
-              $scope.displayError(response.data.type, response.data.message);
+              window.location.href = window.location.href.replace('#!/', 'login/?hash=');
             }
             reject(Error(response));
           });
