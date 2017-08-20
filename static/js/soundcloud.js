@@ -62,7 +62,7 @@
                 $scope.setPanel(2);
                 $location.url(response.data.id);
               }, function error() {
-                sc.trackJSON = {'error': 'Something went wrong... This could have been caused by a track for which the information is not available, or a server/network problem. Please try again.', 'code': 404}
+                sc.trackJSON = {'error': 'Something went wrong... This could have been caused by a track for which the information is not available, or a server/network problem. Please try again.', 'code': 404};
               });
           }
           console.log(response.status + ' ' + response.statusText);
