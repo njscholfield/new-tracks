@@ -67,10 +67,6 @@
       error.message = message;
       error.visible = true;
     };
-
-    $scope.clearErrors = function() {
-      error.hide();
-    };
   }]);
 
   app.controller('resumeController', ['$scope', '$timeout', '$http', function($scope, $timeout, $http) {

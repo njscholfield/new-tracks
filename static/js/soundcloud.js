@@ -51,7 +51,6 @@
       });
     };
     sc.submit = function(callURL) {
-      $scope.clearErrors();
       loading(true);
       if(callURL === undefined) {
         callURL = scapi + sc.url + '&' + client;
