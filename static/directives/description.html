@@ -3,8 +3,11 @@
   <h4 class="text-info text-center">Enter a URL <strong>above</strong> <span ng-show="user.loggedIn">or select a track from the <strong>Tracks</strong> or <strong>Favorites</strong> tab</span> to view its description.</h4>
 </div>
 <section ng-show="descriptionCtrl.trackJSON">
+  <br>
+  <div ng-show="descriptionCtrl.trackJSON.error">
+    <h4 class="text-danger">{{ descriptionCtrl.trackJSON.error }}</h4>
+  </div>
   <div ng-hide="descriptionCtrl.trackJSON.error">
-    <br>
     <div uib-alert class="alert alert-dismissible alert-success" close="descriptionCtrl.dismissAlert()" ng-show="descriptionCtrl.showAlert">
       <a class="alert-link" href="/login/?hash={{descriptionCtrl.trackJSON.id}}">Sign in</a> or <a class="alert-link" href="/register/?hash={{descriptionCtrl.trackJSON.id}}">create an account</a> to save this track for later!
     </div>
@@ -14,6 +17,7 @@
         <h4>by
           <a target="_blank" ng-href="{{descriptionCtrl.trackJSON.user.permalink_url}}">{{descriptionCtrl.trackJSON.user.username}}</a>
         </h4>
+        <h6><span class="text-success">{{ descriptionCtrl.trackJSON.duration | msToHMS }}</span></h6>
         <h6>
           <a target="_blank" ng-href="{{descriptionCtrl.trackJSON.download_url + '?client_id=30cba84d4693746b0a2fbc0649b2e42c'}}" ng-show="descriptionCtrl.trackJSON.downloadable">Download</a>
           <span ng-show="descriptionCtrl.trackJSON.downloadable && descriptionCtrl.trackJSON.purchase_title"> | </span>

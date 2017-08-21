@@ -3,6 +3,17 @@
   var scapi = 'https://api.soundcloud.com/resolve.json?url=';
   var client = 'client_id=30cba84d4693746b0a2fbc0649b2e42c';
 
+  app.filter('msToHMS', function() {
+    return function(ms) {
+      var [labels, time] = [[' hour', ' minute', ' second'], []];
+      time[0] = (ms >= 3600000) ? Math.floor(ms / 3600000): '';
+      time[1] = (ms >= 60000) ? Math.floor(ms % 3600000 / 60000): '';
+      time[2] = Math.floor(ms % 3600000 % 60000 / 1000);
+      time.forEach((val, i, arr) => arr[i] += (val === '') ? '' : (val === 1) ? labels[i]: labels[i] + 's');
+      return time.join(' ').trim();
+    };
+  });
+
   app.controller('descriptionController', ['$http', '$location', '$scope', '$uibModal', '$sce', function($http, $location, $scope, $uibModal, $sce) {
     var sc = this;
     sc.showJSON = false;
