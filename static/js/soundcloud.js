@@ -101,7 +101,7 @@
       }
     };
     $scope.getDescription = function(trackID) {
-      if(trackID && trackID.toString().length === 9) {
+      if(trackID) {
         var url = 'https://api.soundcloud.com/tracks/' + trackID + '?' + client;
         sc.submit(url);
       }
@@ -112,7 +112,7 @@
       if(url.includes('soundcloud.com')) {
         sc.url = url;
         sc.submit();
-      } else if (!isNaN(url) && url.toString().length === 9) {
+      } else if (!isNaN(url)) {
         $scope.currentTrack = url;
         $scope.getDescription(url);
       }
