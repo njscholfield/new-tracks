@@ -1,4 +1,3 @@
-var opbeat = require('opbeat').start();
 var express = require('express');
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
@@ -26,7 +25,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static('static'));
 app.use(flash());
-app.use(opbeat.middleware.express());
 
 require('./app/routes.js')(app, passport, tracks, account);
 
