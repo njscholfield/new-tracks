@@ -1,13 +1,15 @@
 {
   "name": "new-tracks",
-  "version": "2.5.0",
+  "version": "3.0.0",
   "description": "Shows SoundCloud track descriptions and saves tracks for later",
   "engines": {
     "node": "8.x.x"
   },
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "parcel": "parcel index.html",
+    "build": "parcel build index.html"
   },
   "repository": {
     "type": "git",
@@ -16,7 +18,7 @@
   "keywords": [
     "soundcloud",
     "nodejs",
-    "angularjs"
+    "vue.js"
   ],
   "author": "Noah Scholfield",
   "license": "ISC",
@@ -25,17 +27,30 @@
   },
   "homepage": "https://tracks.noahscholfield.com",
   "dependencies": {
-    "bcrypt": "^1.0.2",
+    "@fortawesome/fontawesome": ">=1.1.0",
+    "@fortawesome/fontawesome-free-brands": "^5.0.12",
+    "@fortawesome/fontawesome-free-solid": "^5.0.12",
+    "@fortawesome/vue-fontawesome": "^0.0.22",
+    "autolinker": "^1.6.2",
+    "bcrypt": "^2.0.0",
     "body-parser": "^1.15.2",
+    "bootstrap-vue": "^2.0.0-rc.9",
+    "bootswatch": "^4.1.1",
     "connect-flash": "^0.1.1",
     "connect-redis": "^3.1.0",
     "ejs": "^2.5.2",
     "express": "^4.14.0",
     "express-session": "^1.14.2",
     "mongoose": "^5.0.0",
-    "opbeat": "^4.15.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "passport-soundcloud": "^0.2.0"
+    "passport-soundcloud": "^0.2.0",
+    "vue": "^2.4.2",
+    "vue-hot-reload-api": "^2.3.0"
+  },
+  "devDependencies": {
+    "@vue/component-compiler-utils": "^1.2.1",
+    "parcel-plugin-clean-dist": "^0.0.6",
+    "vue-template-compiler": "^2.5.16"
   }
 }
