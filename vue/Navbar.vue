@@ -5,10 +5,10 @@
       <b-nav-item-dropdown right class="ml-auto">
         <!-- Using button-content slot -->
         <template slot="button-content">
-          <font-awesome-icon :icon="user"/>
+          <font-awesome-icon icon="user"/>
         </template>
         <b-dropdown-item :href="username"><strong>{{ username }}</strong></b-dropdown-item>
-        <b-dropdown-item href="/settings/"><span><font-awesome-icon :icon="cog"/></span> Settings</b-dropdown-item>
+        <b-dropdown-item href="/settings/"><span><font-awesome-icon icon="cog"/></span> Settings</b-dropdown-item>
         <b-dropdown-divider></b-dropdown-divider>
         <b-dropdown-item href="/logout/">Sign Out</b-dropdown-item>
       </b-nav-item-dropdown>
@@ -16,17 +16,12 @@
 </template>
 
 <script>
-  import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
-  import { faUser, faCog } from '@fortawesome/fontawesome-free-solid';
-  
   export default {
     data() {
       return { 
-        user: faUser,
-        cog: faCog
+        
       }
     },
-    components: { FontAwesomeIcon },
     props: ['username']
   }
 </script>
