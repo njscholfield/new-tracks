@@ -1,9 +1,10 @@
 <template>
   <div>
-    <navbar username="njscholfield"></navbar>
+    <navbar :user="user"></navbar>
     <url-input @update="updateData"></url-input>
     <b-container>
-      <description :raw-data="trackData"></description>
+      <navpills @panelChange="updatePanel" :currentPanel="currentPanel" numTracks="100" numOfFavTracks="20" loggedIn="user.loggedIn"></navpills>
+      <description v-show="isCurrentPanel(1)" :raw-data="trackData" :loggedIn="user.loggedIn"></description>
     </b-container>
   </div>
 </template>
@@ -11,18 +12,30 @@
 <script>
   import navbar from './Navbar.vue';
   import urlInput from './urlInput.vue';
+  import navpills from './Navpills.vue';
   import description from './Description.vue';
   
   export default {
     data() {
       return { 
-        trackData: {}
+        trackData: null,
+        currentPanel: 1,
+        user: {
+          username: 'njscholfield',
+          loggedIn: true
+        }
       };
     },
-    components: { navbar, urlInput, description },
+    components: { navbar, urlInput, navpills, description },
     methods: {
       updateData(newData) {
         this.trackData = newData;
+      },
+      updatePanel(id) {
+        this.currentPanel = id;
+      },
+      isCurrentPanel(id) {
+        return this.currentPanel == id;
       }
     }
   }
