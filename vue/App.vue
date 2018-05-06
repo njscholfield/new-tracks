@@ -1,28 +1,28 @@
 <template>
   <div>
-    <Navbar username="njscholfield"/>
-    <Input @update="updateData" />
+    <navbar username="njscholfield"></navbar>
+    <url-input @update="updateData"></url-input>
     <b-container>
-      <Description :raw-data="rawData" />
+      <description :raw-data="trackData"></description>
     </b-container>
   </div>
 </template>
 
 <script>
-  import Navbar from './Navbar.vue';
-  import Input from './Input.vue';
-  import Description from './Description.vue';
+  import navbar from './Navbar.vue';
+  import urlInput from './urlInput.vue';
+  import description from './Description.vue';
   
   export default {
     data() {
       return { 
-        rawData: {}
+        trackData: {}
       };
     },
-    components: { Navbar, Input, Description },
+    components: { navbar, urlInput, description },
     methods: {
       updateData(newData) {
-        this.rawData = newData;
+        this.trackData = newData;
       }
     }
   }
