@@ -50,6 +50,7 @@
     background: #FEAC5E;
     background: linear-gradient(to right, #4BC0C8, #C779D0, #FEAC5E); 
     color: white;
+    margin-bottom: 1.5rem;
   }
   @media (min-width: 576px) {
     .jumbotron {
