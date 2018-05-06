@@ -27,7 +27,7 @@
   </div>
   <div v-else>
     <br>
-    <h4 class="text-info text-center">Enter a URL <strong>above</strong> <span v-show="loggedIn">or select a track from the <strong>Tracks</strong> or <strong>Favorites</strong> tab</span> to view its description.</h4>
+    <h4 class="text-info text-center">Enter a URL <strong>above</strong> <span v-show="user.loggedIn">or select a track from the <strong>Tracks</strong> or <strong>Favorites</strong> tab</span> to view its description.</h4>
   </div>
 </template>
 
@@ -40,7 +40,7 @@
         showJSON: false
       };
     },
-    props: ['rawData', 'loggedIn'],
+    props: ['rawData', 'user'],
     methods: {
       toggleJSON: function() {
         this.showJSON = !this.showJSON;

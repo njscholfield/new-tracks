@@ -3,8 +3,8 @@
     <navbar :user="user"></navbar>
     <url-input @update="updateData"></url-input>
     <b-container>
-      <navpills @panelChange="updatePanel" :currentPanel="currentPanel" numTracks="100" numOfFavTracks="20" loggedIn="user.loggedIn"></navpills>
-      <description v-show="isCurrentPanel(1)" :raw-data="trackData" :loggedIn="user.loggedIn"></description>
+      <navpills v-model="currentPanel" num-tracks="100" num-fav="50" :user="user"></navpills>
+      <description v-show="isCurrentPanel(1)" :raw-data="trackData" :user="user"></description>
     </b-container>
   </div>
 </template>
