@@ -1,5 +1,5 @@
 <template>
-  <div id="apiData" v-if="rawData">
+  <div v-if="rawData">
     <div class="row" id="trackTitle">
       <div class="col-sm-10 order-sm-2">
         <h3>{{ rawData.title }}</h3>
@@ -15,7 +15,14 @@
     <hr>
     <p v-for="paragraph in html" v-html="paragraph"></p>
     <h6>POSTED ON: {{ datePosted.toLocaleDateString() }}</h6>
-    <button class="btn btn-link" @click="toggleJSON">Raw Track Info</button>
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-link" @click="toggleJSON">Raw Track Info</button>
+      </div>
+      <div class="col d-flex justify-content-end">
+        <a :href="rawData.permalink_url" target="_blank"><img alt="Soundcloud Logo" src="https://developers.soundcloud.com/assets/logo_black-8c4cb46bf63fda8936f9a4d967416dc6.png"></a>
+      </div>
+    </div>
     <pre v-if="showJSON"><code>{{ rawData }}</code></pre>
   </div>
 </div>
@@ -54,7 +61,10 @@
           if(item === '') {
             array[index] = '<br>';
           } else {
-            array[index] = Autolinker.link(item); // will need to add soundcloud mention
+            array[index] = Autolinker.link(item, {mention: 'twitter', replaceFn(match) {
+                return (match.getType() === 'mention') ? `<a href="https://soundcloud.com/${match.getMention()}" target="_blank">@${match.getMention()}</a>` : true;
+              }
+            });
           }
         });
         return html;
