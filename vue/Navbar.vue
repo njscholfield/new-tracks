@@ -1,17 +1,20 @@
 <template>
   <b-navbar toggleable="xl" type="dark" variant="primary">
     <b-navbar-brand href="/"><img id="brandimg" src="../static/img/placeholder.png"></b-navbar-brand>
-      <!-- Right aligned nav items -->
-      <b-nav-item-dropdown right class="ml-auto">
+      <b-nav-item-dropdown right class="ml-auto" v-if="user.loggedIn">
         <!-- Using button-content slot -->
         <template slot="button-content">
           <font-awesome-icon icon="user"/>
         </template>
-        <b-dropdown-item :href="username"><strong>{{ username }}</strong></b-dropdown-item>
+        <b-dropdown-item :href="user.username"><strong>{{ user.username }}</strong></b-dropdown-item>
         <b-dropdown-item href="/settings/"><span><font-awesome-icon icon="cog"/></span> Settings</b-dropdown-item>
         <b-dropdown-divider></b-dropdown-divider>
         <b-dropdown-item href="/logout/">Sign Out</b-dropdown-item>
       </b-nav-item-dropdown>
+      <div class="ml-auto" v-else>
+        <a class="btn btn-secondary navbar-btn" href="/login/">Sign In</a>
+        <a class="btn btn-success navbar-btn" href="/register/">Register</a>
+      </div>
   </b-navbar>
 </template>
 
@@ -22,7 +25,7 @@
         
       }
     },
-    props: ['username']
+    props: ['user']
   }
 </script>
 
