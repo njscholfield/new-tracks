@@ -8,12 +8,12 @@
           <div class="input-group">
             <div class="input-group-prepend">
               <span class="input-group-text">
-                <font-awesome-icon :icon="soundcloud"/>
+                <font-awesome-icon :icon="['fab', 'soundcloud']"/>
               </span>
             </div>
             <input class="form-control has-feedback" type="url" v-model="trackURL" placeholder="https://soundcloud.com/...">
             <div class="input-group-append">
-              <button class="form-control-feedback" aria-hidden="true" ng-click="descriptionCtrl.url = ''" type="reset"><font-awesome-icon :icon="times"/></button>
+              <button class="form-control-feedback" aria-hidden="true" ng-click="descriptionCtrl.url = ''" type="reset"><font-awesome-icon icon="times"/></button>
             </div>
           </div>
         </div>
@@ -23,20 +23,13 @@
 </template>
 
 <script>
-  import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
-  import { faSoundcloud } from '@fortawesome/fontawesome-free-brands';
-  import { faTimes } from '@fortawesome/fontawesome-free-solid';
-
   export default {
     data() {
       return {
         trackURL: '',
-        rawData: {},
-        soundcloud: faSoundcloud,
-        times: faTimes
+        rawData: {}
       };
     },
-    components: { FontAwesomeIcon },
     methods: {
       getTrackInfo() {
         const url = `https://api.soundcloud.com/resolve.json?url=${this.trackURL}&client_id=30cba84d4693746b0a2fbc0649b2e42c`;
