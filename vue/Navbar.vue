@@ -1,6 +1,6 @@
 <template>
   <b-navbar toggleable="xl" type="dark" variant="primary">
-    <b-navbar-brand href="/"><img id="brandimg" :src="brandimg"></b-navbar-brand>
+    <b-navbar-brand href="/"><img id="brandimg" src="../static/favicon-96x96.png"></b-navbar-brand>
       <b-nav-item-dropdown right class="ml-auto" v-if="user.loggedIn">
         <!-- Using button-content slot -->
         <template slot="button-content">
@@ -19,13 +19,9 @@
 </template>
 
 <script>
-  import favicon from '../static/img/placeholder.png';
-  
   export default {
     data() {
-      return { 
-        brandimg: favicon
-      }
+      return {}
     },
     props: ['user'],
     computed: {
