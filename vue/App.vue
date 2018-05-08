@@ -20,10 +20,7 @@
       return { 
         trackData: null,
         currentPanel: 1,
-        user: {
-          username: 'njscholfield',
-          loggedIn: true
-        }
+        user: {}
       };
     },
     components: { navbar, urlInput, navpills, description },
@@ -36,7 +33,16 @@
       },
       isCurrentPanel(id) {
         return this.currentPanel == id;
+      },
+      checkLogin() {
+        fetch('/auth/verify/', {credentials: 'include'})
+          .then(blob => blob.json())
+          .then(data => this.user = data)
+          .catch(response => console.log('Error checking login status', response));
       }
+    },
+    mounted() {
+      this.checkLogin();
     }
   }
 </script>
