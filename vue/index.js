@@ -3,6 +3,7 @@ import Vue from 'vue';
 import Navbar from 'bootstrap-vue/es/components/navbar';
 import Jumbotron from 'bootstrap-vue/es/components/jumbotron';
 import Layout from 'bootstrap-vue/es/components/layout';
+import Alert from 'bootstrap-vue/es/components/alert';
 
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
 import fontawesome from '@fortawesome/fontawesome';
@@ -16,6 +17,7 @@ import App from './App.vue';
 Vue.use(Navbar);
 Vue.use(Jumbotron);
 Vue.use(Layout);
+Vue.use(Alert);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 fontawesome.library.add(faUser, faCog, faTimes, faSoundcloud);
 

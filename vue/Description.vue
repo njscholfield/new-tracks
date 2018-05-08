@@ -1,7 +1,10 @@
 <template>
   <div v-if="rawData">
+    <b-alert variant="success" :show="!user.loggedIn" dismissible>
+      <a class="alert-link" :href="`/login/?hash=${rawData.id}`">Sign in</a> or <a class="alert-link" :href="`/register/?hash=${rawData.id}`">create an account</a> to save this track for later!
+    </b-alert>
     <div class="row" id="trackTitle">
-      <div class="col-sm-10 order-sm-2">
+      <div class="col-md-10 order-md-2 mb-2">
         <h3>{{ rawData.title }}</h3>
         <h4>by <a :href="rawData.user.permalink_url" target="_blank">{{ rawData.user.username }}</a></h4>
         <h6><span class="text-success">{{ rawData.duration | duration }}</span></h6>
@@ -13,8 +16,7 @@
         <span v-if="tags && tags[0] !== ''">Tags:</span>
         <span class="badge badge-primary ml-1" v-for="tag in tags">{{tag}}</span>
       </div>
-      <br>
-      <div class="col-sm-2 order-sm-1">
+      <div class="col-md-2 order-md-1">
         <a :href="artworkUrl" target="_blank" rel="noreferrer noopener">
           <img class="img-fluid" :src="artworkUrl" alt="Album Artwork">
         </a>
