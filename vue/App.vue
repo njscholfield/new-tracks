@@ -43,6 +43,17 @@
     },
     mounted() {
       this.checkLogin();
+    },
+    watch: {
+      '$route' (to, from) {
+        fetch(`https://api.soundcloud.com/tracks/${this.$route.params.track}?client_id=30cba84d4693746b0a2fbc0649b2e42c`)
+          .then(blob => blob.json())
+          .then(data => {
+            this.updateData(data);
+            this.updatePanel(1);
+          })
+          .catch(response => console.log('Error fetching track info', response));
+      }
     }
   }
 </script>

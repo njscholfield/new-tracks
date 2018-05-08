@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import VueRouter from 'vue-router';
 
 import Navbar from 'bootstrap-vue/es/components/navbar';
 import Jumbotron from 'bootstrap-vue/es/components/jumbotron';
@@ -21,9 +22,18 @@ Vue.use(Alert);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 fontawesome.library.add(faUser, faCog, faTimes, faSoundcloud);
 
+Vue.use(VueRouter);
+
+const router = new VueRouter({
+  routes: [
+    { path: '/:track', component: App }
+  ]
+});
+
 const app = new Vue({
   el: '#new-tracks',
-  render: h => h(App)
+  render: h => h(App),
+  router: router
 });
 
 export default app;
