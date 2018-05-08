@@ -41,12 +41,14 @@
 
 <script>
   import Autolinker from 'autolinker';
-  import moment from 'moment'
+  import moment from 'moment';
+  import placeholder from '../static/img/placeholder.png';
 
   export default {
     data() {
       return {
-        showJSON: false
+        showJSON: false,
+        placeholder: placeholder
       };
     },
     props: ['rawData', 'user'],
@@ -79,7 +81,7 @@
         return new Date(this.rawData.created_at);
       },
       artworkUrl() {
-        return (this.rawData.artwork_url) ? this.rawData.artwork_url.replace('large', 't500x500') : '/img/placeholder.png';
+        return (this.rawData.artwork_url) ? this.rawData.artwork_url.replace('large', 't500x500') : this.placeholder;
       },
       html() {
         let html = this.rawData.description.split('\n');
