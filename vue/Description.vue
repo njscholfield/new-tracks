@@ -4,23 +4,31 @@
       <div class="col-sm-10 order-sm-2">
         <h3>{{ rawData.title }}</h3>
         <h4>by <a :href="rawData.user.permalink_url" target="_blank">{{ rawData.user.username }}</a></h4>
-        <a :href="rawData.purchase_url" target="_blank"><h6>{{ rawData.purchase_title }}</h6></a>
+        <h6><span class="text-success">{{ rawData.duration | duration }}</span></h6>
+        <h6>
+          <a v-if="rawData.downloadable" :href="rawData.download_url | clientID" target="_blank" rel="noreferrer noopener">Download</a>
+          <span v-if="rawData.downloadable && rawData.purchase_url"> | </span>
+          <a v-if="rawData.purchase_url" :href="rawData.purchase_url" target="_blank" rel="noreferrer noopener">{{ rawData.purchase_title || 'Buy' }}</a>
+        </h6>
         <span v-if="tags && tags[0] !== ''">Tags:</span>
         <span class="badge badge-primary ml-1" v-for="tag in tags">{{tag}}</span>
       </div>
+      <br>
       <div class="col-sm-2 order-sm-1">
-        <img class="img-fluid" :src="rawData.artwork_url.replace('large', 't500x500')">
+        <a :href="artworkUrl" target="_blank" rel="noreferrer noopener">
+          <img class="img-fluid" :src="artworkUrl" alt="Album Artwork">
+        </a>
       </div>
     </div>
     <hr>
     <p v-for="paragraph in html" v-html="paragraph"></p>
-    <h6>POSTED ON: {{ datePosted.toLocaleDateString() }}</h6>
+    <h6>POSTED ON: {{ datePosted | moment('LL') }}</h6>
     <div class="row">
       <div class="col">
         <button class="btn btn-link" @click="toggleJSON">Raw Track Info</button>
       </div>
       <div class="col d-flex justify-content-end">
-        <a :href="rawData.permalink_url" target="_blank"><img alt="Soundcloud Logo" src="https://developers.soundcloud.com/assets/logo_black-8c4cb46bf63fda8936f9a4d967416dc6.png"></a>
+        <a :href="rawData.permalink_url" target="_blank" rel="noreferrer noopener"><img alt="Soundcloud Logo" title="Click to listen to this song on SoundCloud" src="https://developers.soundcloud.com/assets/logo_black-8c4cb46bf63fda8936f9a4d967416dc6.png"></a>
       </div>
     </div>
     <pre v-if="showJSON"><code>{{ rawData }}</code></pre>
@@ -33,6 +41,7 @@
 
 <script>
   import Autolinker from 'autolinker';
+  import moment from 'moment'
 
   export default {
     data() {
@@ -42,21 +51,35 @@
     },
     props: ['rawData', 'user'],
     methods: {
-      toggleJSON: function() {
+      toggleJSON() {
         this.showJSON = !this.showJSON;
       }
     },
     filters: {
-      autolinker: function(input) {
-        if(input) {
-          input = input.replace('\n', '<br>');
-          return Autolinker.link(input);
-        }
+      duration(ms) {
+        if(!ms) return '';
+        const LABELS = [' hour', ' minute', ' second'];
+        const LENGTH = moment.duration(ms);
+        const TIME = [(LENGTH.hours() > 0) ? LENGTH.hours() : '', LENGTH.minutes(), LENGTH.seconds()]; 
+
+        TIME.forEach((val, i, arr) => arr[i] += (val === '') ? '' : (val === 1) ? LABELS[i]: LABELS[i] + 's');
+        return TIME.join(' ').trim();
+      },
+      moment(input, formatString) {
+        if(!input) return '';
+        return moment(input).format(formatString);
+      },
+      clientID(input) {
+        if(!input) return '';
+        return `${input}${(input.includes('?')) ? '&': '?'}client_id=30cba84d4693746b0a2fbc0649b2e42c`;
       }
     },
     computed: {
-      datePosted: function() {
+      datePosted() {
         return new Date(this.rawData.created_at);
+      },
+      artworkUrl() {
+        return (this.rawData.artwork_url) ? this.rawData.artwork_url.replace('large', 't500x500') : '/img/placeholder.png';
       },
       html() {
         let html = this.rawData.description.split('\n');
