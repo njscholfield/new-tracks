@@ -25,6 +25,10 @@
     <hr>
     <p v-for="paragraph in html" v-html="paragraph"></p>
     <h6>POSTED ON: {{ datePosted | moment('LL') }}</h6>
+    
+    <button class="btn btn-success" v-show="user.loggedIn" @click="$refs.addTrack.showModal()">+ Add Track To List</button>
+    <button class="btn btn-secondary disabled"><span><font-awesome-icon icon="check"/></span> Track Added To List</button>
+    
     <div class="row">
       <div class="col">
         <button class="btn btn-link" @click="toggleJSON">Raw Track Info</button>
@@ -34,6 +38,7 @@
       </div>
     </div>
     <pre v-if="showJSON"><code>{{ rawData }}</code></pre>
+    <add-track-modal ref="addTrack" :track-info="rawData" :user="user"></add-track-modal>
   </div>
   <div v-else>
     <br>
@@ -45,15 +50,18 @@
   import Autolinker from 'autolinker';
   import moment from 'moment';
   import placeholder from '../static/img/placeholder.png';
+  import AddTrackModal from './AddTrackModal.vue';
 
   export default {
     data() {
       return {
         showJSON: false,
-        placeholder: placeholder
+        placeholder: placeholder,
+        showModal: false
       };
     },
     props: ['rawData', 'user'],
+    components: { AddTrackModal },
     methods: {
       toggleJSON() {
         this.showJSON = !this.showJSON;
@@ -68,10 +76,6 @@
 
         TIME.forEach((val, i, arr) => arr[i] += (val === '') ? '' : (val === 1) ? LABELS[i]: LABELS[i] + 's');
         return TIME.join(' ').trim();
-      },
-      moment(input, formatString) {
-        if(!input) return '';
-        return moment(input).format(formatString);
       },
       clientID(input) {
         if(!input) return '';

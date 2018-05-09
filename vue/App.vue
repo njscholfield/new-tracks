@@ -3,9 +3,10 @@
     <navbar :user="user"></navbar>
     <url-input @update="updateData"></url-input>
     <b-container>
-      <navpills v-model="currentPanel" num-tracks="100" num-fav="50" :user="user"></navpills>
-      <description v-show="isCurrentPanel(1)" :raw-data="trackData" :user="user"></description>
-    </b-container>
+      <navpills v-model="currentPanel" :num-tracks="numTracks" :num-fav="favTracks" :user="user"></navpills>
+      <description v-show="isCurrentPanel(1)" :raw-data="trackData" :user="user" @update="passTracks"></description>
+      <tracks ref="tracks" v-if="user.loggedIn" v-show="isCurrentPanel(2)" :user="user" @track-num="updateCounts"></tracks>
+    </b-container>    
   </div>
 </template>
 
@@ -14,16 +15,19 @@
   import urlInput from './urlInput.vue';
   import navpills from './Navpills.vue';
   import description from './Description.vue';
+  import tracks from './Tracks.vue';
   
   export default {
     data() {
       return { 
         trackData: null,
         currentPanel: 1,
-        user: {}
+        user: {},
+        numTracks: 0,
+        favTracks: 0,
       };
     },
-    components: { navbar, urlInput, navpills, description },
+    components: { navbar, urlInput, navpills, description, tracks },
     methods: {
       updateData(newData) {
         this.trackData = newData;
@@ -39,6 +43,13 @@
           .then(blob => blob.json())
           .then(data => this.user = data)
           .catch(response => console.log('Error checking login status', response));
+      },
+      updateCounts(numTracks, favTracks) {
+        this.numTracks = numTracks;
+        this.favTracks = favTracks;
+      },
+      passTracks(tracksArray) {
+        this.$refs.tracks.receiveTracks(tracksArray);
       }
     },
     mounted() {
