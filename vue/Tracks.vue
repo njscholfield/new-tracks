@@ -24,7 +24,7 @@
           <h3><router-link :to="track.trackID">{{ track.title }}</router-link></h3>
           <h5>{{ track.artist }}</h5>
           <h6>{{ track.releaseDate | moment('LL') }}</h6>
-          <button class="btn btn-sm btn-primary" ng-click="trackCtrl.editTrack(track)"><font-awesome-icon icon="pencil-alt"/> Edit Info</button>
+          <button class="btn btn-sm btn-primary" ng-click="trackCtrl.editTrack(track)"><span><font-awesome-icon icon="pencil-alt"/></span> Edit Info</button>
           <hr>
         </div>
       </div>
