@@ -29,6 +29,7 @@
   "dependencies": {
     "@fortawesome/fontawesome": ">=1.1.0",
     "@fortawesome/fontawesome-free-brands": "^5.0.12",
+    "@fortawesome/fontawesome-free-regular": "^5.0.12",
     "@fortawesome/fontawesome-free-solid": "^5.0.12",
     "@fortawesome/vue-fontawesome": "^0.0.22",
     "autolinker": "^1.6.2",
