@@ -43,7 +43,8 @@
         const config = {
           method: 'POST',
           headers: new Headers({'Content-Type': 'application/json'}),
-          body: JSON.stringify(this.submitInfo)
+          body: JSON.stringify(this.submitInfo),
+          credentials: 'include'
         };
         fetch(`/api/${this.user.username}/add`, config)
           .then(blob => blob.json())

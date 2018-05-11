@@ -45,7 +45,8 @@
         const config = {
           method: 'POST',
           headers: new Headers({'Content-Type': 'application/json'}),
-          body: JSON.stringify(this.submitInfo)
+          body: JSON.stringify(this.submitInfo),
+          credentials: 'include'
         };
         fetch(`/api/${this.user.username}/edit`, config)
           .then(blob => blob.json())
@@ -56,7 +57,8 @@
         const config = {
           method: 'POST',
           headers: new Headers({'Content-Type': 'application/json'}),
-          body: JSON.stringify({trackID: this.submitInfo.trackID})
+          body: JSON.stringify({trackID: this.submitInfo.trackID}),
+          credentials: 'include'
         };
         fetch(`/api/${this.user.username}/remove`, config)
           .then(blob => blob.json())
