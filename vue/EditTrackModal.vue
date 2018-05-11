@@ -71,13 +71,8 @@
         this.$refs.modal.show();
       },
       refreshData() {
-        this.submitInfo = {
-          isFavorite: this.trackInfo.isFavorite,
-          title: this.trackInfo.title,
-          artist: this.trackInfo.artist,
-          trackID: this.trackInfo.trackID,
-          releaseDate: this.$options.filters.moment(this.trackInfo.releaseDate, 'YYYY-MM-DD')
-        }
+        this.submitInfo = this.trackInfo;
+        this.submitInfo.releaseDate = this.$options.filters.moment(this.trackInfo.releaseDate, 'YYYY-MM-DD');
       }
     }
   }
