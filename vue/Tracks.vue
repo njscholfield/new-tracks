@@ -6,6 +6,7 @@
           <tr>
             <th>Track Name</th>
             <th>Artist</th>
+            <th class="text-center">Release Date</th>
             <th class="text-center">Edit</th>
           </tr>
         </thead>
@@ -13,7 +14,8 @@
           <tr v-for="track in tracks">
             <td><router-link :to="track.trackID">{{ track.title }}</router-link></td>
             <td>{{ track.artist }}</td>
-            <td><font-awesome-icon icon="pencil-alt"/></td>
+            <td class="text-center">{{ track.releaseDate | moment('LL') }}</td>
+            <td class="text-center"><span class="edit" @click="editTrack(track)"><font-awesome-icon icon="pencil-alt"></font-awesome-icon></span></td>
           </tr>
         </tbody>
       </table>
@@ -24,7 +26,7 @@
           <h3><router-link :to="track.trackID">{{ track.title }}</router-link></h3>
           <h5>{{ track.artist }}</h5>
           <h6>{{ track.releaseDate | moment('LL') }}</h6>
-          <button class="btn btn-sm btn-primary" ng-click="trackCtrl.editTrack(track)"><span><font-awesome-icon icon="pencil-alt"/></span> Edit Info</button>
+          <button class="btn btn-sm btn-primary" @click="editTrack(track)"><span><font-awesome-icon icon="pencil-alt"/></span> Edit Info</button>
           <hr>
         </div>
       </div>
@@ -32,18 +34,23 @@
     </div>
     <button class="btn btn-link" @click="toggleJSON">View JSON</button>
     <pre v-if="showJSON"><code>{{ tracks }}</code></pre>
+    <edit-track-modal ref="editTrack" :track-info="submitInfo" :user="user"></edit-track-modal>
   </div>
 </template>
 
 <script>
+  import EditTrackModal from './EditTrackModal.vue';
+
   export default {
     data() {
       return {
         tracks: [],
-        showJSON: false
+        showJSON: false,
+        submitInfo: {}
       }
     },
     props: ['user'],
+    components: { EditTrackModal },
     computed: {
       numTracks() {
         return this.tracks.length;
@@ -69,6 +76,10 @@
       },
       toggleJSON() {
         this.showJSON = !this.showJSON;
+      },
+      editTrack(track) {
+        this.submitInfo = track;
+        this.$refs.editTrack.showModal();
       }
     },
     mounted() {
@@ -76,3 +87,12 @@
     }
   }
 </script>
+
+<style scoped>
+  td .fa-pencil-alt {
+    color: var(--primary);
+  }
+  td .fa-pencil-alt:hover {
+    color: var(--info);
+  }
+</style>

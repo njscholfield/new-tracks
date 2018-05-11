@@ -5,7 +5,7 @@
     <b-container>
       <navpills v-model="currentPanel" :num-tracks="numTracks" :num-fav="favTracks" :user="user"></navpills>
       <description v-show="isCurrentPanel(1)" :raw-data="trackData" :user="user" @update="passTracks"></description>
-      <tracks ref="tracks" v-if="user.loggedIn" v-show="isCurrentPanel(2)" :user="user" @track-num="updateCounts"></tracks>
+      <tracks ref="tracks" v-if="user.loggedIn" v-show="isCurrentPanel(2)" :user="user" @track-num="updateCounts" @update="passTracks"></tracks>
     </b-container>    
   </div>
 </template>
