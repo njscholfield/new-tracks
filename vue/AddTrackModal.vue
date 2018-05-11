@@ -1,8 +1,8 @@
 <template>
-  <b-modal ref="modal" @shown="refreshData" @ok="submitTrack" title="Add Track">
+  <b-modal ref="modal" @shown="refreshData" @ok="submitTrack" ok-title="Add" title="Add Track">
     <form>
       <div class="form-group">
-        <label>Track Title</label>
+        <label>Title</label>
         <input class="form-control" type="text" v-model="submitInfo.title">
       </div>
       <div class="form-group">
@@ -47,7 +47,7 @@
         };
         fetch(`/api/${this.user.username}/add`, config)
           .then(blob => blob.json())
-          .then(data => this.$parent.$emit('update', data)) //what do I do with the new track array?
+          .then(data => this.$parent.$emit('update', data))
           .catch(response => console.log('Error adding track: ', response));
       },
       updateFavorite(newValue) {
