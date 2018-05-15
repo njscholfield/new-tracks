@@ -36,6 +36,9 @@
     methods: {
       updateData(newData) {
         this.trackData = newData;
+        const path = (newData.id) ? `/${newData.id}` : '/';
+        this.$router.replace(path);
+        this.updatePanel(1);
       },
       updatePanel(id) {
         this.currentPanel = id;
@@ -62,14 +65,27 @@
       this.checkLogin();
     },
     watch: {
-      '$route' (to, from) {
-        fetch(`https://api.soundcloud.com/tracks/${this.$route.params.track}?client_id=30cba84d4693746b0a2fbc0649b2e42c`)
-          .then(blob => blob.json())
-          .then(data => {
-            this.updateData(data);
-            this.updatePanel(1);
+      '$route': { immediate: true,
+      handler(to, from) {
+        const track = this.$route.path.substring(1);
+        if((isNaN(track) && !track.includes('soundcloud')) || track == '') return;
+        const url = ['https://api.soundcloud.com/', undefined, 'client_id=30cba84d4693746b0a2fbc0649b2e42c']
+        url[1] = (track.includes('soundcloud')) ? `resolve.json?url=${track}/&` : `tracks/${track}/?`;
+        fetch(url.join(''))
+          .then(response => {
+            if(!response.ok) {
+              if(response.status === 403) {
+                return { error: 'The information for this track is not available' };
+              } else {
+                return { error: 'Invalid track URL' };
+              }
+            } else {
+              return response.json();
+            }
           })
-          .catch(response => console.log('Error fetching track info', response));
+          .then(data => this.updateData(data))
+          .catch(response => console.log(response));
+        }
       }
     }
   }

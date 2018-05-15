@@ -26,20 +26,17 @@
   export default {
     data() {
       return {
-        trackURL: '',
-        rawData: {}
+        trackURL: ''
       };
     },
     methods: {
       getTrackInfo() {
-        const url = `https://api.soundcloud.com/resolve.json?url=${this.trackURL}&client_id=30cba84d4693746b0a2fbc0649b2e42c`;
-        fetch(url)
-          .then(blob => blob.json())
-          .then(data => {
-            this.rawData = data;
-            this.$emit('update', data);
-          })
-          .catch(response => console.log(response));
+        this.$router.push(this.trackURL);
+        // const url = `https://api.soundcloud.com/resolve.json?url=${this.trackURL}&client_id=30cba84d4693746b0a2fbc0649b2e42c`;
+        // fetch(url)
+        //   .then(blob => blob.json())
+        //   .then(data => this.$emit('update', data))
+        //   .catch(response => console.log(response));
       }
     }
   }

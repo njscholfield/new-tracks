@@ -1,5 +1,8 @@
 <template>
-  <div v-if="rawData">
+  <div v-if="rawData && rawData.error">
+    <h4 class="text-danger">{{ rawData.error }}</h4>
+  </div>
+  <div v-else-if="rawData">
     <b-alert variant="success" :show="!user.loggedIn" dismissible>
       <a class="alert-link" :href="`/login/?hash=${rawData.id}`">Sign in</a> or <a class="alert-link" :href="`/register/?hash=${rawData.id}`">create an account</a> to save this track for later!
     </b-alert>
@@ -86,12 +89,13 @@
     },
     computed: {
       datePosted() {
-        return new Date(this.rawData.created_at);
+        return (this.rawData.created_at) ? new Date(this.rawData.created_at) : undefined;
       },
       artworkUrl() {
         return (this.rawData.artwork_url) ? this.rawData.artwork_url.replace('large', 't500x500') : this.placeholder;
       },
       html() {
+        if(!this.rawData.description) return '';
         let html = this.rawData.description.split('\n');
         html.forEach((item, index, array) => {
           if(item === '') {
@@ -106,6 +110,7 @@
         return html;
       },
       tags() {
+        if(!this.rawData.tag_list) return [];
         let tags = this.rawData.tag_list.split(' ');
         let result = [];
         for(var i = 0; i < tags.length; i++) {
