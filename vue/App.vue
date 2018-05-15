@@ -3,9 +3,9 @@
     <navbar :user="user"></navbar>
     <url-input @update="updateData"></url-input>
     <b-container>
-      <navpills v-model="currentPanel" :num-tracks="numTracks" :num-fav="favTracks" :user="user"></navpills>
-      <description v-show="isCurrentPanel(1)" :raw-data="trackData" :user="user" @update="passTracks"></description>
-      <tracks ref="tracks" v-if="user.loggedIn" v-show="isCurrentPanel(2)" :user="user" @track-num="updateCounts" @update="passTracks"></tracks>
+      <navpills v-model="currentPanel" :num-tracks="numTracks" :user="user"></navpills>
+      <description v-show="isCurrentPanel(1)" :raw-data="trackData" :user="user" :saved-ids="savedIDs" @update="passTracks"></description>
+      <tracks ref="tracks" v-if="user.loggedIn" v-show="isCurrentPanel(2) || isCurrentPanel(3)" :user="user" :show-favs="showFavs" @tracks="updateCounts" @update="passTracks"></tracks>
     </b-container>    
   </div>
 </template>
@@ -23,9 +23,14 @@
         trackData: null,
         currentPanel: 1,
         user: {},
-        numTracks: 0,
-        favTracks: 0,
+        numTracks: { all: 0, favorites: 0 },
+        savedIDs: []
       };
+    },
+    computed: {
+      showFavs() {
+        return this.isCurrentPanel(3);
+      }
     },
     components: { navbar, urlInput, navpills, description, tracks },
     methods: {
@@ -44,9 +49,10 @@
           .then(data => this.user = data)
           .catch(response => console.log('Error checking login status', response));
       },
-      updateCounts(numTracks, favTracks) {
-        this.numTracks = numTracks;
-        this.favTracks = favTracks;
+      updateCounts(numTracks, favTracks, trackIDs) {
+        this.numTracks.all = numTracks;
+        this.numTracks.favorites = favTracks;
+        this.savedIDs = trackIDs;
       },
       passTracks(tracksArray) {
         this.$refs.tracks.receiveTracks(tracksArray);

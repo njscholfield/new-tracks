@@ -1,5 +1,17 @@
 <template>
   <div>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">
+          <font-awesome-icon icon="search"></font-awesome-icon>
+        </span>
+      </div>
+      <input class="form-control has-feedback" v-model="searchTerm">
+      <div class="input-group-append">
+        <button class="form-control-feedback" aria-hidden="true" type="reset" @click="searchTerm = ''"><font-awesome-icon icon="times"></font-awesome-icon></button>
+      </div>
+    </div>
+    <br>
     <div class="d-none d-md-block">
       <table class="table">
         <thead>
@@ -11,7 +23,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="track in tracks">
+          <tr v-for="track in filteredTracks">
             <td><router-link :to="track.trackID">{{ track.title }}</router-link></td>
             <td>{{ track.artist }}</td>
             <td class="text-center">{{ track.releaseDate | moment('LL') }}</td>
@@ -21,7 +33,7 @@
       </table>
     </div>
     <div class="d-md-none">
-      <div v-for="track in tracks">
+      <div v-for="track in filteredTracks">
         <div>
           <h3><router-link :to="track.trackID">{{ track.title }}</router-link></h3>
           <h5>{{ track.artist }}</h5>
@@ -33,7 +45,7 @@
       <h4 class="text-info" v-show="numTracks == 0">No results</h4>
     </div>
     <button class="btn btn-link" @click="toggleJSON">View JSON</button>
-    <pre v-if="showJSON"><code>{{ tracks }}</code></pre>
+    <pre v-if="showJSON"><code>{{ filteredTracks }}</code></pre>
     <edit-track-modal ref="editTrack" :track-info="submitInfo" :user="user"></edit-track-modal>
   </div>
 </template>
@@ -46,20 +58,31 @@
       return {
         tracks: [],
         showJSON: false,
-        submitInfo: {}
+        submitInfo: {},
+        searchTerm: ''
       }
     },
-    props: ['user'],
+    props: ['user', 'showFavs'],
     components: { EditTrackModal },
     computed: {
       numTracks() {
         return this.tracks.length;
       },
       favTracks() {
-        return this.tracks.filter((item) => item.isFavorite)
+        return this.tracks.filter((item) => item.isFavorite);
       },
       favTrackNum() {
         return this.favTracks.length;
+      },
+      filteredTracks() {
+        const lcSearchTerm = this.searchTerm.toLowerCase();
+        const tracks = (this.showFavs) ? this.favTracks : this.tracks;
+        return tracks.filter((track) => {
+          return track.title.toLowerCase().includes(lcSearchTerm) || track.artist.toLowerCase().includes(lcSearchTerm);
+        });
+      },
+      trackIDs() {
+        return this.tracks.map((item) => item.trackID);
       }
     },
     methods: {
@@ -67,12 +90,12 @@
         fetch(`/api/${this.user.username}`, {credentials: 'include'})
           .then(blob => blob.json())
           .then(data => this.tracks = data.tracks)
-          .then(() => this.$emit('track-num', this.numTracks, this.favTrackNum))
+          .then(() => this.$emit('tracks', this.numTracks, this.favTrackNum, this.trackIDs))
           .catch(response => console.log('Error fetching tracks: ', response));
       },
       receiveTracks(trackArray) {
         this.tracks = trackArray;
-        this.$emit('track-num', this.numTracks, this.favTrackNum);
+        this.$emit('tracks', this.numTracks, this.favTrackNum, this.trackIDs);
       },
       toggleJSON() {
         this.showJSON = !this.showJSON;
@@ -94,5 +117,11 @@
   }
   td .fa-pencil-alt:hover {
     color: var(--info);
+  }
+  .form-control-feedback {
+    background-color: transparent;
+    border: none;
+    margin-left: -1.5rem;
+    z-index: 10;
   }
 </style>
