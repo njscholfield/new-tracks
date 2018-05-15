@@ -13,7 +13,7 @@
             </div>
             <input class="form-control has-feedback" type="url" v-model="trackURL" placeholder="https://soundcloud.com/...">
             <div class="input-group-append">
-              <button class="form-control-feedback" aria-hidden="true" ng-click="descriptionCtrl.url = ''" type="reset"><font-awesome-icon icon="times"/></button>
+              <button class="form-control-feedback" aria-hidden="true" type="reset"><font-awesome-icon icon="times"/></button>
             </div>
           </div>
         </div>
