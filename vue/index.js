@@ -16,6 +16,7 @@ import faTimes from '@fortawesome/fontawesome-free-solid/faTimes';
 import faPencilAlt from '@fortawesome/fontawesome-free-solid/faPencilAlt';
 import faCheck from '@fortawesome/fontawesome-free-solid/faCheck';
 import faStar from '@fortawesome/fontawesome-free-solid/faStar';
+import faSearch from '@fortawesome/fontawesome-free-solid/faSearch';
 import farStar from '@fortawesome/fontawesome-free-regular/faStar';
 import faSoundcloud from '@fortawesome/fontawesome-free-brands/faSoundcloud';
 
@@ -27,7 +28,7 @@ Vue.use(Layout);
 Vue.use(Alert);
 Vue.use(Modal);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
-fontawesome.library.add(faUser, faCog, faTimes, faPencilAlt, faCheck, faStar, farStar, faSoundcloud);
+fontawesome.library.add(faUser, faCog, faTimes, faPencilAlt, faCheck, faStar, faSearch, farStar, faSoundcloud);
 
 Vue.filter('moment', (input, formatString) => {
   if(!input) return '';
