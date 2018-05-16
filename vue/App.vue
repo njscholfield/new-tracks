@@ -1,12 +1,13 @@
 <template>
-  <div>
+  <div id="top">
     <navbar :user="user"></navbar>
     <url-input @update="updateData"></url-input>
     <b-container>
       <navpills v-model="currentPanel" :num-tracks="numTracks" :user="user"></navpills>
       <description v-show="isCurrentPanel(1)" :raw-data="trackData" :user="user" :saved-ids="savedIDs" @update="passTracks"></description>
       <tracks ref="tracks" v-if="user.loggedIn" v-show="isCurrentPanel(2) || isCurrentPanel(3)" :user="user" :show-favs="showFavs" @tracks="updateCounts" @update="passTracks"></tracks>
-    </b-container>    
+    </b-container>  
+    <button class="btn btn-sm btn-primary d-md-none" id="btn-scroll" @click="scrollToTop"><font-awesome-icon icon="chevron-up"></font-awesome-icon></button>  
   </div>
 </template>
 
@@ -59,6 +60,10 @@
       },
       passTracks(tracksArray) {
         this.$refs.tracks.receiveTracks(tracksArray);
+      },
+      scrollToTop() {
+        const top = document.getElementById('top');
+        top.scrollIntoView(true);
       }
     },
     mounted() {
@@ -77,7 +82,7 @@
               if(response.status === 403) {
                 return { error: 'The information for this track is not available' };
               } else {
-                return { error: 'Invalid track URL' };
+                return { error: 'Invalid URL, please try again' };
               }
             } else {
               return response.json();
@@ -90,3 +95,11 @@
     }
   }
 </script>
+
+<style>
+  #btn-scroll {
+    position: fixed;
+    bottom: 3rem;
+    right: 1rem;
+  }
+</style>
