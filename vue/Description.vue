@@ -16,7 +16,7 @@
           <span v-if="rawData.downloadable && rawData.purchase_url"> | </span>
           <a v-if="rawData.purchase_url" :href="rawData.purchase_url" target="_blank" rel="noreferrer noopener">{{ rawData.purchase_title || 'Buy' }}</a>
         </h6>
-        <span v-if="tags && tags[0] !== ''">Tags:</span>
+        <span v-if="tags.length > 0 && tags[0] !== ''">Tags:</span>
         <span class="badge badge-primary ml-1" v-for="tag in tags">{{tag}}</span>
       </div>
       <div class="col-md-2 order-md-1">
