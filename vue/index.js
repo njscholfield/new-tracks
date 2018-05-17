@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import moment from 'moment';
+const moment = require('moment');
 
 import Navbar from 'bootstrap-vue/es/components/navbar';
 import Jumbotron from 'bootstrap-vue/es/components/jumbotron';

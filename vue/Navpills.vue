@@ -20,7 +20,7 @@
         return this.value == id;
       }
     }
-  }
+  };
 </script>
 
 <style scoped>

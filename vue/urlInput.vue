@@ -39,7 +39,7 @@
         //   .catch(response => console.log(response));
       }
     }
-  }
+  };
 </script>
 
 <style scoped>

@@ -17,7 +17,7 @@
           <a v-if="rawData.purchase_url" :href="rawData.purchase_url" target="_blank" rel="noreferrer noopener">{{ rawData.purchase_title || 'Buy' }}</a>
         </h6>
         <span v-if="tags.length > 0 && tags[0] !== ''">Tags:</span>
-        <span class="badge badge-primary ml-1" v-for="tag in tags">{{tag}}</span>
+        <span class="badge badge-primary ml-1" v-for="tag in tags">{{ tag }}</span>
       </div>
       <div class="col-md-2 order-md-1">
         <a :href="artworkUrl" target="_blank" rel="noreferrer noopener">
@@ -53,7 +53,7 @@
 
 <script>
   import Autolinker from 'autolinker';
-  import moment from 'moment';
+  const moment = require('moment');
   import placeholder from '../static/img/placeholder.png';
   import AddTrackModal from './AddTrackModal.vue';
 
@@ -62,7 +62,6 @@
       return {
         showJSON: false,
         placeholder: placeholder,
-        showModal: false
       };
     },
     props: ['rawData', 'user', 'savedIds'],
@@ -102,14 +101,15 @@
             array[index] = '<br>';
           } else {
             array[index] = Autolinker.link(item, {mention: 'twitter', replaceFn(match) {
-                return (match.getType() === 'mention') ? `<a href="https://soundcloud.com/${match.getMention()}" target="_blank">@${match.getMention()}</a>` : true;
-              }
+              return (match.getType() === 'mention') ? `<a href="https://soundcloud.com/${match.getMention()}" target="_blank">@${match.getMention()}</a>` : true;
+            }
             });
           }
         });
         return html;
       },
       tags() {
+        /* eslint no-useless-escape: 0 */
         if(!this.rawData.tag_list) return [];
         let tags = this.rawData.tag_list.split(' ');
         let result = [];
@@ -127,5 +127,5 @@
         return result;
       }
     }
-  }
+  };
 </script>

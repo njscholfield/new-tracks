@@ -14,8 +14,8 @@
         <input class="form-control" type="date" v-model="submitInfo.releaseDate" placeholder="YYYY-MM-DD">
       </div>
       <div>
-        <button class="btn btn-default" v-if="!submitInfo.isFavorite" @click="updateFavorite(true)" title="Click to favorite this track"><span><font-awesome-icon :icon="['far', 'star']"/></span> Favorite</button>
-        <button class="btn btn-primary" v-if="submitInfo.isFavorite" @click="updateFavorite(false)" title="Click to unfavorite this track"><span><font-awesome-icon icon="star"/></span> Favorite</button>
+        <button v-if="submitInfo.isFavorite" @click="updateFavorite(false)" class="btn btn-primary" title="Click to unfavorite this track"><span><font-awesome-icon icon="star"/></span> Favorite</button>
+        <button v-else @click="updateFavorite(true)" class="btn btn-default"  title="Click to favorite this track"><span><font-awesome-icon :icon="['far', 'star']"/></span> Favorite</button>
       </div>
     </form>
   </b-modal>
@@ -64,8 +64,8 @@
           artist: this.trackInfo.user.username,
           trackID: this.trackInfo.id,
           releaseDate: this.$options.filters.moment(this.releaseDate, 'YYYY-MM-DD')
-        }
+        };
       }
     }
-  }
+  };
 </script>

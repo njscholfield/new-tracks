@@ -21,15 +21,10 @@
 <script>
   export default {
     data() {
-      return {}
+      return {};
     },
-    props: ['user'],
-    computed: {
-      brandimg () {
-        return favicon;
-      }
-    }
-  }
+    props: ['user']
+  };
 </script>
 
 <style>

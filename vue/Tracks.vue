@@ -23,7 +23,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="track in filteredTracks">
+          <tr v-for="track in filteredTracks" :key="track.trackID">
             <td><router-link :to="track.trackID">{{ track.title }}</router-link></td>
             <td>{{ track.artist }}</td>
             <td class="text-center">{{ track.releaseDate | moment('LL') }}</td>
@@ -33,7 +33,7 @@
       </table>
     </div>
     <div class="d-md-none">
-      <div v-for="track in filteredTracks">
+      <div v-for="track in filteredTracks" :key="track.trackID">
         <div>
           <h3><router-link :to="track.trackID">{{ track.title }}</router-link></h3>
           <h5>{{ track.artist }}</h5>
@@ -60,7 +60,7 @@
         showJSON: false,
         submitInfo: {},
         searchTerm: ''
-      }
+      };
     },
     props: ['user', 'showFavs'],
     components: { EditTrackModal },
@@ -108,7 +108,7 @@
     mounted() {
       this.getTracks();
     }
-  }
+  };
 </script>
 
 <style scoped>

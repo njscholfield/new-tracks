@@ -77,5 +77,5 @@
         this.submitInfo.releaseDate = this.$options.filters.moment(this.trackInfo.releaseDate, 'YYYY-MM-DD');
       }
     }
-  }
+  };
 </script>

@@ -7,7 +7,7 @@
       <description v-show="isCurrentPanel(1)" :raw-data="trackData" :user="user" :saved-ids="savedIDs" @update="passTracks"></description>
       <tracks ref="tracks" v-if="user.loggedIn" v-show="isCurrentPanel(2) || isCurrentPanel(3)" :user="user" :show-favs="showFavs" @tracks="updateCounts" @update="passTracks"></tracks>
     </b-container>  
-    <button class="btn btn-sm btn-primary d-md-none" id="btn-scroll" @click="scrollToTop"><font-awesome-icon icon="chevron-up"></font-awesome-icon></button>  
+    <button class="btn btn-sm btn-primary d-md-none" id="btn-scroll" @click="scrollToTop"><font-awesome-icon icon="chevron-up"></font-awesome-icon></button> 
   </div>
 </template>
 
@@ -70,11 +70,10 @@
       this.checkLogin();
     },
     watch: {
-      '$route': { immediate: true,
-      handler(to, from) {
+      '$route': { immediate: true, handler() {
         const track = this.$route.path.substring(1);
         if((isNaN(track) && !track.includes('soundcloud')) || track == '') return;
-        const url = ['https://api.soundcloud.com/', undefined, 'client_id=30cba84d4693746b0a2fbc0649b2e42c']
+        const url = ['https://api.soundcloud.com/', undefined, 'client_id=30cba84d4693746b0a2fbc0649b2e42c'];
         url[1] = (track.includes('soundcloud')) ? `resolve.json?url=${track}/&` : `tracks/${track}/?`;
         fetch(url.join(''))
           .then(response => {
@@ -90,10 +89,10 @@
           })
           .then(data => this.updateData(data))
           .catch(response => console.log(response));
-        }
+      }
       }
     }
-  }
+  };
 </script>
 
 <style>

@@ -27,6 +27,17 @@ module.exports = {
         "semi": [
             "error",
             "always"
-        ]
-    }
+        ],
+        "vue/require-v-for-key": 0,
+        "no-console": 1
+    },
+    "overrides": [
+        {
+            "files": ["*.vue"],
+            "rules": {
+              "indent": "off",
+              "vue/script-indent": ["error", 2, { "baseIndent": 1 }]
+            }
+        }
+  ]
 };
