@@ -8,6 +8,7 @@
       <tracks ref="tracks" v-if="user.loggedIn" v-show="isCurrentPanel(2) || isCurrentPanel(3)" :user="user" :show-favs="showFavs" @tracks="updateCounts" @update="passTracks"></tracks>
     </b-container>  
     <button class="btn btn-sm btn-primary d-md-none" id="btn-scroll" @click="scrollToTop"><font-awesome-icon icon="chevron-up"></font-awesome-icon></button> 
+    <loading v-show="isLoading"></loading>
   </div>
 </template>
 
@@ -17,6 +18,7 @@
   import navpills from './Navpills.vue';
   import description from './Description.vue';
   import tracks from './Tracks.vue';
+  import loading from './Loading.vue';
   
   export default {
     data() {
@@ -25,7 +27,8 @@
         currentPanel: 1,
         user: {},
         numTracks: { all: 0, favorites: 0 },
-        savedIDs: []
+        savedIDs: [],
+        isLoading: false
       };
     },
     computed: {
@@ -33,7 +36,7 @@
         return this.isCurrentPanel(3);
       }
     },
-    components: { navbar, urlInput, navpills, description, tracks },
+    components: { navbar, urlInput, navpills, description, tracks, loading },
     methods: {
       updateData(newData) {
         this.trackData = newData;
@@ -75,6 +78,7 @@
         if((isNaN(track) && !track.includes('soundcloud')) || track == '') return;
         const url = ['https://api.soundcloud.com/', undefined, 'client_id=30cba84d4693746b0a2fbc0649b2e42c'];
         url[1] = (track.includes('soundcloud')) ? `resolve.json?url=${track}/&` : `tracks/${track}/?`;
+        this.isLoading = true;
         fetch(url.join(''))
           .then(response => {
             if(!response.ok) {
@@ -88,6 +92,7 @@
             }
           })
           .then(data => this.updateData(data))
+          .then(() => this.isLoading = false)
           .catch(response => console.log(response));
       }
       }
