@@ -2,11 +2,11 @@
   <div id="top">
     <navbar :user="user"></navbar>
     <url-input @update="updateData"></url-input>
-    <b-container>
+    <div class="container">
       <navpills v-model="currentPanel" :num-tracks="numTracks" :user="user"></navpills>
       <description v-show="isCurrentPanel(1)" :raw-data="trackData" :user="user" :saved-ids="savedIDs" @update="passTracks"></description>
       <tracks ref="tracks" v-if="user.loggedIn" v-show="isCurrentPanel(2) || isCurrentPanel(3)" :user="user" :show-favs="showFavs" @tracks="updateCounts" @update="passTracks"></tracks>
-    </b-container>  
+    </div>  
     <button class="btn btn-sm btn-primary d-md-none" id="btn-scroll" @click="scrollToTop"><font-awesome-icon icon="chevron-up"></font-awesome-icon></button> 
     <resume v-if="user.loggedIn" :is-visible="showResume" :user="user"></resume>
     <loading v-show="isLoading"></loading>

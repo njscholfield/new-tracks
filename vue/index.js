@@ -3,8 +3,6 @@ import VueRouter from 'vue-router';
 const moment = require('moment');
 
 import Navbar from 'bootstrap-vue/es/components/navbar';
-import Jumbotron from 'bootstrap-vue/es/components/jumbotron';
-import Layout from 'bootstrap-vue/es/components/layout';
 import Alert from 'bootstrap-vue/es/components/alert';
 import Modal from 'bootstrap-vue/es/components/modal';
 
@@ -24,8 +22,6 @@ import faSoundcloud from '@fortawesome/fontawesome-free-brands/faSoundcloud';
 import App from './App.vue';
 
 Vue.use(Navbar);
-Vue.use(Jumbotron);
-Vue.use(Layout);
 Vue.use(Alert);
 Vue.use(Modal);
 Vue.component('font-awesome-icon', FontAwesomeIcon);

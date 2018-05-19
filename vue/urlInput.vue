@@ -1,25 +1,27 @@
 <template>
-  <b-jumbotron>
-    <h3>Enter a track link below to get started</h3>
-    <form id="track-input" @submit.prevent="getTrackInfo">
-      <fieldset>
-        <div class="form-group">
-          <label class="sr-only" for="trackURL">SoundCloud® Track URL</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text">
-                <font-awesome-icon :icon="['fab', 'soundcloud']"/>
-              </span>
-            </div>
-            <input class="form-control has-feedback" type="url" v-model="trackURL" placeholder="https://soundcloud.com/...">
-            <div class="input-group-append">
-              <button class="form-control-feedback" aria-hidden="true" type="reset"><font-awesome-icon icon="times"/></button>
+  <div class="jumbotron">
+    <div class="container">
+      <h3>Enter a track link below to get started</h3>
+      <form id="track-input" @submit.prevent="getTrackInfo">
+        <fieldset>
+          <div class="form-group">
+            <label class="sr-only" for="trackURL">SoundCloud® Track URL</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <font-awesome-icon :icon="['fab', 'soundcloud']"/>
+                </span>
+              </div>
+              <input class="form-control has-feedback" type="url" v-model="trackURL" placeholder="https://soundcloud.com/...">
+              <div class="input-group-append">
+                <button class="form-control-feedback" aria-hidden="true" type="reset"><font-awesome-icon icon="times"/></button>
+              </div>
             </div>
           </div>
-        </div>
-      </fieldset>
-    </form>
-  </b-jumbotron>
+        </fieldset>
+      </form>
+    </div>
+  </div>
 </template>
 
 <script>
