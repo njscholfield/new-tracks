@@ -8,6 +8,7 @@
       <tracks ref="tracks" v-if="user.loggedIn" v-show="isCurrentPanel(2) || isCurrentPanel(3)" :user="user" :show-favs="showFavs" @tracks="updateCounts" @update="passTracks"></tracks>
     </b-container>  
     <button class="btn btn-sm btn-primary d-md-none" id="btn-scroll" @click="scrollToTop"><font-awesome-icon icon="chevron-up"></font-awesome-icon></button> 
+    <resume v-if="user.loggedIn" :is-visible="showResume" :user="user"></resume>
     <loading v-show="isLoading"></loading>
   </div>
 </template>
@@ -18,12 +19,13 @@
   import navpills from './Navpills.vue';
   import description from './Description.vue';
   import tracks from './Tracks.vue';
+  import resume from './Resume.vue';
   import loading from './Loading.vue';
   
   export default {
     data() {
       return { 
-        trackData: null,
+        trackData: undefined,
         currentPanel: 1,
         user: {},
         numTracks: { all: 0, favorites: 0 },
@@ -34,9 +36,16 @@
     computed: {
       showFavs() {
         return this.isCurrentPanel(3);
+      },
+      currentTrack() {
+        if(!this.trackData) return undefined;
+        return this.trackData.id;
+      },
+      showResume() {
+        return this.currentTrack != this.user.resumeTrack;
       }
     },
-    components: { navbar, urlInput, navpills, description, tracks, loading },
+    components: { navbar, urlInput, navpills, description, tracks, resume, loading },
     methods: {
       updateData(newData) {
         this.trackData = newData;
@@ -67,6 +76,15 @@
       scrollToTop() {
         const top = document.getElementById('top');
         top.scrollIntoView(true);
+      },
+      updateResumeTrack() {
+        const config = {
+          method: 'POST',
+          headers: new Headers({'Content-Type': 'application/json'}),
+          body: JSON.stringify({currentTrack: this.currentTrack}),
+          credentials: 'include'
+        };
+        fetch(`/api/${this.user.username}/current`, config);
       }
     },
     mounted() {
@@ -92,6 +110,7 @@
             }
           })
           .then(data => this.updateData(data))
+          .then(() => this.updateResumeTrack())
           .then(() => this.isLoading = false)
           .catch(response => console.log(response));
       }
