@@ -25,7 +25,7 @@
   export default {
     data() {
       return { 
-        trackData: undefined,
+        trackData: {},
         currentPanel: 1,
         user: {},
         numTracks: { all: 0, favorites: 0 },

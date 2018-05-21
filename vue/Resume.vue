@@ -20,7 +20,7 @@
   export default {
     data() {
       return {
-        trackInfo: undefined
+        trackInfo: {}
       };
     },
     props: ['user', 'isVisible'],
