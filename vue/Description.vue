@@ -2,7 +2,7 @@
   <div v-if="rawData && rawData.error">
     <h4 class="text-danger">{{ rawData.error }}</h4>
   </div>
-  <div v-else-if="rawData">
+  <div v-else-if="rawData.title">
     <b-alert variant="success" :show="!user.loggedIn" dismissible>
       <a class="alert-link" :href="`/login/?hash=${rawData.id}`">Sign in</a> or <a class="alert-link" :href="`/register/?hash=${rawData.id}`">create an account</a> to save this track for later!
     </b-alert>
