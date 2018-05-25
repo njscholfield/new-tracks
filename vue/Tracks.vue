@@ -24,7 +24,7 @@
         </thead>
         <tbody>
           <!-- using the same id for both -->
-          <tr v-for="track in filteredTracks" :key="track.trackID" :id="track.trackID">
+          <tr v-for="track in filteredTracks" :key="track.trackID" :class="track.trackID">
             <td><router-link :to="track.trackID">{{ track.title }}</router-link></td>
             <td>{{ track.artist }}</td>
             <td class="text-center">{{ track.releaseDate | moment('LL') }}</td>
@@ -34,8 +34,7 @@
       </table>
     </div>
     <div class="d-md-none">
-      <!-- doesn't work for scrollTo -->
-      <div v-for="track in filteredTracks" :key="track.trackID" :id="track.trackID">
+      <div v-for="track in filteredTracks" :key="track.trackID" :class="track.trackID">
         <div>
           <h3><router-link :to="track.trackID">{{ track.title }}</router-link></h3>
           <h5>{{ track.artist }}</h5>
@@ -107,7 +106,9 @@
         this.$refs.editTrack.showModal();
       },
       scrollToId(trackID) {
-        document.getElementById(trackID).scrollIntoView(true);
+        const els = [...document.getElementsByClassName(trackID)];
+        const el = (!els) ? undefined : (els[0].offsetParent) ? els[0] : els[1];
+        if(el) el.scrollIntoView(true);
       }
     },
     mounted() {

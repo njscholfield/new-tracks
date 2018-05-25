@@ -74,8 +74,7 @@
         this.$refs.tracks.receiveTracks(tracksArray);
       },
       scrollToTop() {
-        const top = document.getElementById('top');
-        top.scrollIntoView(true);
+        document.getElementById('top').scrollIntoView(true);
       },
       updateResumeTrack() {
         const config = {
@@ -114,6 +113,11 @@
           .then(() => this.isLoading = false)
           .catch(response => console.log(response));
       }
+      },
+      'currentPanel': function(newValue) {
+        if(newValue === 2 || newValue == 3) {
+          window.setTimeout(this.$refs.tracks.scrollToId(this.currentTrack), 400);
+        }
       }
     }
   };
