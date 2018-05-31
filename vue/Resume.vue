@@ -1,5 +1,5 @@
 <template>
-  <b-alert v-if="trackInfo.title" dismissible id="resume" :show="visible" @dismissed="visible = false">
+  <b-alert v-if="trackInfo.title" dismissible id="resume" :show="visible" @dismissed="hide = true">
     <h6 class="text-muted" id="resume-header">LAST OPENED TRACK</h6>
     <hr id="resume-divider">
     <div class="row">
@@ -21,7 +21,7 @@
     data() {
       return {
         trackInfo: {},
-        visible: this.isVisible
+        hide: false
       };
     },
     props: ['user', 'isVisible'],
@@ -30,6 +30,9 @@
         if(!this.trackInfo) return '';
         else if(!this.trackInfo.artwork_url) return placeholder;
         return this.trackInfo.artwork_url.replace('large', 't300x300');
+      },
+      visible() {
+        return this.isVisible && !this.hide;
       }
     },
     methods: {
