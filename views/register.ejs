@@ -1,35 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <% include ../views/partials/head.ejs %>
     <title>Register | New Tracks</title>
-    <link rel="stylesheet" href="https://noahscholfield.com/css/bootstrap-yeti.min.css">
   </head>
   <body>
     <%- include('../views/partials/navbar.ejs', {user: user}) %>
     <div class="jumbotron">
       <div class="container">
-        <h1>Register</h1>
+        <h1 class="display-4">Register</h1>
       </div>
     </div>
     <div class="container">
       <h4 class="<%= message['type'] %>"><%= message['content'] %></h4>
-      <a href="/auth/soundcloud"><img class="pull-right" alt="login using SoundCloud" src="https://connect.soundcloud.com/2/btn-connect-l.png"></a>
+      <div class="d-flex justify-content-end">
+        <a href="/auth/soundcloud"><img alt="login using SoundCloud" src="https://connect.soundcloud.com/2/btn-connect-l.png"></a>
+      </div>
       <form action="/register/?hash=<%= hash %>" method="post">
-        <legend>Register</legend>
         <fieldset>
           <div class="form-group">
             <label for="inputEmail">Email Address</label>
             <input type="email" name="inputEmail" class="form-control" placeholder="username@example.com" required="true" autocomplete="email">
           </div>
           <div class="form-group">
-            <label for="inputUsername">Username <button type="button" class="btn btn-xs btn-default" data-container="body" data-toggle="popover" data-placement="top" data-content="Your username can contain letters, numbers, and these symbols: $-_.+!*'(),">ℹ︎</button></label>
+            <label for="inputUsername">Username <button type="button" class="btn btn-sm btn-secondary" data-container="body" data-toggle="popover" data-placement="top" data-content="Your username can contain letters, numbers, and these symbols: $-_.+!*'(),"><span class="fas fa-info-circle"></span></button></label>
             <input type="text" name="inputUsername" class="form-control" placeholder="jsmith" required="true" autocapitalize="none" autocorrect="off">
           </div>
           <div class="form-group">
-            <label for="newPassword1">Password <button type="button" class="btn btn-xs btn-default" data-container="body" data-toggle="popover" data-placement="top" data-content="Password must be 8-72 characters">ℹ︎</button></label>
+            <label for="newPassword1">Password <button type="button" class="btn btn-sm btn-secondary" data-container="body" data-toggle="popover" data-placement="top" data-content="Password must be 8-72 characters"><span class="fas fa-info-circle"></span></button></label>
             <input type="password" name="newPassword1" class="form-control" autocomplete="new-password" placeholder="not 'password' please" required="true" minlength="8" maxlength="73">
           </div>
           <div class="form-group">
