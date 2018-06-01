@@ -106,7 +106,7 @@
         this.$refs.editTrack.showModal();
       },
       scrollToId(trackID) {
-        const els = [...document.getElementsByClassName(trackID)];
+        const els = document.getElementsByClassName(trackID);
         const el = (!els || !els[0]) ? undefined : (els[0].offsetParent !== null) ? els[0] : els[1];
         if(el) el.scrollIntoView(true);
       }
