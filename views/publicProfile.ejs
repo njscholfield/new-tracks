@@ -35,10 +35,6 @@
         <h4 class="text-info">No tracks have been added by <%= username %></h4>
         <br>
       <% } %>
-      <a class="btn btn-link" onclick="$('#json').toggleClass('d-none')">Toggle JSON</a>
-      <div class="d-none" id="json">
-        <pre><code><%= JSON.stringify(tracks, undefined, 2) %></code></pre>
-      </div>
     </div>
     <% include ../views/partials/scripts.ejs %>
   </body>

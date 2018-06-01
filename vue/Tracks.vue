@@ -45,8 +45,6 @@
       </div>
       <h4 class="text-info" v-show="numTracks == 0">No results</h4>
     </div>
-    <button class="btn btn-link" @click="toggleJSON">View JSON</button>
-    <pre v-if="showJSON"><code>{{ filteredTracks }}</code></pre>
     <edit-track-modal ref="editTrack" :track-info="submitInfo" :user="user"></edit-track-modal>
   </div>
 </template>
@@ -58,7 +56,6 @@
     data() {
       return {
         tracks: [],
-        showJSON: false,
         submitInfo: {},
         searchTerm: ''
       };
@@ -97,9 +94,6 @@
       receiveTracks(trackArray) {
         this.tracks = trackArray;
         this.$emit('tracks', this.numTracks, this.favTrackNum, this.trackIDs);
-      },
-      toggleJSON() {
-        this.showJSON = !this.showJSON;
       },
       editTrack(track) {
         this.submitInfo = track;
