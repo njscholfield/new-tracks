@@ -7,7 +7,7 @@
       <description v-show="isCurrentPanel(1)" :raw-data="trackData" :user="user" :saved-ids="savedIDs" @update="passTracks"></description>
       <tracks ref="tracks" v-if="user.loggedIn" v-show="isCurrentPanel(2) || isCurrentPanel(3)" :user="user" :show-favs="showFavs" @tracks="updateCounts" @update="passTracks"></tracks>
     </div>  
-    <button class="btn btn-sm btn-primary d-md-none" id="btn-scroll" @click="scrollToTop"><font-awesome-icon icon="chevron-up"></font-awesome-icon></button> 
+    <button class="btn btn-sm btn-primary d-md-none" v-show="!nearTop" id="btn-scroll" @click="scrollToTop"><font-awesome-icon icon="chevron-up"></font-awesome-icon></button> 
     <resume v-if="user.loggedIn" :is-visible="showResume" :user="user"></resume>
     <loading v-show="isLoading"></loading>
   </div>
@@ -30,7 +30,8 @@
         user: {},
         numTracks: { all: 0, favorites: 0 },
         savedIDs: [],
-        isLoading: false
+        isLoading: false,
+        nearTop: true
       };
     },
     computed: {
@@ -42,7 +43,7 @@
         return this.trackData.id;
       },
       showResume() {
-        return this.currentTrack != this.user.resumeTrack;
+        return this.currentTrack != this.user.resumeTrack && this.nearTop;
       }
     },
     components: { navbar, urlInput, navpills, description, tracks, resume, loading },
@@ -84,10 +85,21 @@
           credentials: 'include'
         };
         fetch(`/api/${this.user.username}/current`, config);
+      },
+      handleScroll(e) {
+        if(this.nearTop !== (e.pageY < 200)) {
+          this.nearTop = Boolean(e.pageY < 200);
+        }
       }
     },
     mounted() {
       this.checkLogin();
+    },
+    created () {
+      window.addEventListener('scroll', this.handleScroll);
+    },
+    destroyed () {
+      window.removeEventListener('scroll', this.handleScroll);
     },
     watch: {
       '$route': { immediate: true, handler() {
@@ -115,8 +127,8 @@
       }
       },
       'currentPanel': function(newValue) {
-        if(newValue === 2 || newValue == 3) {
-          window.setTimeout(this.$refs.tracks.scrollToId(this.currentTrack), 400);
+        if(newValue == 2 || newValue == 3) {
+          window.setTimeout(() => this.$refs.tracks.scrollToId(this.currentTrack), 400);
         }
       }
     }
