@@ -141,4 +141,10 @@
     bottom: 3rem;
     right: 1rem;
   }
+  @media (max-width: 500px) {
+    /* Prevent fields from zooming in on mobile */
+    .form-control:focus, .form-control:hover {
+      font-size: 1.1em;
+    }
+  }
 </style>
