@@ -7,7 +7,7 @@
       <description v-show="isCurrentPanel(1)" :raw-data="trackData" :user="user" :saved-ids="savedIDs" @update="passTracks"></description>
       <tracks ref="tracks" v-if="user.loggedIn" v-show="isCurrentPanel(2) || isCurrentPanel(3)" :user="user" :show-favs="showFavs" @tracks="updateCounts" @update="passTracks"></tracks>
     </div>  
-    <button class="btn btn-sm btn-primary d-md-none" v-show="!nearTop" id="btn-scroll" @click="scrollToTop"><font-awesome-icon icon="chevron-up"></font-awesome-icon></button> 
+    <button class="btn btn-lg btn-primary d-md-none" v-show="!nearTop" id="btn-scroll" @click="scrollToTop"><font-awesome-icon icon="chevron-up"></font-awesome-icon></button> 
     <resume v-if="user.loggedIn" :is-visible="showResume" :user="user"></resume>
     <loading v-show="isLoading"></loading>
   </div>
@@ -86,9 +86,9 @@
         };
         fetch(`/api/${this.user.username}/current`, config);
       },
-      handleScroll(e) {
-        if(this.nearTop !== (e.pageY < 200)) {
-          this.nearTop = Boolean(e.pageY < 200);
+      handleScroll() {
+        if(this.nearTop !== (document.scrollingElement.scrollTop < 200)) {
+          this.nearTop = Boolean(document.scrollingElement.scrollTop < 200);
         }
       }
     },
@@ -145,6 +145,9 @@
   /* Prevent fields from zooming in on mobile */
   .form-control:focus, .form-control:hover {
     font-size: 1.1em;
+  }
+  input[type=date] {
+    min-height: 2.5rem;
   }
 }
 </style>
