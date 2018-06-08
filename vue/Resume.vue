@@ -41,7 +41,7 @@
         fetch(url)
           .then(blob => blob.json())
           .then(data => this.trackInfo = data)
-          .catch(response => console.log('Error getting resume track info', response));
+          .catch(() => this.hide = true);
       }
     },
     mounted() {

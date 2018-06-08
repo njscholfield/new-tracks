@@ -64,7 +64,7 @@
         fetch('/auth/verify/', {credentials: 'include'})
           .then(blob => blob.json())
           .then(data => this.user = data)
-          .catch(response => console.log('Error checking login status', response));
+          .catch(() => this.user.loggedIn = false);
       },
       updateCounts(numTracks, favTracks, trackIDs) {
         this.numTracks.all = numTracks;
@@ -77,7 +77,19 @@
       scrollToTop() {
         document.getElementById('top').scrollIntoView(true);
       },
+      handleServerResponse(response) {
+        if(!response.ok) {
+          if(response.status === 403) {
+            return { error: 'The information for this track is not available' };
+          } else {
+            return { error: 'Invalid URL, please try again' };
+          }
+        } else {
+          return response.json();
+        }
+      },
       updateResumeTrack() {
+        if(!this.user.loggedIn) return;
         const config = {
           method: 'POST',
           headers: new Headers({'Content-Type': 'application/json'}),
@@ -109,21 +121,11 @@
         url[1] = (track.includes('soundcloud')) ? `resolve.json?url=${track}/&` : `tracks/${track}/?`;
         this.isLoading = true;
         fetch(url.join(''))
-          .then(response => {
-            if(!response.ok) {
-              if(response.status === 403) {
-                return { error: 'The information for this track is not available' };
-              } else {
-                return { error: 'Invalid URL, please try again' };
-              }
-            } else {
-              return response.json();
-            }
-          })
+          .then(response => this.handleServerResponse(response))
           .then(data => this.updateData(data))
           .then(() => this.updateResumeTrack())
           .then(() => this.isLoading = false)
-          .catch(response => console.log(response));
+          .catch(() => this.updateData({ error: 'Error loading track info, check your connection!' }));
       }
       },
       'currentPanel': function(newValue) {
