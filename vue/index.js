@@ -6,18 +6,26 @@ import Navbar from 'bootstrap-vue/es/components/navbar';
 import Alert from 'bootstrap-vue/es/components/alert';
 import Modal from 'bootstrap-vue/es/components/modal';
 
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome';
-import fontawesome from '@fortawesome/fontawesome';
-import faUser from '@fortawesome/fontawesome-free-solid/faUser';
-import faCog from '@fortawesome/fontawesome-free-solid/faCog';
-import faTimes from '@fortawesome/fontawesome-free-solid/faTimes';
-import faPencilAlt from '@fortawesome/fontawesome-free-solid/faPencilAlt';
-import faCheck from '@fortawesome/fontawesome-free-solid/faCheck';
-import faStar from '@fortawesome/fontawesome-free-solid/faStar';
-import faSearch from '@fortawesome/fontawesome-free-solid/faSearch';
-import faChevronUp from '@fortawesome/fontawesome-free-solid/faChevronUp';
-import farStar from '@fortawesome/fontawesome-free-regular/faStar';
-import faSoundcloud from '@fortawesome/fontawesome-free-brands/faSoundcloud';
+// import { Navbar, Alert, Modal } from 'bootstrap-vue/es/components'; 
+
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faUser } from '@fortawesome/free-solid-svg-icons/faUser';
+import { faCog } from '@fortawesome/free-solid-svg-icons/faCog';
+import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons/faPencilAlt';
+import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
+import { faStar } from '@fortawesome/free-solid-svg-icons/faStar';
+import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
+import { faChevronUp } from '@fortawesome/free-solid-svg-icons/faChevronUp';
+import { faStar as farStar } from '@fortawesome/free-regular-svg-icons/faStar';
+import { faSoundcloud } from '@fortawesome/free-brands-svg-icons/faSoundcloud';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
+// import { library } from '@fortawesome/fontawesome-svg-core';
+// import { faUser, faCog, faTimes, faPencilAlt, faCheck, faStar, faSearch, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+// import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
+// import { faSoundcloud } from '@fortawesome/free-brands-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import App from './App.vue';
 
@@ -25,7 +33,7 @@ Vue.use(Navbar);
 Vue.use(Alert);
 Vue.use(Modal);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
-fontawesome.library.add(faUser, faCog, faTimes, faPencilAlt, faCheck, faStar, faSearch, faChevronUp, farStar, faSoundcloud);
+library.add(faUser, faCog, faTimes, faPencilAlt, faCheck, faStar, faSearch, faChevronUp, farStar, faSoundcloud);
 
 Vue.filter('moment', (input, formatString) => {
   if(!input) return '';

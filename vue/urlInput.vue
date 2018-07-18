@@ -9,12 +9,12 @@
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">
-                  <font-awesome-icon :icon="['fab', 'soundcloud']"/>
+                  <font-awesome-icon :icon="['fab', 'soundcloud']"></font-awesome-icon>
                 </span>
               </div>
               <input class="form-control has-feedback" type="url" v-model="trackURL" placeholder="https://soundcloud.com/...">
               <div class="input-group-append">
-                <button class="form-control-feedback" aria-hidden="true" type="reset"><font-awesome-icon icon="times"/></button>
+                <button class="form-control-feedback" aria-hidden="true" type="reset"><font-awesome-icon icon="times"></font-awesome-icon></button>
               </div>
             </div>
           </div>
