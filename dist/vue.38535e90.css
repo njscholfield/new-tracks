@@ -52,4 +52,4 @@ td .fa-pencil-alt[data-v-25bebb]:hover{color:var(--info)
 }
 to{transform:translate(0)
 }
-}#btn-scroll{bottom:3rem;position:fixed;right:1rem}@media (max-width:500px){.form-control:focus,.form-control:hover{font-size:1.1em}input[type=date]{min-height:2.5rem}}
+}#btn-scroll{bottom:3rem;padding:.25rem .75rem .5rem;position:fixed;right:1rem}@media (max-width:500px){.form-control:focus,.form-control:hover{font-size:1.1em}input[type=date]{min-height:2.5rem}}
