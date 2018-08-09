@@ -4,12 +4,13 @@
     <url-input @update="updateData"></url-input>
     <div class="container">
       <navpills v-model="currentPanel" :num-tracks="numTracks" :user="user"></navpills>
-      <description v-show="isCurrentPanel(1)" :raw-data="trackData" :user="user" :saved-ids="savedIDs" @update="passTracks"></description>
-      <tracks ref="tracks" v-if="user.loggedIn" v-show="isCurrentPanel(2) || isCurrentPanel(3)" :user="user" :show-favs="showFavs" @tracks="updateCounts" @update="passTracks"></tracks>
+      <description v-show="isCurrentPanel(1)" :raw-data="trackData" :user="user" :saved-ids="savedIDs" @update="passTracks" @error="handleAxiosError"></description>
+      <tracks ref="tracks" v-if="user.loggedIn" v-show="isCurrentPanel(2) || isCurrentPanel(3)" :user="user" :show-favs="showFavs" @tracks="updateCounts" @update="passTracks" @error="handleAxiosError"></tracks>
     </div>  
     <button class="btn btn-primary d-md-none" v-show="!nearTop" id="btn-scroll" @click="scrollToTop"><font-awesome-icon icon="chevron-up"></font-awesome-icon></button> 
     <resume v-if="user.loggedIn" :is-visible="showResume" :user="user"></resume>
     <loading v-show="isLoading"></loading>
+    <error ref="errorModal" :error="errorMessage"></error>
   </div>
 </template>
 
@@ -21,6 +22,7 @@
   import tracks from './Tracks.vue';
   import resume from './Resume.vue';
   import loading from './Loading.vue';
+  import error from './ErrorModal.vue';
   
   export default {
     data() {
@@ -31,7 +33,8 @@
         numTracks: { all: 0, favorites: 0 },
         savedIDs: [],
         isLoading: false,
-        nearTop: true
+        nearTop: true,
+        errorMessage: {}
       };
     },
     computed: {
@@ -46,7 +49,7 @@
         return this.currentTrack != this.user.resumeTrack && this.nearTop;
       }
     },
-    components: { navbar, urlInput, navpills, description, tracks, resume, loading },
+    components: { navbar, urlInput, navpills, description, tracks, resume, loading, error },
     methods: {
       updateData(newData) {
         this.trackData = newData;
@@ -61,9 +64,8 @@
         return this.currentPanel == id;
       },
       checkLogin() {
-        fetch('/auth/verify/', {credentials: 'include'})
-          .then(blob => blob.json())
-          .then(data => this.user = data)
+        this.axios('/auth/verify', {credentials: 'same-origin'})
+          .then(response => this.user = response.data)
           .catch(() => this.user.loggedIn = false);
       },
       updateCounts(numTracks, favTracks, trackIDs) {
@@ -77,26 +79,27 @@
       scrollToTop() {
         document.getElementById('top').scrollIntoView(true);
       },
-      handleServerResponse(response) {
-        if(!response.ok) {
-          if(response.status === 403) {
-            return { error: 'The information for this track is not available' };
+      handleSCError(error) {
+        if(error.response) {
+          if(error.response.status === 403) {
+            this.updateData({ error: 'The information for this track is not available' });
           } else {
-            return { error: 'Invalid URL, please try again' };
+            this.updateData({ error: 'Invalid URL, please try again' });
           }
         } else {
-          return response.json();
+          this.updateData({ error: 'Error loading track info, check your connection!'});
         }
+      },
+      handleAxiosError(title, message) {
+        this.checkLogin();
+        this.errorMessage = { title: title, message: message.response.data.message };
+        this.$refs.errorModal.showModal();
       },
       updateResumeTrack() {
         if(!this.user.loggedIn) return;
-        const config = {
-          method: 'POST',
-          headers: new Headers({'Content-Type': 'application/json'}),
-          body: JSON.stringify({currentTrack: this.currentTrack}),
-          credentials: 'include'
-        };
-        fetch(`/api/${this.user.username}/current`, config);
+        const postData = { currentTrack: this.currentTrack };
+        this.axios.post(`/api/${this.user.username}/current`, postData, {credentials: 'same-origin'})
+          .catch(() => this.checkLogin());
       },
       handleScroll() {
         if(this.nearTop !== (document.scrollingElement.scrollTop < 200)) {
@@ -107,10 +110,10 @@
     mounted() {
       this.checkLogin();
     },
-    created () {
+    created() {
       window.addEventListener('scroll', this.handleScroll);
     },
-    destroyed () {
+    destroyed() {
       window.removeEventListener('scroll', this.handleScroll);
     },
     watch: {
@@ -120,12 +123,11 @@
         const url = ['https://api.soundcloud.com/', undefined, 'client_id=30cba84d4693746b0a2fbc0649b2e42c'];
         url[1] = (track.includes('soundcloud')) ? `resolve.json?url=${track}/&` : `tracks/${track}/?`;
         this.isLoading = true;
-        fetch(url.join(''))
-          .then(response => this.handleServerResponse(response))
-          .then(data => this.updateData(data))
+        this.axios(url.join(''))
+          .then(response => this.updateData(response.data))
           .then(() => this.updateResumeTrack())
-          .then(() => this.isLoading = false)
-          .catch(() => this.updateData({ error: 'Error loading track info, check your connection!' }));
+          .catch(this.handleSCError)
+          .finally(() => this.isLoading = false);
       }
       },
       'currentPanel': function(newValue) {

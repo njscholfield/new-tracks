@@ -85,11 +85,10 @@
     },
     methods: {
       getTracks() {
-        fetch(`/api/${this.user.username}`, {credentials: 'include'})
-          .then(blob => blob.json())
-          .then(data => this.tracks = data.tracks)
+        this.axios(`/api/${this.user.username}`, {credentials: 'same-origin'})
+          .then(response => this.tracks = response.data.tracks)
           .then(() => this.$emit('tracks', this.numTracks, this.favTrackNum, this.trackIDs))
-          .catch(response => console.log('Error fetching tracks: ', response));
+          .catch(response => this.$emit('error', 'Error loading tracks', response));
       },
       receiveTracks(trackArray) {
         this.tracks = trackArray;

@@ -38,9 +38,8 @@
     methods: {
       getTrackInfo() {
         const url = `https://api.soundcloud.com/tracks/${this.user.resumeTrack}?client_id=30cba84d4693746b0a2fbc0649b2e42c`;
-        fetch(url)
-          .then(blob => blob.json())
-          .then(data => this.trackInfo = data)
+        this.axios(url)
+          .then(response => this.trackInfo = response.data)
           .catch(() => this.hide = true);
       }
     },

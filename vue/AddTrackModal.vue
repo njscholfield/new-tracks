@@ -40,16 +40,9 @@
         if(this.submitInfo.releaseDate) {
           this.submitInfo.releaseDate = this.$options.filters.moment(this.submitInfo.releaseDate, '');
         }
-        const config = {
-          method: 'POST',
-          headers: new Headers({'Content-Type': 'application/json'}),
-          body: JSON.stringify(this.submitInfo),
-          credentials: 'include'
-        };
-        fetch(`/api/${this.user.username}/add`, config)
-          .then(blob => blob.json())
-          .then(data => this.$parent.$emit('update', data))
-          .catch(response => console.log('Error adding track: ', response));
+        this.axios.post(`/api/${this.user.username}/add`, this.submitInfo, {credentials: 'same-origin'})
+          .then(response => this.$parent.$emit('update', response.data))
+          .catch(response => this.$parent.$emit('error', 'Error adding track', response));
       },
       updateFavorite(newValue) {
         this.submitInfo.isFavorite = newValue;

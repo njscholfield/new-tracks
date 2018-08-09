@@ -1,6 +1,10 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 const moment = require('moment');
+import axios from 'axios';
+import VueAxios from 'vue-axios';
+ 
+Vue.use(VueAxios, axios);
 
 import Navbar from 'bootstrap-vue/es/components/navbar';
 import Alert from 'bootstrap-vue/es/components/alert';

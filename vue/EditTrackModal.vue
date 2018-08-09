@@ -42,28 +42,15 @@
         if(this.submitInfo.releaseDate) {
           this.submitInfo.releaseDate = this.$options.filters.moment(this.submitInfo.releaseDate, '');
         }
-        const config = {
-          method: 'POST',
-          headers: new Headers({'Content-Type': 'application/json'}),
-          body: JSON.stringify(this.submitInfo),
-          credentials: 'include'
-        };
-        fetch(`/api/${this.user.username}/edit`, config)
-          .then(blob => blob.json())
-          .then(data => this.$parent.$emit('update', data))
-          .catch(response => console.log('Error updating track: ', response));
+        this.axios.post(`/api/${this.user.username}/edit`, this.submitInfo, {credentials: 'same-origin'})
+          .then(response => this.$parent.$emit('update', response.data))
+          .catch(response => this.$parent.$emit('error', 'Error updating track', response));
       },
       deleteTrack() {
-        const config = {
-          method: 'POST',
-          headers: new Headers({'Content-Type': 'application/json'}),
-          body: JSON.stringify({trackID: this.submitInfo.trackID}),
-          credentials: 'include'
-        };
-        fetch(`/api/${this.user.username}/remove`, config)
-          .then(blob => blob.json())
-          .then(data => this.$parent.$emit('update', data))
-          .catch(response => console.log('Error deleting track: ', response));
+        const postData = { trackID: this.submitInfo.trackID };
+        this.axios.post(`/api/${this.user.username}/remove`, postData, {credentials: 'same-origin'})
+          .then(response => this.$parent.$emit('update', response.data))
+          .catch(response => this.$parent.$emit('error', 'Error deleting track', response));
         this.$refs.modal.hide();
       },
       updateFavorite(newValue) {
@@ -73,7 +60,7 @@
         this.$refs.modal.show();
       },
       refreshData() {
-        this.submitInfo = this.trackInfo;
+        this.submitInfo = Object.assign({}, this.trackInfo);
         this.submitInfo.releaseDate = this.$options.filters.moment(this.trackInfo.releaseDate, 'YYYY-MM-DD');
       }
     }
