@@ -7,7 +7,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "parcel build index.html && node index.js",
+    "start": "parcel build index.html && heroku local",
     "parcel": "parcel index.html",
     "build": "parcel build index.html"
   },
