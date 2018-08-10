@@ -9,6 +9,9 @@
         margin: 0;
         color: white;
       }
+      h1 {
+        margin-top: 1rem;
+      }
       .cover {
         height: 100%;
         background: url("/img/<%= image %>.jpg"), #333;
@@ -28,8 +31,10 @@
   <body>
     <div class="cover">
       <%- include('../views/partials/navbar.ejs', {user: user} ) %>
-      <h1 class="text-center"><%= message._1 %></h1>
-      <h3 class="text-center text-info"><%= message._2 %></h3>
+      <div class="container">
+        <h1 class="text-center"><%= message._1 %></h1>
+        <h3 class="text-center text-info"><%= message._2 %></h3>
+      </div>
     </div>
     <div class="credit">
       <a href="<%= credit %>" target="_blank"><h6>Photo Credit</h6></a>
