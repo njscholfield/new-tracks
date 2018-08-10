@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <% include ../views/partials/head.ejs %>
     <title>Account Settings | New Tracks</title>
-    <link rel="stylesheet" href="https://noahscholfield.com/css/bootstrap-yeti.min.css">
   </head>
   <body>
     <%- include('../views/partials/navbar.ejs', {user: user}) %>
@@ -13,8 +10,8 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title">Delete Account Confirmation</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           </div>
           <div class="modal-body">
             <h4 class="text-danger">Are you sure that you want to delete you account?</h4>
@@ -37,8 +34,8 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title">Disconnect SoundCloud Confirmation</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           </div>
           <div class="modal-body">
             <h4 class="text-warning">Are you sure that you want to disconnect SoundCloud from your account?</h4>
@@ -53,15 +50,14 @@
     </div>
     <div class="jumbotron">
       <div class="container">
-        <h1>Account Settings</h1>
+        <h1 class="display-4">Account Settings</h1>
       </div>
     </div>
     <div class="container">
       <h4 class="text-danger"><%= message %></h4>
       <h4 class="text-success"><%= success %></h4>
-      <div class="panel panel-primary">
-        <div class="panel-heading">Account</div>
-
+      <div class="card">
+        <h5 class="card-header bg-primary text-light">Account</h5>
           <% if(user.local.email) { %>
             <ul class="list-group">
               <li class="list-group-item">
@@ -85,7 +81,7 @@
                   <legend>Change Username</legend>
                   <fieldset>
                     <div class="form-group">
-                      <label for="username">New Username <button type="button" class="btn btn-xs btn-default" data-container="body" data-toggle="popover" data-placement="top" data-content="Your username can contain letters, numbers, and these symbols: $-_.+!*'(),">ℹ︎</button></label>
+                      <label for="username">New Username <button type="button" class="btn btn-sm btn-secondary" data-container="body" data-toggle="popover" data-placement="top" data-content="Your username can contain letters, numbers, and these symbols: $-_.+!*'(),"><span class="fas fa-info-circle"></span></button></label>
                       <div class="input-group">
                         <input class="form-control" name="username" type="text" placeholder="<%= user.username %>" required="true" minlength="1">
                         <span class="input-group-btn">
@@ -105,7 +101,7 @@
                       <input class="form-control" name="currentPassword" type="password" required="true">
                     </div>
                     <div class="form-group">
-                      <label for="newPassword1">New Password <button type="button" class="btn btn-xs btn-default" data-container="body" data-toggle="popover" data-placement="top" data-content="Password must be 8-72 characters">ℹ︎</button></label>
+                      <label for="newPassword1">New Password <button type="button" class="btn btn-sm btn-secondary" data-container="body" data-toggle="popover" data-placement="top" data-content="Password must be 8-72 characters"><span class="fas fa-info-circle"></span></button></label>
                       <input class="form-control" name="newPassword1" type="password" required="true">
                     </div>
                     <div class="form-group">
@@ -131,10 +127,10 @@
                       </select>
                     </div>
                   </fieldset>
-                  <a class="btn-link" onclick="$('#visibilityInfo').toggleClass('hidden')">What's this?</a>
+                  <a class="btn-link" onclick="$('#visibilityInfo').toggleClass('d-none')">What's this?</a>
                   <br>
                   <br>
-                  <div class="hidden well well-sm" id="visibilityInfo">
+                  <div class="d-none well well-sm" id="visibilityInfo">
                     <p><strong>Private:</strong> only you will be able to see the tracks you have added to your list</p>
                     <p><strong>Public:</strong> anyone who visits your <a href="/<%= user.username %>/" target="_blank">profile page</a> will be able to see the tracks you have added to your list</p>
                   </div>
@@ -145,7 +141,7 @@
               </li>
             </ul>
           <% } else { %>
-            <div class="panel-body">
+            <div class="card-body">
               <form action="/settings/register/" method="post">
                 <legend>Add Password to Account</legend>
                 <h6>If you would like to be able to sign in with a username and password, fill out the form below.</h6>
@@ -155,11 +151,11 @@
                     <input type="email" name="inputEmail" class="form-control" placeholder="username@example.com" required="true" autocomplete="email">
                   </div>
                   <div class="form-group">
-                    <label for="inputUsername">Username <button type="button" class="btn btn-xs btn-default" data-container="body" data-toggle="popover" data-placement="top" data-content="Your SoundCloud username is filled in, but you can change it to something else. Your username can contain letters, numbers, and these symbols: $-_.+!*'(),">ℹ︎</button></label>
+                    <label for="inputUsername">Username <button type="button" class="btn btn-sm btn-secondary" data-container="body" data-toggle="popover" data-placement="top" data-content="Your SoundCloud username is filled in, but you can change it to something else. Your username can contain letters, numbers, and these symbols: $-_.+!*'(),"><span class="fas fa-info-circle"></span></button></label>
                     <input type="text" name="inputUsername" class="form-control" value="<%= user.username %>" required="true" autocapitalize="none" autocorrect="off" minlength="1">
                   </div>
                   <div class="form-group">
-                    <label for="newPassword1">Password <button type="button" class="btn btn-xs btn-default" data-container="body" data-toggle="popover" data-placement="top" data-content="Password must be 8-72 characters">ℹ︎</button></label>
+                    <label for="newPassword1">Password <button type="button" class="btn btn-sm btn-secondary" data-container="body" data-toggle="popover" data-placement="top" data-content="Password must be 8-72 characters"><span class="fas fa-info-circle"></span></button></label>
                     <input type="password" name="newPassword1" class="form-control" autocomplete="new-password" placeholder="not 'password' please" required="true" minlength="8" maxlength="73">
                   </div>
                   <div class="form-group">
@@ -177,9 +173,9 @@
 
       </div>
 
-      <div class="panel panel-warning">
-        <div class="panel-heading">SoundCloud</div>
-        <div class="panel-body">
+      <div class="card mt-3">
+        <h5 class="card-header bg-warning text-light">SoundCloud</h5>
+        <div class="card-body">
           <% if(user.soundcloud.accessToken) { %>
             <p><strong>User ID:</strong> <%= user.soundcloud.soundcloudID %></p>
             <% if(user.local.email) { %>
@@ -193,12 +189,9 @@
       </div>
 
       <% if(user.local.email) { %>
-        <button class="btn btn-danger" data-toggle="modal" data-target="#DeleteModal">Delete Account</button>
+        <button class="btn btn-danger mt-3" data-toggle="modal" data-target="#DeleteModal">Delete Account</button>
         <br>
       <% } %>
-
-      <button class="btn-link" onclick="$('#json').toggleClass('hidden')">Toggle JSON</button>
-      <pre class="hidden" id="json"><code><%= JSON.stringify(user, undefined, 2) %></code></pre>
 
     </div>
   </body>

@@ -2,7 +2,7 @@ module.exports = function(app, passport, tracks, account) {
 
   app.get('/register/', function(req, res) {
     if(req.isAuthenticated()) {
-      res.redirect('/#!/' + req.query.hash);
+      res.redirect('/#/' + req.query.hash);
     } else {
       res.render('register', {message: {type: 'text-danger', content: req.flash('signupMessage')}, user: {hide:true}, hash: req.query.hash });
     }
@@ -12,12 +12,12 @@ module.exports = function(app, passport, tracks, account) {
     failureRedirect: '/register/',
     failureFlash: true
   }), function(req, res) {
-    res.redirect('/#!/' + req.query.hash);
+    res.redirect('/#/' + req.query.hash);
   });
 
   app.get('/login/', function(req, res) {
     if(req.isAuthenticated()) {
-      res.redirect('/#!/' + req.query.hash);
+      res.redirect('/#/' + req.query.hash);
     } else {
       res.render('login', {message: req.flash('loginMessage'), error: {}, user: {hide:true}, hash: req.query.hash });
     }
@@ -30,7 +30,7 @@ module.exports = function(app, passport, tracks, account) {
     if(req.body.remember_me) {
       req.session.cookie.maxAge = 10 * 24 * 60 * 60 * 1000; /* 10 days */
     }
-    res.redirect('/#!/' + req.query.hash);
+    res.redirect('/#/' + req.query.hash);
   });
 
   app.get('/settings/', isLoggedIn, function(req, res) {
@@ -134,7 +134,7 @@ module.exports = function(app, passport, tracks, account) {
     if(req.isAuthenticated() && req.user.username === req.params.username) {
       return next();
     } else {
-      res.status(403).json({type: 'error', message: 'It looks like you aren\'t logged in.'});
+      res.status(401).json({type: 'error', message: 'It looks like you aren\'t logged in.'});
     }
   }
 

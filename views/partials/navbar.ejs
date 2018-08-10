@@ -1,28 +1,24 @@
-<nav class="navbar navbar-inverse navbar-fixed">
-  <div class="container">
-    <div class="navbar-header pull-left">
-      <a href="/">
-        <img id="brandimg" class="navbar-btn" alt="brand" src="/favicon-96x96.png">
-      </a>
-    </div>
-    <div class="navbar-header pull-right">
-      <% if(user && user.username) { %>
-        <div class="dropdown">
-          <a href="#" class="dropdown-toggle btn navbar-btn navbar-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span></a>
-          <ul class="dropdown-menu dropdown-menu-right" role="menu">
-            <li><a href="/<%= user.username %>/"><strong><%= user.username %></strong></a></li>
-            <li><a href="/settings/"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="/logout/">Sign Out</a></li>
-          </ul>
-        </div>
-      <% } else if(!user || !user.hide){ %>
-        <div>
-          <a class="btn btn-default navbar-btn" href="/login/">Sign In</a>
-          <a class="btn btn-success navbar-btn" href="/register/">Register</a>
-        </div>
-      <% } %>
-    </div>
+<nav class="navbar navbar-dark bg-primary navbar-expand-xl">
+  <a href="/">
+    <img id="brandimg" class="navbar-btn" alt="brand" src="/favicon-96x96.png">
+  </a>
+  <div class="ml-auto">
+    <% if(user && user.username) { %>
+      <div class="dropdown">
+        <a href="#" class="dropdown-toggle nav-item" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-user"></span></a>
+        <div class="dropdown-menu dropdown-menu-right" role="menu">
+          <a class="dropdown-item" href="/<%= user.username %>/"><strong><%= user.username %></strong></a>
+          <a class="dropdown-item" href="/settings/"><span class="fas fa-cog"></span> Settings</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/logout/">Sign Out</a>
+        </ul>
+      </div>
+    <% } else if(!user || !user.hide){ %>
+      <div class="ml-auto">
+        <a class="btn btn-secondary navbar-btn" href="/login/">Sign In</a>
+        <a class="btn btn-success navbar-btn" href="/register/">Register</a>
+      </div>
+    <% } %>
   </div>
 </nav>
 <style>
@@ -30,8 +26,7 @@
     border-radius: 2em;
     height: 2.7em;
   }
-  .navbar-header {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
+  .dropdown-toggle {
+    color: white;
   }
 </style>

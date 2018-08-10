@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <% include ../views/partials/head.ejs %>
     <title><%= message._2 %> | New Tracks</title>
-    <link rel="stylesheet" href="https://noahscholfield.com/css/bootstrap-yeti.min.css">
     <style>
       html, body {
         height: 100%;
         margin: 0;
         color: white;
+      }
+      h1 {
+        margin-top: 1rem;
       }
       .cover {
         height: 100%;
@@ -31,8 +31,10 @@
   <body>
     <div class="cover">
       <%- include('../views/partials/navbar.ejs', {user: user} ) %>
-      <h1 class="text-center"><%= message._1 %></h1>
-      <h3 class="text-center text-info"><%= message._2 %></h3>
+      <div class="container">
+        <h1 class="text-center"><%= message._1 %></h1>
+        <h3 class="text-center text-info"><%= message._2 %></h3>
+      </div>
     </div>
     <div class="credit">
       <a href="<%= credit %>" target="_blank"><h6>Photo Credit</h6></a>

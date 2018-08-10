@@ -23,6 +23,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(session(sess));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.static('dist'));
 app.use(express.static('static'));
 app.use(flash());
 
