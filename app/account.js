@@ -13,7 +13,7 @@ exports.updateEmail = function(req, res) {
         req.flash('signupMessage', 'That email address is already being used or is invalid!');
         res.redirect('/settings/');
       } else {
-        req.user.update({$set: {'local.email': data.email}}, function(err) {
+        req.user.updateOne({$set: {'local.email': data.email}}, function(err) {
           if(err) {
             console.log('Error updating email address: ' + err);
             req.flash('signupMessage', 'Error updating email address.');
@@ -40,7 +40,7 @@ exports.changeUsername = function(req, res) {
         req.flash('signupMessage', 'That username is already being used or is invalid!');
         res.redirect('/settings/');
       } else {
-        req.user.update({$set: {username: data.username}}, function(err) {
+        req.user.updateOne({$set: {username: data.username}}, function(err) {
           if(err) {
             console.log('Error updating username: ' + err);
             req.flash('signupMessage', 'Error updating username.');
@@ -80,7 +80,7 @@ exports.changePassword = function(req, res) {
 exports.changeProfileVisibility = function(req, res) {
   var newVisibility = req.body.profileVisibility;
 
-  req.user.update({$set: {profileVisibility: newVisibility}}, function(err) {
+  req.user.updateOne({$set: {profileVisibility: newVisibility}}, function(err) {
     if(err) {
       console.log('Error changing profile visibility: ' + err);
       req.flash('signupMessage', 'Error changing profile visibility.');
@@ -113,7 +113,7 @@ exports.deleteAccount = function(req, res) {
   var password = req.body.password;
 
   if(req.user.validPassword(password)) {
-    User.remove({username: req.user.username}, function(err) {
+    User.deleteOne({username: req.user.username}, function(err) {
       if(err) {
         console.log('Error deleting account: ' + err);
         req.flash('signupMessage', 'Error deleting account');
