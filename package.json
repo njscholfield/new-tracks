@@ -3,7 +3,7 @@
   "version": "3.0.0",
   "description": "Shows SoundCloud track descriptions and saves tracks for later",
   "engines": {
-    "node": "8.x.x"
+    "node": "^10.13.0"
   },
   "main": "index.js",
   "scripts": {
