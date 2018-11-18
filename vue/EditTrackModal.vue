@@ -14,8 +14,8 @@
         <input class="form-control" type="date" v-model="submitInfo.releaseDate" placeholder="YYYY-MM-DD">
       </div>
       <div>
-        <button class="btn btn-default" v-if="!submitInfo.isFavorite" @click="updateFavorite(true)" title="Click to favorite this track"><span><font-awesome-icon :icon="['far', 'star']"/></span> Favorite</button>
-        <button class="btn btn-primary" v-if="submitInfo.isFavorite" @click="updateFavorite(false)" title="Click to unfavorite this track"><span><font-awesome-icon icon="star"/></span> Favorite</button>
+        <button class="btn btn-default" v-if="!submitInfo.isFavorite" @click.prevent="updateFavorite(true)" title="Click to favorite this track"><span><font-awesome-icon :icon="['far', 'star']"/></span> Favorite</button>
+        <button class="btn btn-primary" v-if="submitInfo.isFavorite" @click.prevent="updateFavorite(false)" title="Click to unfavorite this track"><span><font-awesome-icon icon="star"/></span> Favorite</button>
       </div>
       <br>
       <button class="btn btn-danger btn-block" @click="deleteTrack()">Delete Track</button>
