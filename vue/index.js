@@ -3,33 +3,18 @@ import VueRouter from 'vue-router';
 const moment = require('moment');
 import axios from 'axios';
 import VueAxios from 'vue-axios';
- 
+
 Vue.use(VueAxios, axios);
 
 import Navbar from 'bootstrap-vue/es/components/navbar';
 import Alert from 'bootstrap-vue/es/components/alert';
 import Modal from 'bootstrap-vue/es/components/modal';
 
-// import { Navbar, Alert, Modal } from 'bootstrap-vue/es/components'; 
-
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faUser } from '@fortawesome/free-solid-svg-icons/faUser';
-import { faCog } from '@fortawesome/free-solid-svg-icons/faCog';
-import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
-import { faPencilAlt } from '@fortawesome/free-solid-svg-icons/faPencilAlt';
-import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
-import { faStar } from '@fortawesome/free-solid-svg-icons/faStar';
-import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
-import { faChevronUp } from '@fortawesome/free-solid-svg-icons/faChevronUp';
-import { faStar as farStar } from '@fortawesome/free-regular-svg-icons/faStar';
-import { faSoundcloud } from '@fortawesome/free-brands-svg-icons/faSoundcloud';
+import { faUser, faCog, faTimes, faPencilAlt, faCheck, faStar, faSearch, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
+import { faSoundcloud } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-
-// import { library } from '@fortawesome/fontawesome-svg-core';
-// import { faUser, faCog, faTimes, faPencilAlt, faCheck, faStar, faSearch, faChevronUp } from '@fortawesome/free-solid-svg-icons';
-// import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
-// import { faSoundcloud } from '@fortawesome/free-brands-svg-icons';
-// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import App from './App.vue';
 

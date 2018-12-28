@@ -6,8 +6,8 @@
       <navpills v-model="currentPanel" :num-tracks="numTracks" :user="user"></navpills>
       <description v-show="isCurrentPanel(1)" :raw-data="trackData" :user="user" :saved-ids="savedIDs" @update="passTracks" @error="handleAxiosError"></description>
       <tracks ref="tracks" v-if="user.loggedIn" v-show="isCurrentPanel(2) || isCurrentPanel(3)" :user="user" :show-favs="showFavs" @tracks="updateCounts" @update="passTracks" @error="handleAxiosError"></tracks>
-    </div>  
-    <button class="btn btn-primary d-md-none" v-show="!nearTop" id="btn-scroll" @click="scrollToTop"><font-awesome-icon icon="chevron-up"></font-awesome-icon></button> 
+    </div>
+    <button class="btn btn-primary d-md-none" v-show="!nearTop" id="btn-scroll" @click="scrollToTop"><font-awesome-icon icon="chevron-up"></font-awesome-icon></button>
     <resume v-if="user.loggedIn" :is-visible="showResume" :user="user"></resume>
     <loading v-show="isLoading"></loading>
     <error ref="errorModal" :error="errorMessage"></error>
@@ -16,17 +16,17 @@
 
 <script>
   import navbar from './Navbar.vue';
-  import urlInput from './urlInput.vue';
-  import navpills from './Navpills.vue';
+  import urlInput from './UrlInput.vue';
+  import navpills from './NavPills.vue';
   import description from './Description.vue';
   import tracks from './Tracks.vue';
   import resume from './Resume.vue';
   import loading from './Loading.vue';
-  import error from './ErrorModal.vue';
-  
+  import error from './ErrorMessageModal.vue';
+
   export default {
     data() {
-      return { 
+      return {
         trackData: {},
         currentPanel: 1,
         user: {},

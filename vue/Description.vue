@@ -28,12 +28,12 @@
     <hr>
     <p v-for="paragraph in html" v-html="paragraph"></p>
     <h6>POSTED ON: {{ datePosted | moment('LL') }}</h6>
-    
+
     <div v-if="user.loggedIn">
       <button class="btn btn-secondary disabled" v-if="savedIds.includes(rawData.id.toString())"><span><font-awesome-icon icon="check"/></span> Track Added To List</button>
       <button class="btn btn-success" v-else @click="$refs.addTrack.showModal()">+ Add Track To List</button>
     </div>
-    
+
     <div class="row">
       <div class="col">
         <button class="btn btn-link" @click="toggleJSON">Raw Track Info</button>
@@ -76,7 +76,7 @@
         if(!ms) return '';
         const LABELS = [' hour', ' minute', ' second'];
         const LENGTH = moment.duration(ms);
-        const TIME = [(LENGTH.hours() > 0) ? LENGTH.hours() : '', LENGTH.minutes(), LENGTH.seconds()]; 
+        const TIME = [(LENGTH.hours() > 0) ? LENGTH.hours() : '', LENGTH.minutes(), LENGTH.seconds()];
 
         TIME.forEach((val, i, arr) => arr[i] += (val === '') ? '' : (val === 1) ? LABELS[i]: LABELS[i] + 's');
         return TIME.join(' ').trim();
@@ -101,7 +101,7 @@
             array[index] = '<br>';
           } else {
             array[index] = Autolinker.link(item, {mention: 'twitter', replaceFn(match) {
-              return (match.getType() === 'mention') ? `<a href="https://soundcloud.com/${match.getMention()}" target="_blank">@${match.getMention()}</a>` : true;
+              return (match.getType() === 'mention') ? `<a href="https://soundcloud.com/${match.getMention()}" target="_blank" rel="noopener noreferrer">@${match.getMention()}</a>` : true;
             }
             });
           }
