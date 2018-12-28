@@ -100,10 +100,7 @@
           if(item === '') {
             array[index] = '<br>';
           } else {
-            array[index] = Autolinker.link(item, {mention: 'twitter', replaceFn(match) {
-              return (match.getType() === 'mention') ? `<a href="https://soundcloud.com/${match.getMention()}" target="_blank" rel="noopener noreferrer">@${match.getMention()}</a>` : true;
-            }
-            });
+            array[index] = Autolinker.link(item, { mention: 'soundcloud' });
           }
         });
         return html;
