@@ -1,6 +1,6 @@
 {
   "name": "new-tracks",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Shows SoundCloud track descriptions and saves tracks for later",
   "engines": {
     "node": "10.x.x"
@@ -9,7 +9,7 @@
   "scripts": {
     "start": "parcel build index.html && heroku local",
     "parcel": "parcel index.html",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html --experimental-scope-hoisting"
   },
   "repository": {
     "type": "git",
@@ -32,7 +32,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.1.0",
     "@fortawesome/free-solid-svg-icons": "^5.1.0",
     "@fortawesome/vue-fontawesome": "^0.1.0",
-    "autolinker": "^1.6.2",
+    "autolinker": "^2.1.0",
     "axios": "^0.18.0",
     "bcrypt": "^3.0.0",
     "body-parser": "^1.15.2",
@@ -57,7 +57,7 @@
     "@vue/component-compiler-utils": "^2.1.0",
     "cssnano": "^4.0.2",
     "eslint": "^5.1.0",
-    "eslint-plugin-vue": "^4.5.0",
+    "eslint-plugin-vue": "^5.0.0",
     "parcel-plugin-clean-dist": "^0.0.6",
     "vue-template-compiler": "^2.5.16"
   }
