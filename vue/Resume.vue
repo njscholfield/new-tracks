@@ -16,7 +16,7 @@
 
 <script>
   import placeholder from '../static/apple-touch-icon-152x152.png';
-  
+
   export default {
     data() {
       return {
@@ -62,7 +62,10 @@
     bottom: 0;
     right: 0;
     z-index: 12;
-    color: var(--dark);
+    color: var(--text);
+  }
+  #top.dark-mode #resume {
+    background-color: rgba(51, 51, 51, 0.96);
   }
   #resume-divider {
     margin: 0;
@@ -74,7 +77,7 @@
   #resume-img {
     max-height: 100px;
   }
-  
+
   @media (max-width: 500px) {
     /* make resume box full width on small screens */
     #resume {

@@ -42,7 +42,7 @@
 <style scoped>
   .jumbotron {
     background: #FEAC5E;
-    background: linear-gradient(to right, #4BC0C8, #C779D0, #FEAC5E); 
+    background: var(--gradient); 
     color: white;
     margin-bottom: 1.5rem;
   }

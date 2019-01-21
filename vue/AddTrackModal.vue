@@ -62,3 +62,14 @@
     }
   };
 </script>
+
+<style>
+  .modal-content {
+    background-color: var(--background);
+    color: var(--text);
+  }
+  .form-control {
+    color: var(--text);
+    background-color: var(--backgound);
+  }
+</style>

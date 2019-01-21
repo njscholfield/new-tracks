@@ -1,5 +1,5 @@
 <template>
-  <b-navbar toggleable="xl" type="dark" variant="primary">
+  <b-navbar toggleable="xl" type="dark" :variant="variant">
     <b-navbar-brand href="/"><img id="brandimg" src="../static/favicon-96x96.png"></b-navbar-brand>
       <b-nav-item-dropdown right class="ml-auto" v-if="user.loggedIn">
         <!-- Using button-content slot -->
@@ -8,6 +8,12 @@
         </template>
         <b-dropdown-item :href="user.username"><strong>{{ user.username }}</strong></b-dropdown-item>
         <b-dropdown-item href="/settings/"><span><font-awesome-icon icon="cog"/></span> Settings</b-dropdown-item>
+        <b-dropdown-item @click="toggleDarkMode">
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="customSwitch1" :checked="mode">
+            <label class="custom-control-label" for="customSwitch1"><span><font-awesome-icon icon="moon"/></span> Dark Mode</label>
+          </div>
+        </b-dropdown-item>
         <b-dropdown-divider></b-dropdown-divider>
         <b-dropdown-item href="/logout/">Sign Out</b-dropdown-item>
       </b-nav-item-dropdown>
@@ -23,7 +29,17 @@
     data() {
       return {};
     },
-    props: ['user']
+    props: ['user', 'mode'],
+    computed: {
+      variant() {
+        return this.mode ? 'dark' : 'primary';
+      }
+    },
+    methods: {
+      toggleDarkMode() {
+        this.$emit('darkMode');
+      }
+    }
   };
 </script>
 

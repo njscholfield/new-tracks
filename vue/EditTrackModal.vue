@@ -66,3 +66,15 @@
     }
   };
 </script>
+
+<style>
+  .modal-content {
+    background-color: var(--background);
+    color: var(--text);
+  }
+  .btn-default,
+  .btn-default:focus,
+  .btn-default:hover {
+    color: var(--text);
+  }
+</style>

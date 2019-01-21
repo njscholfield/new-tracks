@@ -1,6 +1,6 @@
 <template>
-  <div id="top">
-    <navbar :user="user"></navbar>
+  <div id="top" :class="{ 'dark-mode': darkMode }">
+    <navbar :user="user" :mode="darkMode" @darkMode="toggleDarkMode"></navbar>
     <url-input @update="updateData"></url-input>
     <div class="container">
       <navpills v-model="currentPanel" :num-tracks="numTracks" :user="user"></navpills>
@@ -34,7 +34,8 @@
         savedIDs: [],
         isLoading: false,
         nearTop: true,
-        errorMessage: {}
+        errorMessage: {},
+        darkMode: false,
       };
     },
     computed: {
@@ -105,10 +106,18 @@
         if(this.nearTop !== (document.scrollingElement.scrollTop < 200)) {
           this.nearTop = Boolean(document.scrollingElement.scrollTop < 200);
         }
+      },
+      checkDarkMode() {
+        this.darkMode = localStorage.getItem('darkMode');
+      },
+      toggleDarkMode() {
+        this.darkMode = !this.darkMode;
+        localStorage.setItem('darkMode', this.darkMode);
       }
     },
     mounted() {
       this.checkLogin();
+      this.checkDarkMode();
     },
     created() {
       window.addEventListener('scroll', this.handleScroll);
@@ -140,6 +149,32 @@
 </script>
 
 <style>
+  /* Dark Mode Support */
+  :root {
+    --background: white;
+    --text: #222;
+    --gradient: linear-gradient(to right, #4BC0C8, #C779D0, #FEAC5E);
+  }
+  body {
+    margin-bottom: -1rem;
+  }
+  #top.dark-mode {
+    --background: #333;
+    --text: white;
+    --gradient: linear-gradient(to right, #c0392b, #8e44ad);
+    min-height: 100vh;
+  }
+  #top.dark-mode .form-control:focus {
+    background: #999;
+    color: white;
+  }
+  #top.dark-mode a:hover {
+    color: #4CAECE;
+  }
+  #top {
+    background-color: var(--background);
+    color: var(--text);
+  }
   #btn-scroll {
     position: fixed;
     bottom: 3rem;

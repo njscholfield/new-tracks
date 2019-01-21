@@ -39,7 +39,7 @@
         <button class="btn btn-link" @click="toggleJSON">Raw Track Info</button>
       </div>
       <div class="col d-flex justify-content-end">
-        <a :href="rawData.permalink_url" target="_blank" rel="noreferrer noopener"><img alt="Soundcloud Logo" title="Click to listen to this song on SoundCloud" src="https://developers.soundcloud.com/assets/logo_black-8c4cb46bf63fda8936f9a4d967416dc6.png"></a>
+        <a :href="rawData.permalink_url" target="_blank" rel="noreferrer noopener"><img class="sc-icon" alt="Soundcloud Logo" title="Click to listen to this song on SoundCloud" src="https://developers.soundcloud.com/assets/logo_black-8c4cb46bf63fda8936f9a4d967416dc6.png"></a>
       </div>
     </div>
     <pre v-if="showJSON"><code>{{ rawData }}</code></pre>
@@ -126,3 +126,12 @@
     }
   };
 </script>
+
+<style>
+  #top.dark-mode .img-fluid {
+    opacity: .8;
+  }
+  #top.dark-mode .sc-icon {
+    filter: invert(100%);
+  }
+</style>
