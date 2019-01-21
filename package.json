@@ -59,6 +59,7 @@
     "eslint": "^5.1.0",
     "eslint-plugin-vue": "^5.0.0",
     "parcel-plugin-clean-dist": "^0.0.6",
+    "sass": "^1.16.1",
     "vue-template-compiler": "^2.5.16"
   }
 }

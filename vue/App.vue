@@ -148,8 +148,7 @@
   };
 </script>
 
-<style>
-  /* Dark Mode Support */
+<style lang="scss">
   :root {
     --background: white;
     --text: #222;
@@ -158,19 +157,23 @@
   body {
     margin-bottom: -1rem;
   }
+  /* Dark Mode */
   #top.dark-mode {
     --background: #333;
     --text: white;
     --gradient: linear-gradient(to right, #c0392b, #8e44ad);
     min-height: 100vh;
+
+    .form-control:focus {
+      background: #999;
+      color: white;
+    }
+
+    a:hover {
+      color: #4CAECE;
+    }
   }
-  #top.dark-mode .form-control:focus {
-    background: #999;
-    color: white;
-  }
-  #top.dark-mode a:hover {
-    color: #4CAECE;
-  }
+
   #top {
     background-color: var(--background);
     color: var(--text);
