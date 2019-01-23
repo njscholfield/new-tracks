@@ -1,6 +1,6 @@
 {
   "name": "new-tracks",
-  "version": "3.0.2",
+  "version": "3.1.1",
   "description": "Shows SoundCloud track descriptions and saves tracks for later",
   "engines": {
     "node": "10.x.x"
@@ -32,7 +32,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.1.0",
     "@fortawesome/free-solid-svg-icons": "^5.1.0",
     "@fortawesome/vue-fontawesome": "^0.1.0",
-    "autolinker": "^2.1.0",
+    "autolinker": "^3.0.0",
     "axios": "^0.18.0",
     "bcrypt": "^3.0.0",
     "body-parser": "^1.15.2",
