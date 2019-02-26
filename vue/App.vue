@@ -172,6 +172,10 @@
     a:hover {
       color: #4CAECE;
     }
+
+    .table {
+      color: var(--text);
+    }
   }
 
   #top {
