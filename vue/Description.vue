@@ -134,4 +134,7 @@
   #top.dark-mode .sc-icon {
     filter: invert(100%);
   }
+  #top.dark-mode code {
+    color: white;
+  }
 </style>
