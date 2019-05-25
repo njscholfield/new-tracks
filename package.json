@@ -37,7 +37,7 @@
     "axios": "^0.18.0",
     "bcrypt": "^3.0.0",
     "body-parser": "^1.15.2",
-    "bootstrap-vue": "^2.0.0-rc.9",
+    "bootstrap-vue": "2.0.0-rc.17",
     "bootswatch": "^4.1.1",
     "connect-flash": "^0.1.1",
     "connect-redis": "^3.1.0",
@@ -55,7 +55,7 @@
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
-    "@vue/component-compiler-utils": "^2.1.0",
+    "@vue/component-compiler-utils": "^3.0.0",
     "cssnano": "^4.0.2",
     "eslint": "^5.1.0",
     "eslint-plugin-vue": "^5.0.0",
