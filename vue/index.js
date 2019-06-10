@@ -6,6 +6,11 @@ import VueAxios from 'vue-axios';
 
 Vue.use(VueAxios, axios);
 
+// import { NavbarPlugin, AlertPlugin, ModalPlugin } from 'bootstrap-vue';
+// Vue.use(NavbarPlugin);
+// Vue.use(AlertPlugin);
+// Vue.use(ModalPlugin);
+
 import Navbar from 'bootstrap-vue/es/components/navbar';
 import Alert from 'bootstrap-vue/es/components/alert';
 import Modal from 'bootstrap-vue/es/components/modal';
