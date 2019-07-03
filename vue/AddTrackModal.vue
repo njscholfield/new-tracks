@@ -1,5 +1,5 @@
 <template>
-  <b-modal ref="modal" @shown="refreshData" @ok="submitTrack" ok-title="Add" title="Add Track">
+  <b-modal static="true" lazy="true" ref="modal" @shown="refreshData" @ok="submitTrack" ok-title="Add" title="Add Track">
     <form>
       <div class="form-group">
         <label>Title</label>
