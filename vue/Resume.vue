@@ -59,7 +59,7 @@
     border: .5px solid gray;
     border-left: 5px solid #43AC6A;
     position: fixed;
-    bottom: 0;
+    bottom: calc(env(safe-area-inset-bottom) + 3.4rem);
     right: 0;
     z-index: 12;
     color: var(--text);
