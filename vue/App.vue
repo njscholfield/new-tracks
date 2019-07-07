@@ -155,7 +155,8 @@
     --gradient: linear-gradient(to right, #4BC0C8, #C779D0, #FEAC5E);
   }
   body {
-    margin-bottom: -1rem;
+    margin-bottom: 3.4rem;
+    margin-bottom: calc(env(safe-area-inset-bottom) + 3.4rem);
   }
   /* Dark Mode */
   #top.dark-mode {
@@ -184,7 +185,8 @@
   }
   #btn-scroll {
     position: fixed;
-    bottom: 3rem;
+    bottom: 6rem;
+    bottom: calc(env(safe-area-inset-bottom) + 6rem);
     right: 1rem;
     padding: .25rem .75rem .5rem .75rem;
   }
