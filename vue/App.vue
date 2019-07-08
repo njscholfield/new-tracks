@@ -170,10 +170,6 @@
       color: white;
     }
 
-    a:hover {
-      color: #4CAECE;
-    }
-
     .table {
       color: var(--text);
     }
