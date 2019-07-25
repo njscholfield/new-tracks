@@ -1,5 +1,5 @@
 <template>
-  <b-modal static="true" lazy="true" ref="modal" ok-only ok-variant="danger" ok-title="Dismiss" header-text-variant="danger" :title="error.title">
+  <b-modal static lazy ref="modal" ok-only ok-variant="danger" ok-title="Dismiss" header-text-variant="danger" :title="error.title">
     <h6>{{ this.error.message }}</h6>
   </b-modal>
 </template>
