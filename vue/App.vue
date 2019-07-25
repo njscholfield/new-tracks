@@ -108,7 +108,11 @@
         }
       },
       checkDarkMode() {
-        this.darkMode = localStorage.getItem('darkMode');
+        const modeStr = localStorage.getItem('darkMode'); // null if no setting is stored
+        this.darkMode = (modeStr === 'true'); // convert localStorage string to boolean
+        if(modeStr === null && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          this.darkMode = true;
+        }
       },
       toggleDarkMode() {
         this.darkMode = !this.darkMode;
@@ -155,8 +159,8 @@
     --gradient: linear-gradient(to right, #4BC0C8, #C779D0, #FEAC5E);
   }
   body {
-    margin-bottom: 3.4rem;
-    margin-bottom: calc(env(safe-area-inset-bottom) + 3.4rem);
+    margin-bottom: 3.3rem;
+    margin-bottom: calc(env(safe-area-inset-bottom) + 3.3rem);
   }
   /* Dark Mode */
   #top.dark-mode {
