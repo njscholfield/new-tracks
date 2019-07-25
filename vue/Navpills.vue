@@ -47,6 +47,9 @@
       background-color: rgba(255, 255, 255, 0.7);
     }
     cursor: pointer;
+    &:hover {
+      color: white; // prevent hover color being black in light mode
+    }
   }
   .nav {
     justify-content: space-around;
