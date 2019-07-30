@@ -4,7 +4,7 @@
     <hr id="resume-divider">
     <div class="row">
       <div class="col-4 col-sm-auto">
-        <router-link :to="user.resumeTrack"><img class="img-fluid" id="resume-img" :src="artworkURL"></router-link>
+        <router-link :to="user.resumeTrack"><img alt="Album Artwork" class="img-fluid" id="resume-img" :src="artworkURL"></router-link>
       </div>
       <div class="col-8 col-sm">
         <router-link :to="user.resumeTrack"><h5>{{ trackInfo.title }}</h5></router-link>

@@ -1,10 +1,10 @@
 <template>
   <b-navbar toggleable="xl" type="dark" :variant="variant">
-    <b-navbar-brand href="/"><img id="brandimg" src="../static/favicon-96x96.png"></b-navbar-brand>
+    <b-navbar-brand href="/"><img id="brandimg" alt="Home" src="../static/favicon-96x96.png"></b-navbar-brand>
       <b-nav-item-dropdown right class="ml-auto" v-if="user.loggedIn">
         <!-- Using button-content slot -->
         <template slot="button-content">
-          <font-awesome-icon icon="user"/>
+          <font-awesome-icon icon="user" title="User menu dropdown toggle"/>
         </template>
         <b-dropdown-item :href="user.username"><strong>{{ user.username }}</strong></b-dropdown-item>
         <b-dropdown-item href="/settings/"><span><font-awesome-icon icon="cog"/></span> Settings</b-dropdown-item>

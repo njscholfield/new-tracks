@@ -5,14 +5,13 @@
       <form id="track-input" @submit.prevent="getTrackInfo">
         <fieldset>
           <div class="form-group">
-            <label class="sr-only" for="trackURL">SoundCloud® Track URL</label>
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">
                   <font-awesome-icon :icon="['fab', 'soundcloud']"></font-awesome-icon>
                 </span>
               </div>
-              <input class="form-control has-feedback" type="url" v-model="trackURL" placeholder="https://soundcloud.com/...">
+              <input class="form-control has-feedback" type="url" aria-label="SoundCloud® Track URL" v-model="trackURL" placeholder="https://soundcloud.com/...">
               <div class="input-group-append">
                 <button class="form-control-feedback" aria-hidden="true" type="reset"><font-awesome-icon icon="times"></font-awesome-icon></button>
               </div>
@@ -42,7 +41,7 @@
 <style scoped>
   .jumbotron {
     background: #FEAC5E;
-    background: var(--gradient); 
+    background: var(--gradient);
     color: white;
     margin-bottom: 1.5rem;
   }

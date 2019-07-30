@@ -9,7 +9,7 @@
     <div class="row" id="trackTitle">
       <div class="col-md-10 order-md-2 mb-2">
         <h3>{{ rawData.title }}</h3>
-        <h4>by <a :href="rawData.user.permalink_url" target="_blank">{{ rawData.user.username }}</a></h4>
+        <h4>by <a :href="rawData.user.permalink_url" target="_blank" rel="noopener noreferrer">{{ rawData.user.username }}</a></h4>
         <h6><span class="text-success">{{ rawData.duration | duration }}</span></h6>
         <h6>
           <a v-if="rawData.downloadable" :href="rawData.download_url | clientID" target="_blank" rel="noreferrer noopener">Download</a>
