@@ -1,6 +1,6 @@
 <template>
   <div id="top" :class="{ 'dark-mode': darkMode }">
-    <navbar :user="user" :mode="darkMode" @darkMode="toggleDarkMode"></navbar>
+    <navbar :user="user" :mode="darkMode" @darkMode="toggleDarkMode" @random="randomTrack"></navbar>
     <url-input @update="updateData"></url-input>
     <div class="container">
       <navpills v-model="currentPanel" :num-tracks="numTracks" :user="user"></navpills>
@@ -117,6 +117,10 @@
       toggleDarkMode() {
         this.darkMode = !this.darkMode;
         localStorage.setItem('darkMode', this.darkMode);
+      },
+      randomTrack() {
+        const randomID = Math.floor((Math.random() * this.savedIDs.length));
+        this.$router.push(this.savedIDs[randomID]);
       }
     },
     mounted() {
