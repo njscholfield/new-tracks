@@ -1,4 +1,5 @@
 var express = require('express');
+var redis = require('redis');
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
 var passport = require('passport');
@@ -10,7 +11,8 @@ var app = express();
 
 require('./config/passport.js')(passport);
 
-var sess = { store: new RedisStore({url: process.env.REDIS_URL}), secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false, name: 'sessionID', cookie: {}};
+var client = redis.createClient(process.env.REDIS_URL);
+var sess = { store: new RedisStore({ client }), secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false, name: 'sessionID', cookie: {}};
 if (app.get('env') === 'production') {
   app.set('trust proxy', 1);
   sess.cookie.secure = true;
