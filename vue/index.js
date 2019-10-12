@@ -17,6 +17,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
 import { faStar } from '@fortawesome/free-solid-svg-icons/faStar';
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons/faChevronUp';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import { faStream } from '@fortawesome/free-solid-svg-icons/faStream';
 import { faMusic } from '@fortawesome/free-solid-svg-icons/faMusic';
 import { faMoon } from '@fortawesome/free-solid-svg-icons/faMoon';
@@ -31,7 +32,7 @@ Vue.use(NavbarPlugin);
 Vue.use(AlertPlugin);
 Vue.use(ModalPlugin);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
-library.add(faUser, faCog, faTimes, faPencilAlt, faCheck, faStar, faSearch, faChevronUp, faStream, faMusic, faMoon, faDice, farStar, faSoundcloud);
+library.add(faUser, faCog, faTimes, faPencilAlt, faCheck, faStar, faSearch, faChevronUp, faChevronDown, faStream, faMusic, faMoon, faDice, farStar, faSoundcloud);
 
 Vue.filter('moment', (input, formatString) => {
   if(!input) return '';
