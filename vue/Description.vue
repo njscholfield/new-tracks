@@ -11,11 +11,11 @@
         <h3>{{ rawData.title }}</h3>
         <h4>by <a :href="rawData.user.permalink_url" target="_blank" rel="noopener noreferrer">{{ rawData.user.username }}</a></h4>
         <h6><span class="text-success">{{ rawData.duration | duration }}</span></h6>
-        <h6>
+        <p>
           <a v-if="rawData.downloadable" :href="rawData.download_url | clientID" target="_blank" rel="noreferrer noopener">Download</a>
           <span v-if="rawData.downloadable && rawData.purchase_url"> | </span>
           <a v-if="rawData.purchase_url" :href="rawData.purchase_url" target="_blank" rel="noreferrer noopener">{{ rawData.purchase_title || 'Buy' }}</a>
-        </h6>
+        </p>
         <span v-if="tags.length > 0 && tags[0] !== ''">Tags:</span>
         <span class="badge badge-primary ml-1" v-for="tag in tags">{{ tag }}</span>
       </div>

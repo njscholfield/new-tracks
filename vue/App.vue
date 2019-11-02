@@ -7,7 +7,7 @@
       <description v-show="isCurrentPanel(1)" :raw-data="trackData" :user="user" :saved-ids="savedIDs" @update="passTracks" @error="handleAxiosError"></description>
       <tracks ref="tracks" v-if="user.loggedIn" v-show="isCurrentPanel(2) || isCurrentPanel(3)" :user="user" :show-favs="showFavs" @tracks="updateCounts" @update="passTracks" @error="handleAxiosError"></tracks>
     </div>
-    <button class="btn btn-primary" id="btn-scroll" @click="scroll"><font-awesome-icon :icon="nearTop ? 'chevron-down' : 'chevron-up'"></font-awesome-icon></button>
+    <button class="btn btn-primary" id="btn-scroll" @click="scroll" :title="nearTop ? 'Scroll to bottom' : 'Scroll to top'"><font-awesome-icon :icon="nearTop ? 'chevron-down' : 'chevron-up'" aria-hidden="true"></font-awesome-icon></button>
     <resume v-if="user.loggedIn" :is-visible="showResume" :user="user"></resume>
     <loading v-show="isLoading"></loading>
     <error ref="errorModal" :error="errorMessage"></error>

@@ -1,12 +1,13 @@
 <template>
   <div>
+    <label for="search" class="sr-only">Search your saved tracks</label>
     <div class="input-group">
       <div class="input-group-prepend">
         <span class="input-group-text">
           <font-awesome-icon icon="search"></font-awesome-icon>
         </span>
       </div>
-      <input class="form-control has-feedback" v-model="searchTerm">
+      <input id="search" class="form-control has-feedback" v-model="searchTerm">
       <div class="input-group-append">
         <button class="form-control-feedback" aria-hidden="true" type="reset" @click="searchTerm = ''"><font-awesome-icon icon="times"></font-awesome-icon></button>
       </div>
@@ -28,7 +29,7 @@
             <td><router-link :to="track.trackID">{{ track.title }}</router-link></td>
             <td>{{ track.artist }}</td>
             <td class="text-center">{{ track.releaseDate | moment('LL') }}</td>
-            <td class="text-center"><span class="edit" @click="editTrack(track)"><font-awesome-icon icon="pencil-alt"></font-awesome-icon></span></td>
+            <td class="text-center"><button class="btn" @click="editTrack(track)" title="Click to edit this track"><font-awesome-icon icon="pencil-alt"></font-awesome-icon></button></td>
           </tr>
         </tbody>
       </table>
@@ -38,7 +39,7 @@
         <div>
           <h3><router-link :to="track.trackID">{{ track.title }}</router-link></h3>
           <h5>{{ track.artist }}</h5>
-          <h6>{{ track.releaseDate | moment('LL') }}</h6>
+          <p>{{ track.releaseDate | moment('LL') }}</p>
           <button class="btn btn-sm btn-primary" @click="editTrack(track)"><span><font-awesome-icon icon="pencil-alt"/></span> Edit Info</button>
           <hr>
         </div>

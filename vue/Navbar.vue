@@ -3,12 +3,14 @@
     <b-navbar-brand href="/"><img id="brandimg" alt="Home" src="../static/favicon-96x96.png"></b-navbar-brand>
       <b-nav class="ml-auto" v-if="user.loggedIn">
         <b-nav-item @click="randomTrack" title="Click to view a random saved track">
-          <font-awesome-icon icon="dice"></font-awesome-icon>
+          <label class="sr-only">Click to view a random saved track</label>
+          <font-awesome-icon icon="dice" aria-hidden="true"></font-awesome-icon>
         </b-nav-item>
         <b-nav-item-dropdown right>
           <!-- Using button-content slot -->
           <template slot="button-content">
-            <font-awesome-icon icon="user" title="User menu dropdown toggle"/>
+            <label class="sr-only">User menu dropdown toggle</label>
+            <font-awesome-icon icon="user" aria-hidden="true" title="User menu dropdown toggle"/>
           </template>
           <b-dropdown-item :href="user.username"><strong>{{ user.username }}</strong></b-dropdown-item>
           <b-dropdown-item href="/settings/"><span><font-awesome-icon icon="cog"/></span> Settings</b-dropdown-item>

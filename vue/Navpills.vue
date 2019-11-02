@@ -1,23 +1,23 @@
 <template>
-  <div class="nav-container">
+  <nav class="nav-container">
     <ul class="nav">
-      <li class="nav-item" role="presentation">
-        <a class="nav-link" :class="{'active': isCurrentPanel(1)}" @click="setPanel(1)">
-          <font-awesome-icon icon="stream"></font-awesome-icon> <span class="d-none d-sm-inline-block">Description</span>
-        </a>
+      <li class="nav-item">
+        <button class="btn nav-link" :class="{'active': isCurrentPanel(1)}" @click="setPanel(1)" tabindex="0" title="View the current track's description">
+          <font-awesome-icon icon="stream"></font-awesome-icon> <span id="desc-label" class="d-none d-sm-inline-block">Description</span>
+        </button>
       </li>
-      <li class="nav-item" role="presentation" v-show="user.loggedIn">
-        <a class="nav-link" :class="{'active': isCurrentPanel(2)}" @click="setPanel(2)">
+      <li class="nav-item" v-show="user.loggedIn">
+        <button class="btn nav-link" :class="{'active': isCurrentPanel(2)}" @click="setPanel(2)" tabindex="0" title="View all your saved tracks">
           <font-awesome-icon icon="music"></font-awesome-icon> <span class="d-none d-sm-inline-block">Tracks</span> <span class="badge badge-pill badge-light">{{ numTracks.all }}</span>
-        </a>
+        </button>
       </li>
-      <li class="nav-item" role="presentation" v-show="user.loggedIn">
-        <a class="nav-link" :class="{'active': isCurrentPanel(3)}" @click="setPanel(3)">
-          <font-awesome-icon icon="star"></font-awesome-icon> <span class="d-none d-sm-inline-block">Favorites</span> <span class="badge badge-pill badge-light">{{ numTracks.favorites }}</span>
-        </a>
+      <li class="nav-item" v-show="user.loggedIn">
+        <button class="btn nav-link" :class="{'active': isCurrentPanel(3)}" @click="setPanel(3)" tabindex="0" title="View all your favorited tracks">
+          <font-awesome-icon icon="star"></font-awesome-icon> <span id="fav-label" class="d-none d-sm-inline-block">Favorites</span> <span class="badge badge-pill badge-light">{{ numTracks.favorites }}</span>
+        </button>
       </li>
     </ul>
-  </div>
+  </nav>
 </template>
 
 <script>
@@ -41,7 +41,7 @@
   ul {
     margin-bottom: 2rem;
   }
-  a.nav-link {
+  button.nav-link {
     color: rgba(255, 255, 255, 0.5);
     .badge {
       background-color: rgba(255, 255, 255, 0.7);
