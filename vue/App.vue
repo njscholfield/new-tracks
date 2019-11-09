@@ -2,11 +2,9 @@
   <div id="top" :class="{ 'dark-mode': darkMode }">
     <navbar :user="user" :mode="darkMode" @darkMode="toggleDarkMode" @random="randomTrack"></navbar>
     <url-input @update="updateData"></url-input>
-    <div class="container">
-      <navpills v-model="currentPanel" :num-tracks="numTracks" :user="user"></navpills>
-      <description v-show="isCurrentPanel(1)" :raw-data="trackData" :user="user" :saved-ids="savedIDs" @update="passTracks" @error="handleAxiosError"></description>
-      <tracks ref="tracks" v-if="user.loggedIn" v-show="isCurrentPanel(2) || isCurrentPanel(3)" :user="user" :show-favs="showFavs" @tracks="updateCounts" @update="passTracks" @error="handleAxiosError"></tracks>
-    </div>
+    <navpills v-model="currentPanel" :num-tracks="numTracks" :user="user"></navpills>
+    <description v-show="isCurrentPanel(1)" :raw-data="trackData" :user="user" :saved-ids="savedIDs" @update="passTracks" @error="handleAxiosError"></description>
+    <tracks ref="tracks" v-if="user.loggedIn" v-show="isCurrentPanel(2) || isCurrentPanel(3)" :user="user" :show-favs="showFavs" :current-id="currentTrack" @tracks="updateCounts" @update="passTracks" @error="handleAxiosError"></tracks>
     <button class="btn btn-primary" id="btn-scroll" @click="scroll" :title="nearTop ? 'Scroll to bottom' : 'Scroll to top'"><font-awesome-icon :icon="nearTop ? 'chevron-down' : 'chevron-up'" aria-hidden="true"></font-awesome-icon></button>
     <resume v-if="user.loggedIn" :is-visible="showResume" :user="user"></resume>
     <loading v-show="isLoading"></loading>
@@ -56,7 +54,9 @@
       updateData(newData) {
         this.trackData = newData;
         const path = (newData.id) ? `/${newData.id}` : '/';
-        this.$router.replace(path);
+        if(path !== this.$router.currentRoute.path) {
+          this.$router.replace(path);
+        }
         this.updatePanel(1);
       },
       updatePanel(id) {
@@ -138,7 +138,7 @@
     watch: {
       '$route': { immediate: true, handler() {
         const track = this.$route.path.substring(1);
-        if((isNaN(track) && !track.includes('soundcloud')) || track == '') return;
+        if((isNaN(track) && !track.includes('soundcloud')) || track == '' || track == this.currentTrack) return;
         const url = ['https://api.soundcloud.com/', undefined, 'client_id=30cba84d4693746b0a2fbc0649b2e42c'];
         url[1] = (track.includes('soundcloud')) ? `resolve.json?url=${track}/&` : `tracks/${track}/?`;
         this.isLoading = true;
