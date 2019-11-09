@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container-fluid">
     <label for="search" class="sr-only">Search your saved tracks</label>
     <div class="input-group">
       <div class="input-group-prepend">
@@ -12,18 +12,16 @@
         <button class="form-control-feedback" aria-hidden="true" type="reset" @click="searchTerm = ''"><font-awesome-icon icon="times"></font-awesome-icon></button>
       </div>
     </div>
-    <br>
-    <div class="grid-container">
-      <div v-for="track in filteredTracks" :key="track.trackID" :id="track.trackID">
-        <div class="track-box">
-          <h3><router-link :to="track.trackID">{{ track.title }}</router-link></h3>
-          <h5>{{ track.artist }}</h5>
-          <p>{{ track.releaseDate | moment('LL') }}</p>
-          <button class="btn btn-sm btn-primary" @click="editTrack(track)"><span><font-awesome-icon icon="pencil-alt"/></span> Edit Info</button>
-        </div>
-      </div>
-      <h4 class="text-info" v-show="filteredTracks.length == 0">No results</h4>
-    </div>
+    <ul v-if="filteredTracks.length" class="grid-container">
+      <li class="track-box" :class="{'active': isCurrentTrack(track.trackID)}" v-for="track in filteredTracks" :key="track.trackID" :id="track.trackID">
+        <h3 v-if="isCurrentTrack(track.trackID)" title="This track is already selected, view it in the Description tab">{{ track.title }}</h3>
+        <h3 v-else><router-link :to="track.trackID">{{ track.title }}</router-link></h3>
+        <h5>{{ track.artist }}</h5>
+        <p>{{ track.releaseDate | moment('LL') }}</p>
+        <button class="btn btn-sm btn-primary" @click="editTrack(track)"><span><font-awesome-icon icon="pencil-alt"/></span> Edit Info</button>
+      </li>
+    </ul>
+    <h4 class="text-info mt-3" v-else>No results</h4>
     <edit-track-modal ref="editTrack" :track-info="submitInfo" :user="user"></edit-track-modal>
   </div>
 </template>
@@ -39,7 +37,7 @@
         searchTerm: ''
       };
     },
-    props: ['user', 'showFavs'],
+    props: ['user', 'showFavs', 'currentId'],
     components: { EditTrackModal },
     computed: {
       numTracks() {
@@ -79,6 +77,9 @@
       },
       scrollToId(trackID) {
         document.getElementById(trackID).scrollIntoView(true);
+      },
+      isCurrentTrack(id) {
+        return (this.currentId == id);
       }
     },
     mounted() {
@@ -101,13 +102,24 @@
     z-index: 10;
   }
   .grid-container {
-    padding-bottom: 1rem;
+    padding: 1rem 0;
+    list-style: none;
   }
   .track-box {
     border: 1px dotted #999;
     padding: 1rem;
     height: 100%;
     margin-bottom: 1rem;
+    &.active {
+      background-color: var(--indigo);
+      color: #cecece;
+      h3 {
+        color: white
+      }
+    }
+  }
+  .dark-mode .track-box.bg-info {
+    opacity: .8;
   }
   @supports(display: grid) {
     .grid-container {
@@ -121,7 +133,10 @@
       grid-template-columns: auto 1fr;
       grid-template-rows: auto auto 1fr auto;
       h3 {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
+      }
+      p {
+        font-weight: 300;
       }
       h3, h5, p {
         grid-column: span 2;
