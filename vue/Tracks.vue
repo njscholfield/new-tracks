@@ -106,7 +106,7 @@
     list-style: none;
   }
   .track-box {
-    border: 1px dotted #999;
+    box-shadow: 0 0 2px;
     padding: 1rem;
     height: 100%;
     margin-bottom: 1rem;
