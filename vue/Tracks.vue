@@ -13,38 +13,16 @@
       </div>
     </div>
     <br>
-    <div class="d-none d-md-block">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Track Name</th>
-            <th>Artist</th>
-            <th class="text-center">Release Date</th>
-            <th class="text-center">Edit</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- using the same id for both -->
-          <tr v-for="track in filteredTracks" :key="track.trackID" :class="track.trackID">
-            <td><router-link :to="track.trackID">{{ track.title }}</router-link></td>
-            <td>{{ track.artist }}</td>
-            <td class="text-center">{{ track.releaseDate | moment('LL') }}</td>
-            <td class="text-center"><button class="btn" @click="editTrack(track)" title="Click to edit this track"><font-awesome-icon icon="pencil-alt"></font-awesome-icon></button></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="d-md-none">
-      <div v-for="track in filteredTracks" :key="track.trackID" :class="track.trackID">
-        <div>
+    <div class="grid-container">
+      <div v-for="track in filteredTracks" :key="track.trackID" :id="track.trackID">
+        <div class="track-box">
           <h3><router-link :to="track.trackID">{{ track.title }}</router-link></h3>
           <h5>{{ track.artist }}</h5>
           <p>{{ track.releaseDate | moment('LL') }}</p>
           <button class="btn btn-sm btn-primary" @click="editTrack(track)"><span><font-awesome-icon icon="pencil-alt"/></span> Edit Info</button>
-          <hr>
         </div>
       </div>
-      <h4 class="text-info" v-show="numTracks == 0">No results</h4>
+      <h4 class="text-info" v-show="filteredTracks.length == 0">No results</h4>
     </div>
     <edit-track-modal ref="editTrack" :track-info="submitInfo" :user="user"></edit-track-modal>
   </div>
@@ -100,9 +78,7 @@
         this.$refs.editTrack.showModal();
       },
       scrollToId(trackID) {
-        const els = document.getElementsByClassName(trackID);
-        const el = (!els || !els[0]) ? undefined : (els[0].offsetParent !== null) ? els[0] : els[1];
-        if(el) el.scrollIntoView(true);
+        document.getElementById(trackID).scrollIntoView(true);
       }
     },
     mounted() {
@@ -111,7 +87,7 @@
   };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   td .fa-pencil-alt {
     color: var(--primary);
   }
@@ -123,5 +99,36 @@
     border: none;
     margin-left: -1.5rem;
     z-index: 10;
+  }
+  .grid-container {
+    padding-bottom: 1rem;
+  }
+  .track-box {
+    border: 1px dotted #999;
+    padding: 1rem;
+    height: 100%;
+    margin-bottom: 1rem;
+  }
+  @supports(display: grid) {
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-gap: 1rem;
+    }
+    .track-box {
+      margin-bottom: 0;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-template-rows: auto auto 1fr auto;
+      h3 {
+        font-size: 1.2rem;
+      }
+      h3, h5, p {
+        grid-column: span 2;
+      }
+      button {
+        grid-column: 1 / 2;
+      }
+    }
   }
 </style>
