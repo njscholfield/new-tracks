@@ -1,8 +1,8 @@
 <template>
-  <div v-if="rawData && rawData.error">
+  <div class="container" v-if="rawData && rawData.error">
     <h4 class="text-danger">{{ rawData.error }}</h4>
   </div>
-  <div v-else-if="rawData.title">
+  <div class="container" v-else-if="rawData.title">
     <b-alert variant="success" :show="!user.loggedIn" dismissible>
       <a class="alert-link" :href="`/login/?hash=${rawData.id}`">Sign in</a> or <a class="alert-link" :href="`/register/?hash=${rawData.id}`">create an account</a> to save this track for later!
     </b-alert>
@@ -20,7 +20,7 @@
         <span class="badge badge-primary ml-1" v-for="tag in tags">{{ tag }}</span>
       </div>
       <div class="col-md-2 order-md-1">
-        <a :href="artworkUrl" target="_blank" rel="noreferrer noopener">
+        <a class="artwork-link" :href="artworkUrl" target="_blank" rel="noreferrer noopener">
           <img class="img-fluid" :src="artworkUrl" alt="Album Artwork">
         </a>
       </div>
@@ -30,7 +30,7 @@
     <h6>POSTED ON: {{ datePosted | moment('LL') }}</h6>
 
     <div v-if="user.loggedIn">
-      <button class="btn btn-secondary disabled" v-if="savedIds.includes(rawData.id.toString())"><span><font-awesome-icon icon="check"/></span> Track Added To List</button>
+      <button class="btn btn-secondary" disabled v-if="savedIds.includes(rawData.id.toString())"><span><font-awesome-icon icon="check"/></span> Track Added To List</button>
       <button class="btn btn-success" v-else @click="$refs.addTrack.showModal()">+ Add Track To List</button>
     </div>
 
@@ -45,7 +45,7 @@
     <pre v-if="showJSON"><code>{{ rawData }}</code></pre>
     <add-track-modal ref="addTrack" :track-info="rawData" :user="user"></add-track-modal>
   </div>
-  <div v-else>
+  <div class="container" v-else>
     <br>
     <h4 class="text-info text-center">Enter a URL <strong>above</strong> <span v-show="user.loggedIn">or select a track from the <strong>Tracks</strong> or <strong>Favorites</strong> tab</span> to view its description.</h4>
   </div>
@@ -136,5 +136,8 @@
   }
   #top.dark-mode code {
     color: white;
+  }
+  .artwork-link:focus {
+    outline: 3px solid var(--primary);
   }
 </style>
