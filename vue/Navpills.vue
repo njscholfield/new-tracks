@@ -81,4 +81,7 @@
       background-color: white;
     }
   }
+  .nav-link:focus {
+    outline: 1px solid #fafafa;
+  }
 </style>
