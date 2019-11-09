@@ -118,9 +118,6 @@
       }
     }
   }
-  .dark-mode .track-box.bg-info {
-    opacity: .8;
-  }
   @supports(display: grid) {
     .grid-container {
       display: grid;
