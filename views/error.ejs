@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <% include ../views/partials/head.ejs %>
+    <%- include('../views/partials/head.ejs') %>
     <title><%= message._2 %> | New Tracks</title>
     <style>
       html, body {
@@ -39,6 +39,6 @@
     <div class="credit">
       <a href="<%= credit %>" target="_blank"><h6>Photo Credit</h6></a>
     </div>
-    <% include ../views/partials/scripts.ejs %>
+    <%- include('../views/partials/scripts.ejs') %>
   </body>
 </html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <% include ../views/partials/head.ejs %>
+    <%- include('../views/partials/head.ejs') %>
     <title>Register | New Tracks</title>
   </head>
   <body>
@@ -12,36 +12,34 @@
       </div>
     </div>
     <div class="container">
-      <h4 class="<%= message['type'] %>"><%= message['content'] %></h4>
+      <% if(message['content'] != '') { %><h4 class="<%= message['type'] %>"><%= message['content'] %></h4><% } %>
       <div class="d-flex justify-content-end">
         <a href="/auth/soundcloud"><img alt="login using SoundCloud" src="https://connect.soundcloud.com/2/btn-connect-l.png"></a>
       </div>
       <form action="/register/?hash=<%= hash %>" method="post">
-        <fieldset>
-          <div class="form-group">
-            <label for="inputEmail">Email Address</label>
-            <input type="email" name="inputEmail" class="form-control" placeholder="username@example.com" required="true" autocomplete="email">
-          </div>
-          <div class="form-group">
-            <label for="inputUsername">Username <button type="button" class="btn btn-sm btn-secondary" data-container="body" data-toggle="popover" data-placement="top" data-content="Your username can contain letters, numbers, and these symbols: $-_.+!*'(),"><span class="fas fa-info-circle"></span></button></label>
-            <input type="text" name="inputUsername" class="form-control" placeholder="jsmith" required="true" autocapitalize="none" autocorrect="off">
-          </div>
-          <div class="form-group">
-            <label for="newPassword1">Password <button type="button" class="btn btn-sm btn-secondary" data-container="body" data-toggle="popover" data-placement="top" data-content="Password must be 8-72 characters"><span class="fas fa-info-circle"></span></button></label>
-            <input type="password" name="newPassword1" class="form-control" autocomplete="new-password" placeholder="not 'password' please" required="true" minlength="8" maxlength="73">
-          </div>
-          <div class="form-group">
-            <label for="newPassword2">Confirm Password</label>
-            <input type="password" name="newPassword2" class="form-control" autocomplete="new-password" placeholder="not 'password' please" required="true" minlength="8" maxlength="73">
-          </div>
-        </fieldset>
+        <div class="form-group">
+          <label for="inputEmail">Email Address</label>
+          <input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="username@example.com" required="true" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="inputUsername">Username <button type="button" aria-label="Click to see username" class="btn btn-sm btn-secondary" data-container="body" data-toggle="popover" data-placement="top" data-content="Your username can contain letters, numbers, and these symbols: $-_.+!*'(),"><span class="fas fa-info-circle" aria-hidden="true"></span></button></label>
+          <input type="text" id="inputUsername" name="inputUsername" class="form-control" placeholder="jsmith" required="true" autocapitalize="none" autocorrect="off">
+        </div>
+        <div class="form-group">
+          <label for="newPassword1">Password <button type="button" aria-label="Click to see password requirements" class="btn btn-sm btn-secondary" data-container="body" data-toggle="popover" data-placement="top" data-content="Password must be 8-72 characters"><span class="fas fa-info-circle" aria-hidden="true"></span></button></label>
+          <input type="password" id="newPassword1" name="newPassword1" class="form-control" autocomplete="new-password" placeholder="not 'password' please" required="true" minlength="8" maxlength="73">
+        </div>
+        <div class="form-group">
+          <label for="newPassword2">Confirm Password</label>
+          <input type="password" id="newPassword2" name="newPassword2" class="form-control" autocomplete="new-password" placeholder="not 'password' please" required="true" minlength="8" maxlength="73">
+        </div>
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Submit</button>
-          <button type="reset" class="btn btn-default">Clear</button>
+          <button type="reset" class="btn btn-secondary">Clear</button>
         </div>
       </form>
     </div>
-    <% include ../views/partials/scripts.ejs %>
+    <%- include('../views/partials/scripts.ejs') %>
     <script>
     $(function () {
       $('[data-toggle="popover"]').popover()

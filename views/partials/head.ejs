@@ -2,7 +2,7 @@
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.3.1/yeti/bootstrap.min.css" integrity="sha256-r12iFMQEm0UR9ibQQSIzevTq+BFH3dn5+PFcr2M1Y8w=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css" integrity="sha256-zmfNZmXoNWBMemUOo1XUGFfc0ihGGLYdgtJS3KCr/l0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous" />
 <style>
 @media (min-width: 576px) {
   .jumbotron {
@@ -11,5 +11,18 @@
 }
 .jumbotron {
   margin-bottom: 1rem;
+}
+@media(prefers-color-scheme: dark) {
+  body, .form-control, th, td, .modal-content {
+    color: white;
+    background-color: #333;
+  }
+  .jumbotron, .form-control, .list-group-item, .card-body {
+    background-color: #555;
+  }
+  .form-control:focus {
+    background-color: #777;
+    color: white;
+  }
 }
 </style>
