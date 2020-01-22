@@ -140,4 +140,7 @@
   .artwork-link:focus {
     outline: 3px solid var(--primary);
   }
+  p a {
+    word-wrap: break-word;
+  }
 </style>
