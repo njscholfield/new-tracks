@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+
 module.exports = function(app, passport, tracks, account) {
 
   app.get('/register/', function(req, res) {
@@ -31,6 +33,22 @@ module.exports = function(app, passport, tracks, account) {
       req.session.cookie.maxAge = 10 * 24 * 60 * 60 * 1000; /* 10 days */
     }
     res.redirect('/#/' + req.query.hash);
+  });
+
+  app.post('/login/token/', passport.authenticate('local-login', { session: false, failureRedirect: '/login/token/fail/', failureFlash: true }), function(req, res) {
+    if(req.user) {
+      const jwtToken = jwt.sign({usr: req.user.username}, process.env.SESSION_SECRET, {
+        expiresIn: '10d',
+        issuer: 'tracks.noahscholfield.com'
+      });
+      res.json({ username: req.user.username, token: jwtToken });
+    } else {
+      res.sendStatus(401);
+    }
+  });
+
+  app.get('/login/token/fail/', function(req, res) {
+    res.status(401).json({ error: req.flash('loginMessage')[0] });
   });
 
   app.get('/settings/', isLoggedIn, function(req, res) {
@@ -133,9 +151,10 @@ module.exports = function(app, passport, tracks, account) {
   function isAuthorized(req, res, next) {
     if(req.isAuthenticated() && req.user.username === req.params.username) {
       return next();
-    } else {
-      res.status(401).json({type: 'error', message: 'It looks like you aren\'t logged in.'});
+    } else if(req.get('Authorization')){
+      return passport.authenticate('jwt', { session: false })(req, res, next);
     }
+    res.status(401).json({type: 'error', message: 'It looks like you aren\'t logged in.'});
   }
 
 };

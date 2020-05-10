@@ -1,5 +1,7 @@
 var localStrategy = require('passport-local').Strategy;
 var soundcloudStrategy = require('passport-soundcloud').Strategy;
+var JwtStrategy = require('passport-jwt').Strategy;
+var ExtractJwt = require('passport-jwt').ExtractJwt;
 
 var User = require('../app/userModel.js').user;
 
@@ -162,5 +164,25 @@ module.exports = function(passport) {
       }
     }
   ));
+
+  // JwtStrategy
+  var opts = {
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    secretOrKey: process.env.SESSION_SECRET,
+    issuer: 'tracks.noahscholfield.com',
+    passReqToCallback: true
+  };
+  passport.use('jwt', new JwtStrategy(opts, function(req, jwt_payload, done) {
+    User.findOne({username: jwt_payload.usr}, function(err, user) {
+      if (err) {
+        return done(err, false);
+      }
+      if (user && user.username === req.params.username) {
+        return done(null, user);
+      } else {
+        return done(null, false);
+      }
+    });
+  }));
 
 };
