@@ -3,7 +3,7 @@ var bcrypt = require('bcrypt');
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false, useUnifiedTopology: true}, function(err) {
+mongoose.connect(process.env.MONGO, {useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false, useUnifiedTopology: true}, function(err) {
   if(err) {
     console.log('ERROR connecting. ' + err);
   } else {
