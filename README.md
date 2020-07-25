@@ -14,7 +14,7 @@ Each user has the ability to make their profile public, which allows other peopl
 - [Node.js](https://nodejs.org)
 - [Express](https://expressjs.com)
 - [Heroku](https://heroku.com)
-- [mLab MongoDB](https://mlab.com)
+- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
 - [Passport](http://passportjs.org)
 - [Vue.js](https://vuejs.org)
 - [SoundCloud API](https://developers.soundcloud.com)
