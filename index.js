@@ -1,7 +1,6 @@
 var express = require('express');
-var redis = require('redis');
 var session = require('express-session');
-var RedisStore = require('connect-redis')(session);
+var MongoDBStore = require('connect-mongodb-session')(session);
 var passport = require('passport');
 var bodyParser = require('body-parser');
 var flash = require('connect-flash');
@@ -11,8 +10,10 @@ var app = express();
 
 require('./config/passport.js')(passport);
 
-var client = redis.createClient(process.env.REDIS_URL);
-var sess = { store: new RedisStore({ client }), secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false, name: 'sessionID', cookie: {}};
+var mongoStore = new MongoDBStore({ uri: process.env.MONGO, collection: 'sessions', connectionOptions: {
+  useNewUrlParser: true, useUnifiedTopology: true
+}});
+var sess = { store: mongoStore, secret: process.env.SESSION_SECRET, resave: true, saveUninitialized: false, name: 'sessionID', cookie: {}};
 if (app.get('env') === 'production') {
   app.set('trust proxy', 1);
   sess.cookie.secure = true;

@@ -140,7 +140,7 @@
         const track = this.$route.path.substring(1);
         if((isNaN(track) && !track.includes('soundcloud')) || track == '' || track == this.currentTrack) return;
         const url = ['https://api.soundcloud.com/', undefined, 'client_id=30cba84d4693746b0a2fbc0649b2e42c'];
-        url[1] = (track.includes('soundcloud')) ? `resolve.json?url=${track}/&` : `tracks/${track}/?`;
+        url[1] = (track.includes('soundcloud')) ? `resolve.json?url=${track}&` : `tracks/${track}/?`;
         this.isLoading = true;
         this.axios(url.join(''))
           .then(response => this.updateData(response.data))

@@ -1,13 +1,14 @@
 {
   "name": "new-tracks",
-  "version": "3.6.0",
+  "version": "3.7.0",
   "description": "Shows SoundCloud track descriptions and saves tracks for later",
   "engines": {
     "node": "14.x.x"
   },
   "main": "index.js",
   "scripts": {
-    "start": "parcel build index.html && heroku local",
+    "start": "node index.js",
+    "local": "parcel build index.html && heroku local",
     "parcel": "parcel index.html",
     "build": "parcel build index.html",
     "tree": "parcel build index.html --experimental-scope-hoisting",
@@ -41,7 +42,7 @@
     "bootstrap-vue": "^2.0.0-rc.23",
     "bootswatch": "^4.1.1",
     "connect-flash": "^0.1.1",
-    "connect-redis": "^5.0.0",
+    "connect-mongodb-session": "^2.4.1",
     "ejs": "^3.0.1",
     "express": "^4.14.0",
     "express-session": "^1.14.2",
@@ -52,7 +53,6 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "passport-soundcloud": "^0.2.0",
-    "redis": "3.0.2",
     "vue": ">= 1.0.0",
     "vue-axios": "^3.2.0",
     "vue-hot-reload-api": "^2.3.0",
