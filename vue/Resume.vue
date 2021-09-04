@@ -37,8 +37,8 @@
     },
     methods: {
       getTrackInfo() {
-        const url = `https://api.soundcloud.com/tracks/${this.user.resumeTrack}?client_id=30cba84d4693746b0a2fbc0649b2e42c`;
-        this.axios(url)
+        const url = `https://api.soundcloud.com/tracks/${this.user.resumeTrack}`;
+        this.axios(url, { headers: { 'Authorization': `Bearer ${this.user.token}`} })
           .then(response => this.trackInfo = response.data)
           .catch(() => this.hide = true);
       }

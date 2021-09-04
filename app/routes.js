@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+const axios = require('axios');
+const FormData = require('form-data');
 
 module.exports = function(app, passport, tracks, account) {
 
@@ -92,16 +94,17 @@ module.exports = function(app, passport, tracks, account) {
     res.redirect('/');
   });
 
-  app.get('/auth/verify', function(req, res) {
+  app.get('/auth/verify', async function(req, res) {
+    const token = await getSoundCloudToken();
     if(req.isAuthenticated()) {
       tracks.getCurrentTrack(req.user.username)
         .then(function success(result) {
-          res.status(200).json({loggedIn: true, username: req.user.username, resumeTrack: result.currentTrack});
+          res.status(200).json({loggedIn: true, username: req.user.username, resumeTrack: result.currentTrack, token});
         }, function error() {
-          res.status(200).json({loggedIn: true, username: req.user.username});
+          res.status(200).json({loggedIn: true, username: req.user.username, token});
         });
     } else {
-      res.status(200).json({loggedIn: false});
+      res.status(200).json({loggedIn: false, token});
     }
   });
 
@@ -155,6 +158,20 @@ module.exports = function(app, passport, tracks, account) {
       return passport.authenticate('jwt', { session: false })(req, res, next);
     }
     res.status(401).json({type: 'error', message: 'It looks like you aren\'t logged in.'});
+  }
+
+  async function getSoundCloudToken() {
+    const form = new FormData();
+    form.append('client_id', process.env.SOUNDCLOUD_CLIENT_ID);
+    form.append('client_secret', process.env.SOUNDCLOUD_CLIENT_SECRET);
+    form.append('grant_type', 'client_credentials');
+
+    try {
+      const { data } = await axios.post('https://api.soundcloud.com/oauth2/token', form, { headers: form.getHeaders() });
+      return data.access_token;
+    } catch(e) {
+      console.error(e);
+    }
   }
 
 };
