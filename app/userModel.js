@@ -3,13 +3,12 @@ var bcrypt = require('bcrypt');
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect(process.env.MONGO, {useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false, useUnifiedTopology: true}, function(err) {
-  if(err) {
-    console.log('ERROR connecting. ' + err);
-  } else {
-    console.log ('Succeeded, connected');
-  }
-});
+main().catch(err => console.log('ERROR connecting.', err));
+
+async function main() {
+  await mongoose.connect(process.env.MONGO);
+  console.log('Succeeded, connected');
+}
 
 var trackSchema = mongoose.Schema({
   title: {type: String, required: true},
