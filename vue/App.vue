@@ -137,16 +137,37 @@
     },
     watch: {
       '$route': { immediate: true, handler() {
-        const track = this.$route.path.substring(1);
+        const track = this.$route.path.substring(1).trim();
         if((isNaN(track) && !track.includes('soundcloud')) || track == '' || track == this.currentTrack) return;
         let url = 'https://api.soundcloud.com/';
         url += (track.includes('soundcloud')) ? `resolve.json?url=${track}` : `tracks/${track}/`;
         this.isLoading = true;
-        this.axios(url, { headers: {'Authorization': `Bearer ${this.user.token}` } })
-          .then(response => this.updateData(response.data))
-          .then(() => this.updateResumeTrack())
-          .catch(this.handleSCError)
-          .finally(() => this.isLoading = false);
+
+        if(track.includes('soundcloud')) {
+          // Safari doesn't send headers with redirects for some reason so proxy through server
+          this.axios(`/soundcloud/resolve?url=${track}`)
+            .then(response => this.updateData(response.data))
+            .then(() => this.updateResumeTrack())
+            .catch((err) => this.handleSCError(err))
+            .finally(() => this.isLoading = false);
+        } else {
+          if(!this.user.token) {
+            // Wait 1 sec for /auth/verify to finish so token is available
+            window.setTimeout(() => {
+              this.axios(url, { headers: {'Authorization': `Bearer ${this.user.token}`} })
+                .then(response => this.updateData(response.data))
+                .then(() => this.updateResumeTrack())
+                .catch((err) => this.handleSCError(err))
+                .finally(() => this.isLoading = false);
+            }, 1000);
+          } else {
+            this.axios(url, { headers: {'Authorization': `Bearer ${this.user.token}`} })
+              .then(response => this.updateData(response.data))
+              .then(() => this.updateResumeTrack())
+              .catch((err) => this.handleSCError(err))
+              .finally(() => this.isLoading = false);
+          }
+        } 
       }
       },
       'currentPanel': function(newValue) {
