@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-const moment = require('moment');
+import moment from 'moment';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 

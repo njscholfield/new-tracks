@@ -53,8 +53,8 @@
 
 <script>
   import Autolinker from 'autolinker';
-  const moment = require('moment');
-  const placeholder = require('../static/img/placeholder.png');
+  import moment from 'moment';
+  import placeholder from '../static/img/placeholder.png';
   import AddTrackModal from './AddTrackModal.vue';
 
   export default {

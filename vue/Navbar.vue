@@ -25,7 +25,7 @@
         </b-nav-item-dropdown>
       </b-nav>
       <div class="ml-auto" v-else>
-        <a class="btn btn-secondary navbar-btn" href="/login/">Sign In</a>
+        <a class="btn btn-secondary navbar-btn mr-1" href="/login/">Sign In</a>
         <a class="btn btn-success navbar-btn" href="/register/">Register</a>
       </div>
   </b-navbar>
