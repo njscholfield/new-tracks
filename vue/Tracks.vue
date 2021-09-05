@@ -76,7 +76,8 @@
         this.$refs.editTrack.showModal();
       },
       scrollToId(trackID) {
-        document.getElementById(trackID).scrollIntoView(true);
+        const track = document.getElementById(trackID);
+        if(track) track.scrollIntoView(true);
       },
       isCurrentTrack(id) {
         return (this.currentId == id);
