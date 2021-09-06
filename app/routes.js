@@ -143,6 +143,16 @@ module.exports = function(app, passport, tracks, account) {
     tracks.showUserProfile(req, res);
   });
 
+  app.get('/soundcloud/resolve', async function(req, res) {
+    const token = await getSoundCloudToken();
+    try {
+      const response = await axios(`https://api.soundcloud.com/resolve.json?url=${req.query.url}`, { headers: {'Authorization': `Bearer ${token}` } });
+      res.status(200).json(response.data);
+    } catch(e) {
+      res.status(400).json({ 'message': 'Error fetching track info' });
+    }
+  });
+
   function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
       return next();
