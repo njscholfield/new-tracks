@@ -22,5 +22,4 @@ Each user has the ability to make their profile public, which allows other peopl
 - [Font Awesome 5](https://fontawesome.com)
 - [Bootstrap-Vue](https://bootstrap-vue.js.org)
 - [Autolinker.js](https://github.com/gregjacobs/Autolinker.js)
-- [Moment.js](https://momentjs.com)
-- [Parcel](https://parceljs.org)
+- [Vite](https://vitejs.dev/)

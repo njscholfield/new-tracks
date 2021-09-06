@@ -38,7 +38,13 @@
     methods: {
       submitTrack() {
         if(this.submitInfo.releaseDate) {
-          this.submitInfo.releaseDate = this.$options.filters.moment(this.submitInfo.releaseDate, '');
+          const str = this.submitInfo.releaseDate.split('-');
+          const date = new Date(this.submitInfo.releaseDate);
+          date.setFullYear(str[0]);
+          date.setMonth(str[1] - 1);
+          date.setDate(str[2]);
+          date.setHours(0);
+          this.submitInfo.releaseDate = date.toJSON();
         }
         this.axios.post(`/api/${this.user.username}/add`, this.submitInfo, {credentials: 'same-origin'})
           .then(response => this.$parent.$emit('update', response.data))
@@ -56,7 +62,7 @@
           title: this.trackInfo.title,
           artist: this.trackInfo.user.username,
           trackID: this.trackInfo.id,
-          releaseDate: this.$options.filters.moment(this.releaseDate, 'YYYY-MM-DD')
+          releaseDate: (this.releaseDate) ? this.releaseDate.toJSON().split('T')[0] : ''
         };
       }
     }

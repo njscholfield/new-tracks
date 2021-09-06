@@ -27,7 +27,7 @@
     </div>
     <hr>
     <p v-for="paragraph in html" v-html="paragraph"></p>
-    <h6>POSTED ON: {{ datePosted | moment('LL') }}</h6>
+    <h6>POSTED ON: {{ datePosted | date }}</h6>
 
     <div v-if="user.loggedIn">
       <button class="btn btn-secondary" disabled v-if="savedIds.includes(rawData.id.toString())"><span><font-awesome-icon icon="check"/></span> Track Added To List</button>
@@ -53,7 +53,7 @@
 
 <script>
   import Autolinker from 'autolinker';
-  import moment from 'moment';
+  import parseMilliseconds from 'parse-ms';
   import placeholder from '../static/img/placeholder.png';
   import AddTrackModal from './AddTrackModal.vue';
 
@@ -75,8 +75,8 @@
       duration(ms) {
         if(!ms) return '';
         const LABELS = [' hour', ' minute', ' second'];
-        const LENGTH = moment.duration(ms);
-        const TIME = [(LENGTH.hours() > 0) ? LENGTH.hours() : '', LENGTH.minutes(), LENGTH.seconds()];
+        const LENGTH = parseMilliseconds(ms);
+        const TIME = [(LENGTH.hours > 0) ? LENGTH.hours : '', LENGTH.minutes, LENGTH.seconds];
 
         TIME.forEach((val, i, arr) => arr[i] += (val === '') ? '' : (val === 1) ? LABELS[i]: LABELS[i] + 's');
         return TIME.join(' ').trim();

@@ -40,7 +40,13 @@
     methods: {
       updateTrack() {
         if(this.submitInfo.releaseDate) {
-          this.submitInfo.releaseDate = this.$options.filters.moment(this.submitInfo.releaseDate, '');
+          const str = this.submitInfo.releaseDate.split('-');
+          const date = new Date(this.submitInfo.releaseDate);
+          date.setFullYear(str[0]);
+          date.setMonth(str[1] - 1);
+          date.setDate(str[2]);
+          date.setHours(0);
+          this.submitInfo.releaseDate = date.toJSON();
         }
         this.axios.post(`/api/${this.user.username}/edit`, this.submitInfo, {credentials: 'same-origin'})
           .then(response => this.$parent.$emit('update', response.data))
@@ -61,7 +67,9 @@
       },
       refreshData() {
         this.submitInfo = Object.assign({}, this.trackInfo);
-        this.submitInfo.releaseDate = this.$options.filters.moment(this.trackInfo.releaseDate, 'YYYY-MM-DD');
+        const date = new Date(this.trackInfo.releaseDate);
+        date.setHours(0);
+        this.submitInfo.releaseDate = (this.trackInfo.releaseDate) ? date.toJSON().split('T')[0] : '';
       }
     }
   };

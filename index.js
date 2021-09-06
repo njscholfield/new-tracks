@@ -2,7 +2,6 @@ var express = require('express');
 var session = require('express-session');
 var MongoDBStore = require('connect-mongodb-session')(session);
 var passport = require('passport');
-var bodyParser = require('body-parser');
 var flash = require('connect-flash');
 var tracks = require('./app/tracks.js');
 var account = require('./app/account.js');
