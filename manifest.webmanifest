@@ -4,7 +4,7 @@
   "start_url": "/",
   "display": "standalone",
   "icons": [{
-    "src": "static/apple-touch-icon-152x152.png",
+    "src": "/apple-touch-icon-152x152.png",
     "sizes": "152x152",
     "type": "image/png"
   }]

@@ -12,7 +12,7 @@
             </div>
             <input id="url-input" class="form-control has-feedback" type="url" aria-label="SoundCloud® Track URL" v-model="trackURL" placeholder="https://soundcloud.com/...">
             <div class="input-group-append">
-              <button class="form-control-feedback" aria-hidden="true" type="reset"><font-awesome-icon icon="times"></font-awesome-icon></button>
+              <button class="form-control-feedback" type="reset" aria-label="Clear input"><font-awesome-icon icon="times"></font-awesome-icon></button>
             </div>
           </div>
         </div>

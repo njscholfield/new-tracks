@@ -38,7 +38,6 @@
     "autolinker": "^3.0.0",
     "axios": "^0.21.0",
     "bcrypt": "^5.0.0",
-    "body-parser": "^1.15.2",
     "bootstrap-vue": "^2.0.0-rc.23",
     "bootswatch": "^4.1.1",
     "connect-flash": "^0.1.1",
@@ -60,16 +59,12 @@
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
-    "@vue/component-compiler-utils": "^3.0.0",
-    "cssnano": "4.1.11",
     "eslint": "^7.0.0",
     "eslint-plugin-vue": "^7.0.0",
-    "parcel-plugin-bundle-visualiser": "^1.2.0",
-    "parcel-plugin-clean-dist": "^0.0.6",
     "sass": "^1.16.1",
     "vite": "^2.5.3",
     "vite-plugin-vue2": "^1.8.1",
-    "vue-template-compiler": "^2.5.16"
+    "vue-template-compiler": "^2.6.14"
   },
   "heroku-run-build-script": true
 }
