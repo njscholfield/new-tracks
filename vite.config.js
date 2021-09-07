@@ -18,6 +18,7 @@ export default {
       '/deauth': 'http://localhost:8000/',
       '/settings': 'http://localhost:8000/',
       '/logout': 'http://localhost:8000/',
+      '/soundcloud': 'http://localhost:8000/',
     }
   }
 };
