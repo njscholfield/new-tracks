@@ -1,6 +1,6 @@
 <template>
   <b-navbar toggleable="xl" type="dark" :variant="variant">
-    <b-navbar-brand href="/"><img id="brandimg" alt="Home" src="../static/favicon-96x96.png"></b-navbar-brand>
+    <b-navbar-brand href="/"><img id="brandimg" alt="Home" src="../static/favicon-96x96.png" height="96" width="96"></b-navbar-brand>
       <b-nav class="ml-auto" v-if="user.loggedIn">
         <b-nav-item @click="randomTrack" title="Click to view a random saved track">
           <label class="sr-only">Click to view a random saved track</label>
@@ -25,7 +25,7 @@
         </b-nav-item-dropdown>
       </b-nav>
       <div class="ml-auto" v-else>
-        <a class="btn btn-secondary navbar-btn" href="/login/">Sign In</a>
+        <a class="btn btn-secondary navbar-btn mr-1" href="/login/">Sign In</a>
         <a class="btn btn-success navbar-btn" href="/register/">Register</a>
       </div>
   </b-navbar>
@@ -56,6 +56,7 @@
 <style>
   #brandimg {
     height: 2rem;
+    width: auto;
     border-radius: 2em;
   }
   .b-nav-dropdown {

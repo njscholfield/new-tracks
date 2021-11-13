@@ -17,7 +17,7 @@
         <h3 v-if="isCurrentTrack(track.trackID)" title="This track is already selected, view it in the Description tab">{{ track.title }}</h3>
         <h3 v-else><router-link :to="track.trackID">{{ track.title }}</router-link></h3>
         <h5>{{ track.artist }}</h5>
-        <p>{{ track.releaseDate | moment('LL') }}</p>
+        <p>{{ track.releaseDate | date }}</p>
         <button class="btn btn-sm btn-primary" @click="editTrack(track)"><span><font-awesome-icon icon="pencil-alt"/></span> Edit Info</button>
       </li>
     </ul>

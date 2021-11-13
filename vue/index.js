@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-const moment = require('moment');
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 
@@ -34,9 +33,10 @@ Vue.use(ModalPlugin);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 library.add(faUser, faCog, faTimes, faPencilAlt, faCheck, faStar, faSearch, faChevronUp, faChevronDown, faStream, faMusic, faMoon, faDice, farStar, faSoundcloud);
 
-Vue.filter('moment', (input, formatString) => {
+Vue.filter('date', (input) => {
   if(!input) return '';
-  return moment(input).format(formatString);
+  const date = new Date(input);
+  return new Intl.DateTimeFormat([], { dateStyle: 'long' }).format(date);
 });
 
 Vue.use(VueRouter);

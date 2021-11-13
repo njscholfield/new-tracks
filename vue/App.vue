@@ -68,6 +68,7 @@
       checkLogin() {
         this.axios('/auth/verify', {credentials: 'same-origin'})
           .then(response => this.user = response.data)
+          .then(() => this.handleRoute())
           .catch(() => this.user.loggedIn = false);
       },
       updateCounts(numTracks, favTracks, trackIDs) {
@@ -123,20 +124,8 @@
       randomTrack() {
         const randomID = Math.floor((Math.random() * this.savedIDs.length));
         this.$router.push(this.savedIDs[randomID]);
-      }
-    },
-    mounted() {
-      this.checkLogin();
-      this.checkDarkMode();
-    },
-    created() {
-      window.addEventListener('scroll', this.handleScroll);
-    },
-    destroyed() {
-      window.removeEventListener('scroll', this.handleScroll);
-    },
-    watch: {
-      '$route': { immediate: true, handler() {
+      },
+      handleRoute() {
         const track = this.$route.path.substring(1).trim();
         if((isNaN(track) && !track.includes('soundcloud')) || track == '' || track == this.currentTrack) return;
         let url = 'https://api.soundcloud.com/';
@@ -169,7 +158,19 @@
           }
         } 
       }
-      },
+    },
+    mounted() {
+      this.checkLogin();
+      this.checkDarkMode();
+    },
+    created() {
+      window.addEventListener('scroll', this.handleScroll);
+    },
+    destroyed() {
+      window.removeEventListener('scroll', this.handleScroll);
+    },
+    watch: {
+      '$route': { immediate: false, handler() { this.handleRoute(); } },
       'currentPanel': function(newValue) {
         if(newValue == 2 || newValue == 3) {
           window.setTimeout(() => this.$refs.tracks.scrollToId(this.currentTrack), 400);
