@@ -16,7 +16,8 @@ exports.getSoundCloudToken = async () => {
         token.refreshToken = newToken.refresh_token,
         token.expiration = expiration(newToken.expires_in);
         token.markModified('expiration');
-        return token.save();
+        token.save();
+        return token;
       }
     } else {
       // need to get a brand new token because there isn't one
@@ -27,6 +28,7 @@ exports.getSoundCloudToken = async () => {
       tokenObj.expiration = expiration(newToken.expires_in);
       tokenObj.markModified('expiration');
       tokenObj.save();
+      return tokenObj;
     }
   } catch(e) {
     console.error(e);
