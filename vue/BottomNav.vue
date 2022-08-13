@@ -1,5 +1,5 @@
 <template>
-  <nav class="nav-container">
+  <nav class="nav-container bg-primary">
     <ul class="nav">
       <li class="nav-item">
         <button class="btn nav-link" :class="{'active': isCurrentPanel(1)}" @click="setPanel(1)" tabindex="0" title="View the current track's description">
@@ -8,12 +8,12 @@
       </li>
       <li class="nav-item" v-show="user.loggedIn">
         <button class="btn nav-link" :class="{'active': isCurrentPanel(2)}" @click="setPanel(2)" tabindex="0" title="View all your saved tracks">
-          <font-awesome-icon icon="music"></font-awesome-icon> <span class="d-none d-sm-inline-block">Tracks</span> <span class="badge badge-pill badge-light">{{ numTracks.all }}</span>
+          <font-awesome-icon icon="music"></font-awesome-icon> <span class="d-none d-sm-inline-block">Tracks</span> <span class="badge rounded-pill text-bg-light">{{ numTracks.all }}</span>
         </button>
       </li>
       <li class="nav-item" v-show="user.loggedIn">
         <button class="btn nav-link" :class="{'active': isCurrentPanel(3)}" @click="setPanel(3)" tabindex="0" title="View all your favorited tracks">
-          <font-awesome-icon icon="star"></font-awesome-icon> <span id="fav-label" class="d-none d-sm-inline-block">Favorites</span> <span class="badge badge-pill badge-light">{{ numTracks.favorites }}</span>
+          <font-awesome-icon icon="star"></font-awesome-icon> <span id="fav-label" class="d-none d-sm-inline-block">Favorites</span> <span class="badge rounded-pill text-bg-light">{{ numTracks.favorites }}</span>
         </button>
       </li>
     </ul>
@@ -43,8 +43,10 @@
   }
   button.nav-link {
     color: rgba(255, 255, 255, 0.5);
+    border: 0;
     .badge {
       background-color: rgba(255, 255, 255, 0.7);
+      --bs-badge-padding-x: .5rem;
     }
     cursor: pointer;
     &:hover {

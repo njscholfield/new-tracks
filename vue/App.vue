@@ -1,26 +1,26 @@
 <template>
   <div id="top" :class="{ 'dark-mode': darkMode }">
-    <navbar :user="user" :mode="darkMode" @darkMode="toggleDarkMode" @random="randomTrack"></navbar>
+    <top-nav :user="user" :mode="darkMode" @darkMode="toggleDarkMode" @random="randomTrack"></top-nav>
     <url-input @update="updateData"></url-input>
-    <navpills v-model="currentPanel" :num-tracks="numTracks" :user="user"></navpills>
-    <description v-show="isCurrentPanel(1)" :raw-data="trackData" :user="user" :saved-ids="savedIDs" @update="passTracks" @error="handleAxiosError"></description>
-    <tracks ref="tracks" v-if="user.loggedIn" v-show="isCurrentPanel(2) || isCurrentPanel(3)" :user="user" :show-favs="showFavs" :current-id="currentTrack" @tracks="updateCounts" @update="passTracks" @error="handleAxiosError"></tracks>
+    <bottom-nav v-model="currentPanel" :num-tracks="numTracks" :user="user"></bottom-nav>
+    <description-pane v-show="isCurrentPanel(1)" :raw-data="trackData" :user="user" :saved-ids="savedIDs" @update="passTracks" @error="handleAxiosError"></description-pane>
+    <tracks-pane ref="tracks" v-if="user.loggedIn" v-show="isCurrentPanel(2) || isCurrentPanel(3)" :user="user" :show-favs="showFavs" :current-id="currentTrack" @tracks="updateCounts" @update="passTracks" @error="handleAxiosError"></tracks-pane>
     <button class="btn btn-primary" id="btn-scroll" @click="scroll" :title="nearTop ? 'Scroll to bottom' : 'Scroll to top'"><font-awesome-icon :icon="nearTop ? 'chevron-down' : 'chevron-up'" aria-hidden="true"></font-awesome-icon></button>
-    <resume v-if="user.loggedIn" :is-visible="showResume" :user="user"></resume>
-    <loading v-show="isLoading"></loading>
+    <resume-alert v-if="user.loggedIn" :is-visible="showResume" :user="user"></resume-alert>
+    <loading-animation v-show="isLoading"></loading-animation>
     <error ref="errorModal" :error="errorMessage"></error>
     <div id="bottom"></div>
   </div>
 </template>
 
 <script>
-  import navbar from './Navbar.vue';
+  import topNav from './TopNav.vue';
   import urlInput from './UrlInput.vue';
-  import navpills from './NavPills.vue';
-  import description from './Description.vue';
-  import tracks from './Tracks.vue';
-  import resume from './Resume.vue';
-  import loading from './Loading.vue';
+  import bottomNav from './BottomNav.vue';
+  import descriptionPane from './DescriptionPane.vue';
+  import tracksPane from './TracksPane.vue';
+  import resumeAlert from './ResumeAlert.vue';
+  import loadingAnimation from './LoadingAnimation.vue';
   import error from './ErrorMessageModal.vue';
 
   export default {
@@ -49,7 +49,7 @@
         return this.currentTrack != this.user.resumeTrack && this.nearTop;
       }
     },
-    components: { navbar, urlInput, navpills, description, tracks, resume, loading, error },
+    components: { topNav, urlInput, bottomNav, descriptionPane, tracksPane, resumeAlert, loadingAnimation, error },
     methods: {
       updateData(newData) {
         this.trackData = newData;

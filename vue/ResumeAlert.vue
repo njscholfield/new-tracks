@@ -1,17 +1,21 @@
 <template>
-  <b-alert v-if="trackInfo.title" dismissible id="resume" :show="visible" @dismissed="hide = true">
+  <div v-if="trackInfo.title" class="alert alert-dismissible" id="resume" :show="visible">
     <h6 class="text-muted" id="resume-header">LAST OPENED TRACK</h6>
-    <hr id="resume-divider">
-    <div class="row">
-      <div class="col-4 col-sm-auto">
-        <router-link :to="user.resumeTrack"><img alt="Album Artwork" class="img-fluid" id="resume-img" :src="artworkURL"></router-link>
-      </div>
-      <div class="col-8 col-sm">
-        <router-link :to="user.resumeTrack"><h5>{{ trackInfo.title }}</h5></router-link>
-        <h6>{{ trackInfo.user.username }}</h6>
-      </div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" @click="hide = true"></button>
+  <hr id="resume-divider">
+  <div class="row">
+    <div class="col-4 col-sm-auto">
+      <router-link :to="user.resumeTrack"><img alt="Album Artwork" class="img-fluid" id="resume-img" :src="artworkURL">
+      </router-link>
     </div>
-  </b-alert>
+    <div class="col-8 col-sm">
+      <router-link :to="user.resumeTrack">
+        <h5>{{ trackInfo.title }}</h5>
+      </router-link>
+      <h6>{{ trackInfo.user.username }}</h6>
+    </div>
+  </div>
+  </div>
 </template>
 
 <script>

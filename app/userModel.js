@@ -55,7 +55,15 @@ userSchema.methods.invalidUsername = function(username) {
 
 var user = mongoose.model('user', userSchema);
 
+const soundcloudAuthSchema = mongoose.Schema({
+  accessToken: { type: String },
+  refreshToken: { type: String },
+  expiration: { type: Date }
+});
+var scAuth = mongoose.model('scAuth', soundcloudAuthSchema);
+
 module.exports = {
   user: user,
-  track: track
+  track: track,
+  scAuth: scAuth
 };

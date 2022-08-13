@@ -2,15 +2,11 @@
   <div class="container-fluid">
     <label for="search" class="sr-only">Search your saved tracks</label>
     <div class="input-group">
-      <div class="input-group-prepend">
-        <span class="input-group-text">
-          <font-awesome-icon icon="search"></font-awesome-icon>
-        </span>
-      </div>
-      <input id="search" class="form-control has-feedback" v-model="searchTerm">
-      <div class="input-group-append">
-        <button class="form-control-feedback" aria-hidden="true" type="reset" @click="searchTerm = ''"><font-awesome-icon icon="times"></font-awesome-icon></button>
-      </div>
+      <span class="input-group-text">
+        <font-awesome-icon icon="search"></font-awesome-icon>
+      </span>
+      <input id="search" class="form-control" v-model="searchTerm">
+      <button class="btn btn-clear" aria-hidden="true" type="reset" @click="searchTerm = ''"><font-awesome-icon icon="times"></font-awesome-icon></button>
     </div>
     <ul v-if="filteredTracks.length" class="grid-container">
       <li class="track-box" :class="{'active': isCurrentTrack(track.trackID)}" v-for="track in filteredTracks" :key="track.trackID" :id="track.trackID">
@@ -119,10 +115,19 @@
       }
     }
   }
+  #search {
+    border-right: 0;
+  }
+  .btn-clear {
+    color: var(--text);
+    border: 1px solid var(--bs-border-color);
+    border-left: 0;
+  }
+
   @supports(display: grid) {
     .grid-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       grid-gap: 1rem;
     }
     .track-box {

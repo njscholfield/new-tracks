@@ -41,7 +41,7 @@
   .loading .line:nth-last-child(3) {animation: loadingC .6s .3s linear infinite;}
 
   @keyframes loadingC {
-      0 {transform: translate(0,0);}
+      0% {transform: translate(0,0);}
       50% {transform: translate(0,15px);}
       100% {transform: translate(0,0);}
   }

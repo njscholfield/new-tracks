@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
-const FormData = require('form-data');
+const getSoundCloudToken = require('./soundcloudAuth.js').getSoundCloudToken;
 
 module.exports = function(app, passport, tracks, account) {
 
@@ -99,22 +99,23 @@ module.exports = function(app, passport, tracks, account) {
     if(req.isAuthenticated()) {
       tracks.getCurrentTrack(req.user.username)
         .then(function success(result) {
-          res.status(200).json({loggedIn: true, username: req.user.username, resumeTrack: result.currentTrack, token});
+          res.status(200).json({loggedIn: true, username: req.user.username, resumeTrack: result.currentTrack, token: token.accessToken });
         }, function error() {
-          res.status(200).json({loggedIn: true, username: req.user.username, token});
+          res.status(200).json({loggedIn: true, username: req.user.username, token: token.accessToken });
         });
     } else {
-      res.status(200).json({loggedIn: false, token});
+      res.status(200).json({loggedIn: false, token: token.accessToken });
     }
   });
 
   app.get('/logout/', function(req, res){
-    req.logout();
-    req.session.destroy(function(err) {
-      if(err) {
-        console.log(err);
-      }
-      res.redirect('/');
+    req.logout(function() {
+      req.session.destroy(function (err) {
+        if (err) {
+          console.log(err);
+        }
+        res.redirect('/');
+      });
     });
     res.clearCookie('sessionID');
   });
@@ -146,7 +147,17 @@ module.exports = function(app, passport, tracks, account) {
   app.get('/soundcloud/resolve', async function(req, res) {
     const token = await getSoundCloudToken();
     try {
-      const response = await axios(`https://api.soundcloud.com/resolve.json?url=${req.query.url}`, { headers: {'Authorization': `Bearer ${token}` } });
+      const response = await axios(`https://api.soundcloud.com/resolve.json?url=${req.query.url}`, { headers: {'Authorization': `Bearer ${token.accessToken}` } });
+      res.status(200).json(response.data);
+    } catch(e) {
+      res.status(400).json({ 'message': 'Error fetching track info' });
+    }
+  });
+
+  app.get('/soundcloud/track/:id', async function(req, res) {
+    const token = await getSoundCloudToken();
+    try {
+      const response = await axios(`https://api.soundcloud.com/tracks/${req.params.id}/`, { headers: {'Authorization': `Bearer ${token.accessToken}` } });
       res.status(200).json(response.data);
     } catch(e) {
       res.status(400).json({ 'message': 'Error fetching track info' });
@@ -169,19 +180,4 @@ module.exports = function(app, passport, tracks, account) {
     }
     res.status(401).json({type: 'error', message: 'It looks like you aren\'t logged in.'});
   }
-
-  async function getSoundCloudToken() {
-    const form = new FormData();
-    form.append('client_id', process.env.SOUNDCLOUD_CLIENT_ID);
-    form.append('client_secret', process.env.SOUNDCLOUD_CLIENT_SECRET);
-    form.append('grant_type', 'client_credentials');
-
-    try {
-      const { data } = await axios.post('https://api.soundcloud.com/oauth2/token', form, { headers: form.getHeaders() });
-      return data.access_token;
-    } catch(e) {
-      console.error(e);
-    }
-  }
-
 };
