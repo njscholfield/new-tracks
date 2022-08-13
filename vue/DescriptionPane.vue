@@ -3,9 +3,12 @@
     <h4 class="text-danger">{{ rawData.error }}</h4>
   </div>
   <div class="container" v-else-if="rawData.title">
-    <b-alert variant="success" :show="!user.loggedIn" dismissible>
-      <a class="alert-link" :href="`/login/?hash=${rawData.id}`">Sign in</a> or <a class="alert-link" :href="`/register/?hash=${rawData.id}`">create an account</a> to save this track for later!
-    </b-alert>
+    <div class="alert alert-dismissable alert-success" role="alert" v-show="!user.loggedIn">
+      <div class="d-flex">
+        <button type="button" class="btn-close me-2" aria-label="Close"></button>
+        <div><a class="alert-link" :href="`/login/?hash=${rawData.id}`">Sign in</a> or <a class="alert-link" :href="`/register/?hash=${rawData.id}`">create an account</a> to save this track for later!</div>
+      </div>
+    </div>
     <div class="row" id="trackTitle">
       <div class="col-md-10 order-md-2 mb-2">
         <h3>{{ rawData.title }}</h3>
@@ -17,7 +20,7 @@
           <a v-if="rawData.purchase_url" :href="rawData.purchase_url" target="_blank" rel="noreferrer noopener">{{ rawData.purchase_title || 'Buy' }}</a>
         </p>
         <span v-if="tags.length > 0 && tags[0] !== ''">Tags:</span>
-        <span class="badge badge-primary ml-1" v-for="tag in tags">{{ tag }}</span>
+        <span class="badge bg-primary ms-1" v-for="(tag, idx) in tags" :key="idx">{{ tag }}</span>
       </div>
       <div class="col-md-2 order-md-1">
         <a class="artwork-link" :href="artworkUrl" target="_blank" rel="noreferrer noopener">
@@ -26,7 +29,7 @@
       </div>
     </div>
     <hr>
-    <p v-for="paragraph in html" v-html="paragraph"></p>
+    <p v-for="(paragraph, idx) in html" :key="idx" v-html="paragraph"></p>
     <h6>POSTED ON: {{ datePosted | date }}</h6>
 
     <div v-if="user.loggedIn">

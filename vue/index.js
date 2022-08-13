@@ -5,8 +5,6 @@ import VueAxios from 'vue-axios';
 
 Vue.use(VueAxios, axios);
 
-import { NavbarPlugin, AlertPlugin, ModalPlugin } from 'bootstrap-vue';
-
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser';
 import { faCog } from '@fortawesome/free-solid-svg-icons/faCog';
@@ -27,9 +25,6 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import App from './App.vue';
 
-Vue.use(NavbarPlugin);
-Vue.use(AlertPlugin);
-Vue.use(ModalPlugin);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 library.add(faUser, faCog, faTimes, faPencilAlt, faCheck, faStar, faSearch, faChevronUp, faChevronDown, faStream, faMusic, faMoon, faDice, farStar, faSoundcloud);
 

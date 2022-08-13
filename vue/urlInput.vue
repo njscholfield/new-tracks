@@ -1,19 +1,13 @@
 <template>
-  <div class="jumbotron">
+  <div class="jumbotron p-5">
     <div class="container">
       <form id="track-input" @submit.prevent="getTrackInfo">
         <div class="form-group">
           <label for="url-input"><h3>Enter a track link below to get started</h3></label>
           <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text">
-                <font-awesome-icon :icon="['fab', 'soundcloud']"></font-awesome-icon>
-              </span>
-            </div>
-            <input id="url-input" class="form-control has-feedback" type="url" aria-label="SoundCloud® Track URL" v-model="trackURL" placeholder="https://soundcloud.com/...">
-            <div class="input-group-append">
-              <button class="form-control-feedback" type="reset" aria-label="Clear input"><font-awesome-icon icon="times"></font-awesome-icon></button>
-            </div>
+            <div class="input-group-text"><font-awesome-icon :icon="['fab', 'soundcloud']"></font-awesome-icon></div>
+            <input id="url-input" class="form-control" type="url" aria-label="SoundCloud® Track URL" v-model="trackURL" placeholder="https://soundcloud.com/...">
+            <button class="btn btn-clear" type="reset" aria-label="Clear input"><font-awesome-icon icon="times"></font-awesome-icon></button>
           </div>
         </div>
       </form>
@@ -36,7 +30,7 @@
   };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
   .jumbotron {
     background: #FEAC5E;
     background: var(--gradient);
@@ -53,6 +47,9 @@
   }
   input {
     opacity: 0.6;
+    &::placeholder {
+      color: var(--bs-border-color);
+    }
   }
   .form-control-feedback {
     background-color: transparent;
@@ -60,5 +57,14 @@
     border: none;
     margin-left: -1.5rem;
     z-index: 10;
+  }
+  #url-input {
+    border-right: 0;
+  }
+  .btn-clear {
+    color: var(--text);
+    border: 1px solid var(--bs-border-color);
+    border-left: 0;
+    opacity: .6;
   }
 </style>

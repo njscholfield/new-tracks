@@ -17,15 +17,15 @@
         <a href="/auth/soundcloud"><img alt="login using SoundCloud" src="https://connect.soundcloud.com/2/btn-connect-l.png"></a>
       </div>
       <form action="/login/?hash=<%= hash %>" method="post">
-        <div class="form-group <%= error['username'] %>">
-          <label for="username">Username</label>
+        <div class="form-group mb-3 <%= error['username'] %>">
+          <label class="form-label" for="username">Username</label>
           <input type="text" class="form-control" autofocus placeholder="username" id="username" name="username" autocomplete="username" required="true">
         </div>
-        <div class="form-group <%= error['password'] %>">
-          <label for="password">Password</label>
+        <div class="form-group mb-3 <%= error['password'] %>">
+          <label class="form-label" for="password">Password</label>
           <input type="password" class="form-control" placeholder="password" id="password" name="password" autocomplete="current-password" required="true">
         </div>
-        <div class="checkbox">
+        <div class="checkbox mb-3">
           <label for="remember_me">
             <input type="checkbox" id="remember_me" name="remember_me" checked> Remember Me
           </label>
