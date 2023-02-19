@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 
 mongoose.Promise = global.Promise;
+mongoose.set('strictQuery', false);
 
 main().catch(err => console.log('ERROR connecting.', err));
 

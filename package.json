@@ -1,9 +1,9 @@
 {
   "name": "new-tracks",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "Shows SoundCloud track descriptions and saves tracks for later",
   "engines": {
-    "node": "16.x.x"
+    "node": "18.x.x"
   },
   "main": "index.js",
   "scripts": {
@@ -35,8 +35,8 @@
     "@fortawesome/free-solid-svg-icons": "^6.1.2",
     "@fortawesome/vue-fontawesome": "^2.0.0",
     "@popperjs/core": "^2.11.6",
-    "autolinker": "^3.0.0",
-    "axios": "^0.27.2",
+    "autolinker": "^4.0.0",
+    "axios": "^1.3.3",
     "bcrypt": "^5.0.1",
     "bootstrap": "^5.1.3",
     "bootswatch": "^5.2.0",
@@ -46,7 +46,7 @@
     "express": "^4.14.0",
     "express-session": "^1.14.2",
     "form-data": "^4.0.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.0.4",
     "parse-ms": "^3.0.0",
     "passport": "^0.6.0",
@@ -63,7 +63,7 @@
     "eslint": "^8.2.0",
     "eslint-plugin-vue": "^9.3.0",
     "sass": "^1.16.1",
-    "vite": "^3.0.7",
+    "vite": "^4.1.2",
     "vite-plugin-vue2": "^2.0.2",
     "vue-template-compiler": "^2.6.14"
   },
