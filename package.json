@@ -47,7 +47,7 @@
     "express-session": "^1.14.2",
     "form-data": "^4.0.0",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^6.0.4",
+    "mongoose": "^6.11.5",
     "parse-ms": "^3.0.0",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
