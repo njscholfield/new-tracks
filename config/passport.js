@@ -10,10 +10,13 @@ module.exports = function(passport) {
     done(null, user.id);
   });
 
-  passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
-      done(err, user);
-    });
+  passport.deserializeUser(async function(id, done) {
+    try {
+      const user = await User.findById(id);
+      done(null, user);
+    } catch(err) {
+      done(err);
+    }
   });
 
   passport.use('local-signup', new localStrategy({
@@ -21,7 +24,7 @@ module.exports = function(passport) {
     passwordField: 'newPassword1',
     passReqToCallback: true
   },
-  function(req, username, password, done) {
+  async function(req, username, password, done) {
     var data = req.body;
 
     if(password !== data.newPassword2 || password.length > 72 || password.length < 8) {
@@ -31,13 +34,11 @@ module.exports = function(passport) {
     if(!req.user) {
       // not logged in – create new account
       var newUser = new User();
-      User.findOne({$or: [{'local.email': data.inputEmail}, {username: username}]}, function(err, user) {
-        if(err){
-          return done(err);
-        }
+      try {
+        const user = await User.findOne({$or: [{'local.email': data.inputEmail}, {username: username}]});
 
-        if(user || newUser.invalidUsername(username)) {
-          if(newUser.invalidUsername(username) || user.username === username) {
+        if (user || newUser.invalidUsername(username)) {
+          if (newUser.invalidUsername(username) || user.username === username) {
             return done(null, false, req.flash('signupMessage', 'That username has already been taken or is invalid.'));
           }
           return done(null, false, req.flash('signupMessage', 'That email address is already taken.'));
@@ -46,45 +47,47 @@ module.exports = function(passport) {
           newUser.username = username;
           newUser.local.password = newUser.generateHash(password);
 
-          newUser.save(function(err) {
-            if(err) {
-              console.log('Error creating new account: ' + err);
-              return done(err);
-            }
+          try {
+            await newUser.save();
             return done(null, newUser);
-          });
+          } catch(err) {
+            console.log('Error creating new account: ' + err);
+            return done(err);
+          }
         }
-      });
+      } catch(err) {
+        return done(err);
+      }
     } else {
       // logged in – create local account with password
       if(req.user.username !== username) {
         var testUsername = username;
       }
 
-      User.findOne({$or: [{'local.email': data.inputEmail}, {username: testUsername}]}, function(err, user) {
-        if(err) {
-          console.log('Error searching for used username or email: ' + err);
-          return done(err);
-        } else {
-          if((user && user.username === username && username !== req.user.username) || req.user.invalidUsername(username)) {
-            return done(null, false, req.flash('signupMessage', 'That username has already been taken.'));
-          } else if(user && user.local.email === data.inputEmail) {
-            return done(null, false, req.flash('signupMessage', 'That email address is already in use.'));
-          } else {
-            req.user.username = username;
-            req.user.local.email = data.inputEmail;
-            req.user.local.password = req.user.generateHash(password);
+      try {
+        const user = await User.findOne({$or: [{'local.email': data.inputEmail}, {username: testUsername}]});
 
-            req.user.save(function(err) {
-              if(err) {
-                console.log('Error saving updated user: ' + err);
-                return done(err);
-              }
-              return done(null, req.user, req.flash('signupSuccess', 'Information successfully updated!'));
-            });
+        if ((user && user.username === username && username !== req.user.username) || req.user.invalidUsername(username)) {
+          return done(null, false, req.flash('signupMessage', 'That username has already been taken.'));
+        } else if (user && user.local.email === data.inputEmail) {
+          return done(null, false, req.flash('signupMessage', 'That email address is already in use.'));
+        } else {
+          req.user.username = username;
+          req.user.local.email = data.inputEmail;
+          req.user.local.password = req.user.generateHash(password);
+
+          try {
+            await req.user.save();
+            return done(null, req.user, req.flash('signupSuccess', 'Information successfully updated!'));
+          } catch(err) {
+            console.log('Error saving updated user: ' + err);
+            return done(err);
           }
         }
-      });
+      } catch(err) {
+        console.log('Error searching for used username or email: ' + err);
+        return done(err);
+      }
     }
   }
   ));
@@ -92,20 +95,20 @@ module.exports = function(passport) {
   passport.use('local-login', new localStrategy({
     passReqToCallback: true
   },
-  function(req, username, password, done) {
-    User.findOne({username: username}, function(err, user) {
-      if(err) {
-        return done(err);
-      }
-      if(!user) {
+  async function(req, username, password, done) {
+    try {
+      const user = await User.findOne({username: username});
+
+      if (!user) {
         return done(null, false, req.flash('loginMessage', 'User not found.'));
       }
-      if(!user.validPassword(password)) {
+      if (!user.validPassword(password)) {
         return done(null, false, req.flash('loginMessage', 'Incorrect Password!'));
       }
-
       return done(null, user);
-    });
+    } catch(err) {
+      return done(err);
+    }
   }
   ));
 
@@ -115,52 +118,50 @@ module.exports = function(passport) {
     callbackURL: 'https://tracks.noahscholfield.com/callback.html',
     passReqToCallback: true
   },
-  function(req, accessToken, refreshToken, profile, done) {
+  async function(req, accessToken, refreshToken, profile, done) {
     if(!req.user) {
       // login using SoundCloud
-      User.findOne({ 'soundcloud.soundcloudID': profile.id }, function(err, user) {
-        if(err) {
-          console.log('Error searching for user: ' + err);
-          return done(err);
-        } else {
-          if(user) {
-            // login the user with the SoundCloud account
-            user.update({$set: {'soundcloud.accessToken': accessToken, 'soundcloud.refreshToken': refreshToken}}, function(err) {
-              if(err) {
-                console.log('Error adding accessToken and refreshToken: ' + err);
-                return done(err);
-              } else {
-                return done(null, user);
-              }
-            });
-          } else {
-            // create new account with the SoundCloud account
-            var newUser = new User();
-            newUser.username = profile._json.permalink;
-            newUser.soundcloud.soundcloudID = profile.id;
-            newUser.soundcloud.accessToken = accessToken;
-            newUser.soundcloud.refreshToken = refreshToken;
+      try{
+        const user = await User.findOne({ 'soundcloud.soundcloudID': profile.id });
 
-            newUser.save(function(err) {
-              if(err) {
-                console.log('Error creating new account: ' + err);
-                return done(err);
-              }
-              return done(null, newUser);
-            });
+        if (user) {
+          // login the user with the SoundCloud account
+          try {
+            await user.update({ $set: { 'soundcloud.accessToken': accessToken, 'soundcloud.refreshToken': refreshToken } });
+            return done(null, user);
+          } catch(err) {
+            console.log('Error adding accessToken and refreshToken: ' + err);
+            return done(err);
+          }
+        } else {
+          // create new account with the SoundCloud account
+          var newUser = new User();
+          newUser.username = profile._json.permalink;
+          newUser.soundcloud.soundcloudID = profile.id;
+          newUser.soundcloud.accessToken = accessToken;
+          newUser.soundcloud.refreshToken = refreshToken;
+
+          try {
+            await newUser.save(); 
+            return done(null, newUser);
+          } catch(err) {
+            console.log('Error creating new account: ' + err);
+            return done(err);
           }
         }
-      });
+      } catch(err) {
+        console.log('Error searching for user: ' + err);
+        return done(err);
+      }   
     } else {
       // connect SoundCloud
-      req.user.update({$set: {'soundcloud.soundcloudID': profile.id, 'soundcloud.accessToken': accessToken, 'soundcloud.refreshToken': refreshToken}}, function(err) {
-        if(err) {
-          console.log('Error connnecting SoundCloud: ' + err);
-          return done(err);
-        } else {
-          return done(null, req.user);
-        }
-      });
+      try {
+        await req.user.update({$set: {'soundcloud.soundcloudID': profile.id, 'soundcloud.accessToken': accessToken, 'soundcloud.refreshToken': refreshToken}});
+        return done(null, req.user);
+      } catch(err) {
+        console.log('Error connnecting SoundCloud: ' + err);
+        return done(err);
+      }
     }
   }
   ));
@@ -172,17 +173,18 @@ module.exports = function(passport) {
     issuer: 'tracks.noahscholfield.com',
     passReqToCallback: true
   };
-  passport.use('jwt', new JwtStrategy(opts, function(req, jwt_payload, done) {
-    User.findOne({username: jwt_payload.usr}, function(err, user) {
-      if (err) {
-        return done(err, false);
-      }
+  passport.use('jwt', new JwtStrategy(opts, async function(req, jwt_payload, done) {
+    try {
+      const user = await User.findOne({username: jwt_payload.usr});
+
       if (user && user.username === req.params.username) {
         return done(null, user);
       } else {
         return done(null, false);
       }
-    });
+    } catch(err) {
+      return done(err, false);
+    }
   }));
 
 };

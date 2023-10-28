@@ -71,6 +71,9 @@
   #top.dark-mode #resume {
     background-color: rgba(51, 51, 51, 0.96);
   }
+  #top.dark-mode .text-muted {
+    color: #ffffff99 !important;
+  }
   #resume-divider {
     margin: 0;
     margin-bottom: 1em;

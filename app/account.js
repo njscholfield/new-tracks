@@ -1,60 +1,58 @@
 var User = require('./userModel.js').user;
 
-exports.updateEmail = function(req, res) {
+exports.updateEmail = async function(req, res) {
   var data = req.body;
 
-  User.findOne({'local.email': data.email}, function(err, user){
-    if(err) {
-      console.log('Error checking for used email address: ' + err);
-      req.flash('signupMessage', 'Error updating email address.');
+  try {
+    const user = await User.findOne({'local.email': data.email});
+    if (user || data.email.length === 0) {
+      req.flash('signupMessage', 'That email address is already being used or is invalid!');
       res.redirect('/settings/');
     } else {
-      if(user || data.email.length === 0) {
-        req.flash('signupMessage', 'That email address is already being used or is invalid!');
-        res.redirect('/settings/');
-      } else {
-        req.user.updateOne({$set: {'local.email': data.email}}, function(err) {
-          if(err) {
-            console.log('Error updating email address: ' + err);
-            req.flash('signupMessage', 'Error updating email address.');
-          } else {
-            req.flash('signupSuccess', 'Email address successfully updated!');
-          }
-          res.redirect('/settings/');
-        });
+      try {
+        await req.user.updateOne({ $set: { 'local.email': data.email } });
+        req.flash('signupSuccess', 'Email address successfully updated!');
+      } catch(err) {
+        console.log('Error updating email address: ' + err);
+        req.flash('signupMessage', 'Error updating email address.');
       }
+      res.redirect('/settings/');
+
     }
-  });
+  } catch(e) {
+    console.log('Error checking for used email address: ' + e);
+    req.flash('signupMessage', 'Error updating email address.');
+    res.redirect('/settings/');
+  }
 };
 
-exports.changeUsername = function(req, res) {
+exports.changeUsername = async function(req, res) {
   var data = req.body;
 
-  User.findOne({username: data.username}, function(err, user){
-    if(err) {
-      console.log('Error checking for used username: ' + err);
-      req.flash('signupMessage', 'Error updating username.');
+  try {
+    const user = await User.findOne({username: data.username});
+
+    if (user || req.user.invalidUsername(data.username)) {
+      req.flash('signupMessage', 'That username is already being used or is invalid!');
       res.redirect('/settings/');
     } else {
-      if(user || req.user.invalidUsername(data.username)) {
-        req.flash('signupMessage', 'That username is already being used or is invalid!');
-        res.redirect('/settings/');
-      } else {
-        req.user.updateOne({$set: {username: data.username}}, function(err) {
-          if(err) {
-            console.log('Error updating username: ' + err);
-            req.flash('signupMessage', 'Error updating username.');
-          } else {
-            req.flash('signupSuccess', 'Username successfully updated!');
-          }
-          res.redirect('/settings/');
-        });
+      try {
+        await req.user.updateOne({ $set: { username: data.username } });
+        req.flash('signupSuccess', 'Username successfully updated!');
+      } catch(err) {
+        console.log('Error updating username: ' + err);
+        req.flash('signupMessage', 'Error updating username.');
       }
+      res.redirect('/settings/');
     }
-  });
+  } catch(err) {
+    console.log('Error checking for used username: ' + err);
+    req.flash('signupMessage', 'Error updating username.');
+    res.redirect('/settings/');
+  }
 };
 
-exports.changePassword = function(req, res) {
+exports.changePassword = async function(req, res) {
   var data = req.body;
 
   if(!req.user.validPassword(data.currentPassword)) {
@@ -65,65 +63,60 @@ exports.changePassword = function(req, res) {
     res.redirect('/settings/');
   } else {
     req.user.local.password = req.user.generateHash(data.newPassword1);
-    req.user.save(function(err) {
-      if(err) {
-        console.log('Error changing password: ' + err);
-        req.flash('signupMessage', 'Error changing password!');
-      } else {
-        req.flash('signupSuccess', 'Password successfully changed!');
-      }
-      res.redirect('/settings/');
-    });
+    try {
+      await req.user.save();
+      req.flash('signupSuccess', 'Password successfully changed!');
+    } catch(err) {
+      console.log('Error changing password: ' + err);
+      req.flash('signupMessage', 'Error changing password!');
+    }
+    res.redirect('/settings/');
   }
 };
 
-exports.changeProfileVisibility = function(req, res) {
+exports.changeProfileVisibility = async function(req, res) {
   var newVisibility = req.body.profileVisibility;
 
-  req.user.updateOne({$set: {profileVisibility: newVisibility}}, function(err) {
-    if(err) {
-      console.log('Error changing profile visibility: ' + err);
-      req.flash('signupMessage', 'Error changing profile visibility.');
-      res.redirect('/settings/');
-    } else {
-      req.flash('signupSuccess', 'Profile visibility successfully changed.');
-      res.redirect('/settings/');
-    }
-  });
+  try {
+    await req.user.updateOne({$set: {profileVisibility: newVisibility}});
+    req.flash('signupSuccess', 'Profile visibility successfully changed.');
+  } catch(err) {
+    console.log('Error changing profile visibility: ' + err);
+    req.flash('signupMessage', 'Error changing profile visibility.');
+  }
+  res.redirect('/settings/');
 };
 
-exports.disconnectSoundCloud = function(req, res) {
+exports.disconnectSoundCloud = async function(req, res) {
   if(!req.user.local.email) {
     res.redirect('/settings/');
   } else {
     req.user.soundcloud = {};
-    req.user.save(function(err) {
-      if(err) {
-        req.flash('signupMessage', 'Error disconnecting SoundCloud');
-        console.log('Error disconnecting SoundCloud: ' + err);
-      } else {
-        req.flash('signupSuccess', 'Your account is now disconnected from SoundCloud');
-      }
-      res.redirect('/settings/');
-    });
+    try {
+      await req.user.save();
+      req.flash('signupSuccess', 'Your account is now disconnected from SoundCloud');
+    } catch(err) {
+      req.flash('signupMessage', 'Error disconnecting SoundCloud');
+      console.log('Error disconnecting SoundCloud: ' + err);
+    }
+    res.redirect('/settings/');
   }
 };
 
-exports.deleteAccount = function(req, res) {
+exports.deleteAccount = async function(req, res) {
   var password = req.body.password;
 
   if(req.user.validPassword(password)) {
-    User.deleteOne({username: req.user.username}, function(err) {
-      if(err) {
-        console.log('Error deleting account: ' + err);
-        req.flash('signupMessage', 'Error deleting account');
-        res.redirect('/settings/');
-      } else {
-        req.logout();
-        req.session.destroy();
-        res.redirect('/');
-      }
-    });
+    try {
+      await User.deleteOne({username: req.user.username});
+      req.logout();
+      req.session.destroy();
+      res.redirect('/');
+    } catch(err) {
+      console.log('Error deleting account: ' + err);
+      req.flash('signupMessage', 'Error deleting account');
+      res.redirect('/settings/');
+    }
   } else {
     req.flash('signupMessage', 'Password is incorrect');
     res.redirect('/settings/');
