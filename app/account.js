@@ -109,9 +109,7 @@ exports.deleteAccount = async function(req, res) {
   if(req.user.validPassword(password)) {
     try {
       await User.deleteOne({username: req.user.username});
-      req.logout();
-      req.session.destroy();
-      res.redirect('/');
+      res.redirect('/logout/');
     } catch(err) {
       console.log('Error deleting account: ' + err);
       req.flash('signupMessage', 'Error deleting account');
