@@ -2,8 +2,6 @@ var models = require('./userModel.js');
 var user = models.user;
 var track = models.track;
 
-var ObjectId = require('mongoose').Types.ObjectId; 
-
 exports.getTracks = async function(req, res) {
   try {
     const result = await user.findOne({ username: req.user.username }, 'tracks');
