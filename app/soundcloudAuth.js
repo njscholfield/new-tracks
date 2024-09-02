@@ -1,6 +1,5 @@
 const SCAuth = require('./userModel.js').scAuth;
 const axios = require('axios');
-const FormData = require('form-data');
 
 exports.getSoundCloudToken = async () => {
   try {
@@ -36,31 +35,41 @@ exports.getSoundCloudToken = async () => {
 };
 
 async function refreshSoundCloudToken(token) {
-  const form = new FormData();
-  form.append('client_id', process.env.SOUNDCLOUD_CLIENT_ID);
-  form.append('client_secret', process.env.SOUNDCLOUD_CLIENT_SECRET);
-  form.append('refresh_token', token.refreshToken);
-  form.append('grant_type', 'refresh_token');
+  const formData = {
+    client_id: process.env.SOUNDCLOUD_CLIENT_ID,
+    client_secret: process.env.SOUNDCLOUD_CLIENT_SECRET,
+    refresh_token: token.refreshToken,
+    grant_type: 'refresh_token'
+  };
 
   try {
-    const { data } = await axios.post('https://api.soundcloud.com/oauth2/token', form, { headers: form.getHeaders() });
+    const { data } = await axios.post('https://secure.soundcloud.com/oauth/token', formData, { headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }});
     return data;
-  } catch (e) {
+  } catch(e) {
     console.error(e);
     return await fetchSoundCloudToken(); // if refreshing fails, try just getting a new token
   }
 }
 
 async function fetchSoundCloudToken() {
-  const form = new FormData();
-  form.append('client_id', process.env.SOUNDCLOUD_CLIENT_ID);
-  form.append('client_secret', process.env.SOUNDCLOUD_CLIENT_SECRET);
-  form.append('grant_type', 'client_credentials');
+  const formData = {
+    grant_type: 'client_credentials'
+  };
+
+  const credential = Buffer.from(`${process.env.SOUNDCLOUD_CLIENT_ID}:${process.env.SOUNDCLOUD_CLIENT_SECRET}`).toString('base64');
+  const authHeader = `Basic ${credential}`;
 
   try {
-    const { data } = await axios.post('https://api.soundcloud.com/oauth2/token', form, { headers: form.getHeaders() });
+    const { data } = await axios.post('https://secure.soundcloud.com/oauth/token', formData, {
+      headers: {
+        'Authorization': authHeader,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    });
     return data;
-  } catch (e) {
+  } catch(e) {
     console.error(e);
   }
 }

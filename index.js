@@ -9,9 +9,7 @@ var app = express();
 
 require('./config/passport.js')(passport);
 
-var mongoStore = new MongoDBStore({ uri: process.env.MONGO, collection: 'sessions', connectionOptions: {
-  useNewUrlParser: true, useUnifiedTopology: true
-}});
+var mongoStore = new MongoDBStore({ uri: process.env.MONGO, collection: 'sessions' });
 var sess = { store: mongoStore, secret: process.env.SESSION_SECRET, resave: true, saveUninitialized: false, name: 'sessionID', cookie: {}};
 if (app.get('env') === 'production') {
   app.set('trust proxy', 1);

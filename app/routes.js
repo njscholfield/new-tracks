@@ -149,7 +149,7 @@ module.exports = function(app, passport, tracks, account) {
     try {
       const response = await axios(`https://api.soundcloud.com/resolve.json?url=${req.query.url}`, { headers: {'Authorization': `Bearer ${token.accessToken}` } });
       res.status(200).json(response.data);
-    } catch(e) {
+    } catch {
       res.status(400).json({ 'message': 'Error fetching track info' });
     }
   });
@@ -159,7 +159,7 @@ module.exports = function(app, passport, tracks, account) {
     try {
       const response = await axios(`https://api.soundcloud.com/tracks/${req.params.id}/`, { headers: {'Authorization': `Bearer ${token.accessToken}` } });
       res.status(200).json(response.data);
-    } catch(e) {
+    } catch {
       res.status(400).json({ 'message': 'Error fetching track info' });
     }
   });

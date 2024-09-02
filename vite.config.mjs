@@ -1,9 +1,9 @@
 // vite.config.js
-import { createVuePlugin } from 'vite-plugin-vue2';
+import vue from '@vitejs/plugin-vue2';
 
 export default {
   plugins: [
-    createVuePlugin(/*options*/)
+    vue()
   ],
   build: {
     sourcemap: true

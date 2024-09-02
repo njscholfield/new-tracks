@@ -44,11 +44,11 @@
   button.nav-link {
     color: rgba(255, 255, 255, 0.5);
     border: 0;
+    cursor: pointer;
     .badge {
       background-color: rgba(255, 255, 255, 0.7);
       --bs-badge-padding-x: .5rem;
     }
-    cursor: pointer;
     &:hover {
       color: white; // prevent hover color being black in light mode
     }
