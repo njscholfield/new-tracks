@@ -1,5 +1,5 @@
 // vite.config.js
-import vue from '@vitejs/plugin-vue2';
+import vue from '@vitejs/plugin-vue';
 
 export default {
   plugins: [

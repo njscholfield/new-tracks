@@ -1,5 +1,5 @@
 <template>
-  <div v-if="trackInfo.title" class="alert alert-dismissible" id="resume" :show="visible">
+  <div v-if="trackInfo.title" class="alert alert-dismissible" id="resume">
     <h6 class="text-muted" id="resume-header">LAST OPENED TRACK</h6>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" @click="hide = true"></button>
   <hr id="resume-divider">

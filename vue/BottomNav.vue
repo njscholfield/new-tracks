@@ -25,13 +25,14 @@
     data() {
       return {};
     },
-    props: ['value', 'numTracks', 'user'],
+    emits: ['update:modelValue'],
+    props: ['modelValue', 'numTracks', 'user'],
     methods: {
       setPanel(id) {
-        this.$emit('input', id);
+        this.$emit('update:modelValue', id);
       },
       isCurrentPanel(id) {
-        return this.value == id;
+        return this.modelValue == id;
       }
     }
   };

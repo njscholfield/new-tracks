@@ -13,9 +13,9 @@
       <div class="col-md-10 order-md-2 mb-2">
         <h3>{{ rawData.title }}</h3>
         <h4>by <a :href="rawData.user.permalink_url" target="_blank" rel="noopener noreferrer">{{ rawData.user.username }}</a></h4>
-        <h6><span class="text-success">{{ rawData.duration | duration }}</span></h6>
+        <h6><span class="text-success">{{ duration(rawData.duration) }}</span></h6>
         <p>
-          <a v-if="rawData.downloadable" :href="rawData.download_url | clientID" target="_blank" rel="noreferrer noopener">Download</a>
+          <a v-if="rawData.downloadable" :href="clientID(rawData.download_url)" target="_blank" rel="noreferrer noopener">Download</a>
           <span v-if="rawData.downloadable && rawData.purchase_url"> | </span>
           <a v-if="rawData.purchase_url" :href="rawData.purchase_url" target="_blank" rel="noreferrer noopener">{{ rawData.purchase_title || 'Buy' }}</a>
         </p>
@@ -30,7 +30,7 @@
     </div>
     <hr>
     <p v-for="(paragraph, idx) in html" :key="idx" v-html="paragraph"></p>
-    <h6>POSTED ON: {{ datePosted | date }}</h6>
+    <h6>POSTED ON: {{ $filters.date(datePosted) }}</h6>
 
     <div v-if="user.loggedIn">
       <button class="btn btn-secondary" disabled v-if="savedIds.includes(rawData.id.toString())"><span><font-awesome-icon icon="check"/></span> Track Added To List</button>
@@ -72,9 +72,7 @@
     methods: {
       toggleJSON() {
         this.showJSON = !this.showJSON;
-      }
-    },
-    filters: {
+      },
       duration(ms) {
         if(!ms) return '';
         const LABELS = [' hour', ' minute', ' second'];

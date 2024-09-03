@@ -1,9 +1,7 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
+import { createApp } from 'vue';
+import { createWebHashHistory, createRouter } from 'vue-router';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
-
-Vue.use(VueAxios, axios);
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser';
@@ -25,26 +23,28 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import App from './App.vue';
 
-Vue.component('font-awesome-icon', FontAwesomeIcon);
-library.add(faUser, faCog, faTimes, faPencilAlt, faCheck, faStar, faSearch, faChevronUp, faChevronDown, faStream, faMusic, faMoon, faDice, farStar, faSoundcloud);
-
-Vue.filter('date', (input) => {
-  if(!input) return '';
-  const date = new Date(input);
-  return new Intl.DateTimeFormat([], { dateStyle: 'long' }).format(date);
-});
-
-Vue.use(VueRouter);
-const router = new VueRouter({
+const router = createRouter({
+  history: createWebHashHistory(),
   routes: [
     { path: '/:track', component: App }
   ]
 });
 
-const app = new Vue({
-  el: '#new-tracks',
-  render: h => h(App),
-  router: router
-});
+const app = createApp(App);
+app.use(VueAxios, axios);
+app.use(router);
+
+app.component('font-awesome-icon', FontAwesomeIcon);
+library.add(faUser, faCog, faTimes, faPencilAlt, faCheck, faStar, faSearch, faChevronUp, faChevronDown, faStream, faMusic, faMoon, faDice, farStar, faSoundcloud);
+
+app.config.globalProperties.$filters = {
+  date(input) {
+    if (!input) return '';
+    const date = new Date(input);
+    return new Intl.DateTimeFormat([], { dateStyle: 'long' }).format(date);
+  }
+};
+
+app.mount('#new-tracks');
 
 export default app;
