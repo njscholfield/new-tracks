@@ -1,9 +1,9 @@
 {
   "name": "new-tracks",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "description": "Shows SoundCloud track descriptions and saves tracks for later",
   "engines": {
-    "node": "20.x.x"
+    "node": "22"
   },
   "main": "index.js",
   "scripts": {
