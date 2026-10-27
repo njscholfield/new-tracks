@@ -14,7 +14,7 @@
     <div class="container">
       <% if(message['content'] != '') { %><h4 class="<%= message['type'] %>"><%= message['content'] %></h4><% } %>
       <div class="d-flex justify-content-end">
-        <a href="/auth/soundcloud"><img alt="login using SoundCloud" src="https://connect.soundcloud.com/2/btn-connect-l.png"></a>
+        <a href="/auth/soundcloud"><img alt="login using SoundCloud" src="/img/soundcloud-connect-sc-l.png" width="243" height="44"></a>
       </div>
       <form action="/register/?hash=<%= hash %>" method="post">
         <div class="form-group mb-3">

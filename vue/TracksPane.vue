@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <label for="search" class="sr-only">Search your saved tracks</label>
+    <label for="search" class="visually-hidden">Search your saved tracks</label>
     <div class="input-group">
       <span class="input-group-text">
         <font-awesome-icon icon="search"></font-awesome-icon>

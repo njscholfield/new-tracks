@@ -1,16 +1,21 @@
 var express = require('express');
 var session = require('express-session');
-var MongoDBStore = require('connect-mongodb-session')(session);
+var { MongoStore } = require('connect-mongo');
+var mongoose = require('mongoose');
 var passport = require('passport');
-var flash = require('connect-flash');
+var flash = require('./app/flash.js');
 var tracks = require('./app/tracks.js');
 var account = require('./app/account.js');
 var app = express();
 
 require('./config/passport.js')(passport);
 
-var mongoStore = new MongoDBStore({ uri: process.env.MONGO, collection: 'sessions' });
-var sess = { store: mongoStore, secret: process.env.SESSION_SECRET, resave: true, saveUninitialized: false, name: 'sessionID', cookie: {}};
+var mongoStore = MongoStore.create({
+  clientPromise: mongoose.connection.asPromise().then((conn) => conn.getClient()),
+  collectionName: 'sessions',
+  stringify: false
+});
+var sess = { store: mongoStore, secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false, name: 'sessionID', cookie: { sameSite: 'lax' }};
 if (app.get('env') === 'production') {
   app.set('trust proxy', 1);
   sess.cookie.secure = true;

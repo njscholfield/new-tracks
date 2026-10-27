@@ -23,7 +23,7 @@ exports.editTrackInList = async function(req, res) {
   });
 
   try {
-    const result = await user.findOneAndUpdate({username: username, 'tracks.trackID': data.trackID}, {$set: {'tracks.$': newTrack}}, {new: true});
+    const result = await user.findOneAndUpdate({username: username, 'tracks.trackID': data.trackID}, {$set: {'tracks.$': newTrack}}, {returnDocument: 'after'});
     res.status(200).json(result.tracks);
   } catch(err) {
     console.log('Error updating track: ' + err);
@@ -35,7 +35,7 @@ exports.removeTrackFromList = async function(req, res) {
   var [data, username] = [req.body, req.user.username];
 
   try {
-    const result = await user.findOneAndUpdate({username: username}, {$pull: {tracks: {trackID: data.trackID} } }, {new: true});
+    const result = await user.findOneAndUpdate({username: username}, {$pull: {tracks: {trackID: data.trackID} } }, {returnDocument: 'after'});
     res.status(200).json(result.tracks);
   } catch(err) {
     console.log('Error removing track: ' + err);
@@ -65,7 +65,7 @@ exports.addTrackToList = async function(req, res) {
 
 var addTrackToExistingUser = async function(req, res, result, newTrack) {
   try {
-    const userObj = await user.findOneAndUpdate({_id: result._id}, {$push: {tracks: newTrack}}, {new: true});
+    const userObj = await user.findOneAndUpdate({_id: result._id}, {$push: {tracks: newTrack}}, {returnDocument: 'after'});
     res.status(200).json(userObj.tracks);
   } catch(err) {
     console.log('Error $push new track: ' + err);
@@ -78,7 +78,7 @@ exports.getCurrentTrack = async function(username) {
     const result = await user.findOne({ username: username }, 'currentTrack');
     return { currentTrack: result.currentTrack };
   } catch (err) {
-    throw Error({ type: 'error', message: err });
+    throw new Error('Error getting current track', { cause: err });
   }
 };
 

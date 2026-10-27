@@ -1,9 +1,29 @@
 var localStrategy = require('passport-local').Strategy;
-var soundcloudStrategy = require('passport-soundcloud').Strategy;
+var { Strategy: OAuth2Strategy, InternalOAuthError } = require('passport-oauth2');
 var JwtStrategy = require('passport-jwt').Strategy;
 var ExtractJwt = require('passport-jwt').ExtractJwt;
+var axios = require('axios');
 
 var User = require('../app/userModel.js').user;
+
+class SoundCloudStrategy extends OAuth2Strategy {
+  constructor(options, verify) {
+    super({
+      authorizationURL: 'https://secure.soundcloud.com/authorize',
+      tokenURL: 'https://secure.soundcloud.com/oauth/token',
+      state: true,
+      pkce: true,
+      ...options
+    }, verify);
+    this.name = 'soundcloud';
+  }
+
+  userProfile(accessToken, done) {
+    axios.get('https://api.soundcloud.com/me', { headers: { 'Authorization': `OAuth ${accessToken}` }, timeout: 10000 })
+      .then(({ data }) => done(null, { provider: 'soundcloud', id: data.id, displayName: data.full_name, _json: data }))
+      .catch((err) => done(new InternalOAuthError('failed to fetch user profile', err)));
+  }
+}
 
 module.exports = function(passport) {
   passport.serializeUser(function(user, done) {
@@ -112,7 +132,7 @@ module.exports = function(passport) {
   }
   ));
 
-  passport.use('soundcloud', new soundcloudStrategy({
+  passport.use('soundcloud', new SoundCloudStrategy({
     clientID: process.env.SOUNDCLOUD_CLIENT_ID,
     clientSecret: process.env.SOUNDCLOUD_CLIENT_SECRET,
     callbackURL: 'https://tracks.noahscholfield.com/callback.html',
@@ -127,7 +147,7 @@ module.exports = function(passport) {
         if (user) {
           // login the user with the SoundCloud account
           try {
-            await user.update({ $set: { 'soundcloud.accessToken': accessToken, 'soundcloud.refreshToken': refreshToken } });
+            await user.updateOne({ $set: { 'soundcloud.accessToken': accessToken, 'soundcloud.refreshToken': refreshToken } });
             return done(null, user);
           } catch(err) {
             console.log('Error adding accessToken and refreshToken: ' + err);
@@ -156,7 +176,7 @@ module.exports = function(passport) {
     } else {
       // connect SoundCloud
       try {
-        await req.user.update({$set: {'soundcloud.soundcloudID': profile.id, 'soundcloud.accessToken': accessToken, 'soundcloud.refreshToken': refreshToken}});
+        await req.user.updateOne({$set: {'soundcloud.soundcloudID': profile.id, 'soundcloud.accessToken': accessToken, 'soundcloud.refreshToken': refreshToken}});
         return done(null, req.user);
       } catch(err) {
         console.log('Error connnecting SoundCloud: ' + err);

@@ -8,13 +8,6 @@ export default {
   build: {
     sourcemap: true
   },
-  css: {
-    preprocessorOptions: {
-      scss: {
-        api: 'modern-compiler',
-      },
-    },
-  },
   server: {
     proxy: {
       '/auth/verify': 'http://localhost:8000/',

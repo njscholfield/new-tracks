@@ -5,13 +5,13 @@
       <ul class="navbar-nav ms-auto mb-0 mb-lg-0" v-if="user.loggedIn">
         <li class="nav-item">
           <button class="btn navbar-btn" @click="randomTrack" title="Click to view a random saved track">
-            <label class="sr-only">Click to view a random saved track</label>
+            <label class="visually-hidden">Click to view a random saved track</label>
             <font-awesome-icon icon="dice" aria-hidden="true"></font-awesome-icon>
           </button>
         </li>
         <li class="nav-item dropdown">
           <button class="btn nav-link dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-            <label class="sr-only">User menu dropdown toggle</label>
+            <label class="visually-hidden">User menu dropdown toggle</label>
             <font-awesome-icon icon="user" aria-hidden="true" title="User menu dropdown toggle"/>
           </button>
           <ul class="dropdown-menu dropdown-menu-end">

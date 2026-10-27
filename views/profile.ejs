@@ -178,11 +178,14 @@
           <% if(user.soundcloud.accessToken) { %>
             <p><strong>User ID:</strong> <%= user.soundcloud.soundcloudID %></p>
             <% if(user.local.email) { %>
-              <img alt="disconnect SoundCloud" src="https://connect.soundcloud.com/2/btn-disconnect-l.png" data-bs-toggle="modal" data-bs-target="#DisconnectModal">
+              <picture>
+                <source srcset="/img/soundcloud-disconnect-dark-l.png" media="(prefers-color-scheme: dark)">
+                <img alt="disconnect SoundCloud" src="/img/soundcloud-disconnect-light-l.png" width="147" height="44" data-bs-toggle="modal" data-bs-target="#DisconnectModal">
+              </picture>
             <% } %>
           <% } else { %>
             <p>Click the button below to connect your SoundCloud Account</p>
-            <a href="/auth/soundcloud"><img alt="connect to SoundCloud" src="https://connect.soundcloud.com/2/btn-connect-l.png"></a>
+            <a href="/auth/soundcloud"><img alt="connect to SoundCloud" src="/img/soundcloud-connect-l.png" width="128" height="44"></a>
           <% } %>
         </div>
       </div>

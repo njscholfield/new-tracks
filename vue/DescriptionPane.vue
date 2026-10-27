@@ -42,7 +42,10 @@
         <button class="btn btn-link" @click="toggleJSON">Raw Track Info</button>
       </div>
       <div class="col d-flex justify-content-end">
-        <a :href="rawData.permalink_url" target="_blank" rel="noreferrer noopener"><img class="sc-icon" alt="Soundcloud Logo" title="Click to listen to this song on SoundCloud" src="https://developers.soundcloud.com/assets/logo_black-8c4cb46bf63fda8936f9a4d967416dc6.png"></a>
+        <a class="sc-link" :href="rawData.permalink_url" target="_blank" rel="noreferrer noopener" title="Click to listen to this song on SoundCloud">
+          <img class="sc-icon sc-icon-black" alt="SoundCloud Logo" :src="scLogoBlack">
+          <img class="sc-icon sc-icon-white" alt="SoundCloud Logo" :src="scLogoWhite">
+        </a>
       </div>
     </div>
     <pre v-if="showJSON"><code>{{ rawData }}</code></pre>
@@ -58,6 +61,8 @@
   import Autolinker from 'autolinker';
   import parseMilliseconds from 'parse-ms';
   import placeholder from '../static/img/placeholder.png';
+  import scLogoBlack from '../static/img/soundcloud-logo-black.png';
+  import scLogoWhite from '../static/img/soundcloud-logo-white.png';
   import AddTrackModal from './AddTrackModal.vue';
 
   export default {
@@ -65,6 +70,8 @@
       return {
         showJSON: false,
         placeholder: placeholder,
+        scLogoBlack: scLogoBlack,
+        scLogoWhite: scLogoWhite,
       };
     },
     props: ['rawData', 'user', 'savedIds'],
@@ -132,8 +139,27 @@
   #top.dark-mode .img-fluid {
     opacity: .8;
   }
-  #top.dark-mode .sc-icon {
-    filter: invert(100%);
+  .sc-link {
+    display: inline-flex;
+    align-items: center;
+    padding: .5rem .75rem;
+    border-radius: .25rem;
+    background-color: #FF5500;
+  }
+  .sc-icon {
+    display: block;
+  }
+  .sc-icon-white {
+    display: none;
+  }
+  #top.dark-mode .sc-link {
+    background-color: #121212;
+  }
+  #top.dark-mode .sc-icon-black {
+    display: none;
+  }
+  #top.dark-mode .sc-icon-white {
+    display: block;
   }
   #top.dark-mode code {
     color: white;

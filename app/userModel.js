@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 
-mongoose.Promise = global.Promise;
 mongoose.set('strictQuery', false);
 
 main().catch(err => console.log('ERROR connecting.', err));
@@ -46,7 +45,7 @@ userSchema.methods.validPassword = function(password) {
 
 userSchema.methods.invalidUsername = function(username) {
   var reservedUsernames = ['api', 'auth', 'callback.html', 'deauth', 'login', 'newtracks', 'profile', 'register', 'settings', 'soundcloud'];
-  var regex = new RegExp(/([^A-Za-z0-9$\-_.+!*\'(),])+/);
+  var regex = new RegExp(/([^A-Za-z0-9$\-_.+!*'(),])+/);
   if(reservedUsernames.includes(username) || username.search(regex) !== -1 || username.length === 0) {
     return true;
   } else {

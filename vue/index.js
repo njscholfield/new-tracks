@@ -1,7 +1,6 @@
 import { createApp } from 'vue';
 import { createWebHashHistory, createRouter } from 'vue-router';
 import axios from 'axios';
-import VueAxios from 'vue-axios';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser';
@@ -31,7 +30,7 @@ const router = createRouter({
 });
 
 const app = createApp(App);
-app.use(VueAxios, axios);
+app.config.globalProperties.axios = axios;
 app.use(router);
 
 app.component('font-awesome-icon', FontAwesomeIcon);

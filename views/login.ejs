@@ -14,7 +14,7 @@
     <div class="container">
       <% if(message != '') { %><h4 class="text-danger"><%= message %></h4><% } %>
       <div class="d-flex justify-content-end">
-        <a href="/auth/soundcloud"><img alt="login using SoundCloud" src="https://connect.soundcloud.com/2/btn-connect-l.png"></a>
+        <a href="/auth/soundcloud"><img alt="login using SoundCloud" src="/img/soundcloud-connect-sc-l.png" width="243" height="44"></a>
       </div>
       <form action="/login/?hash=<%= hash %>" method="post">
         <div class="form-group mb-3 <%= error['username'] %>">
